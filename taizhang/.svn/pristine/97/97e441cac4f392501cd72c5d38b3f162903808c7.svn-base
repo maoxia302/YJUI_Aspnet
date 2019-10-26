@@ -1,0 +1,210 @@
+﻿<script type="text/javascript">
+</script>
+<div style="padding: 15px; overflow: hidden">
+<form id="f_disanfangjianhe_add" method="post">
+    <table class="tableForm" width="100%">
+
+    </table>
+<table class="tableForm" width="100%">
+
+    <tr>
+        <td colspan="7" style="text-align: center; font-size: 18px;">
+            <b>反馈基本情况</b>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 15%;">
+            编号：
+        </td>
+        <td id="ID" style="width: 15%;"></td>
+        <td style="width: 15%;">
+            反馈时间：
+        </td>
+        <td style="width: 15%;" id="fkDate"></td>
+        <td style="width: 15%;">
+            反馈人：
+        </td>
+        <td style="width: 15%;" id="fkPerson"></td>
+    </tr>
+    <tr>
+        <td>
+            问题归属部门
+        </td>
+        <td id='wtDep'></td>
+        <td>
+            &nbsp;
+        </td>
+        <td></td>
+        <td>
+            &nbsp;
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td style="width: 120px;">
+            反馈描述：
+        </td>
+        <td colspan="5" id="fkDesc"></td>
+    </tr>
+    <tr>
+        <td colspan="6" style="text-align: center; font-size: 18px;">
+            <b>问题处理</b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            领取部门：
+        </td>
+        <td>
+            <input type="text" name="receiveDep" disabled="disabled"/>
+        </td>
+        <td>
+            领取人：
+        </td>
+        <td>
+            <input type="text" name="receivePerson" disabled="disabled"/>
+        </td>
+        <td>
+            &nbsp;
+        </td>
+        <td>
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td>
+            临时改善:
+        </td>
+        <td colspan="3"><textarea class="easyui-textbox" cols="50" name="tempGaishan" rows="6" disabled="disabled"></textarea></td>
+        <td>日期：</td>
+        <td>
+            <input type="text" name="dyDate" class="Wdate" onfocus="WdatePicker({ minDate: '%y-%M-%d' })" disabled="disabled"/>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            长期改善:
+        </td>
+        <td colspan="3"><textarea class="easyui-textbox" cols="50" name="cqFangan" rows="6" disabled="disabled"></textarea></td>
+        <td>日期：</td>
+        <td>
+            <input type="text" name="cqDate" class="Wdate" onfocus="WdatePicker({ minDate: '%y-%M-%d' })" disabled="disabled"/>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            完成情况最终描述:
+        </td>
+        <td colspan="3"><textarea class="easyui-textbox" cols="50" name="endDesc" rows="6" disabled="disabled"></textarea></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="7" style="text-align: center; font-size: 18px;">
+            <b>落实部门</b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            落时结果：
+        </td>
+        <td>
+            <input type="text" name="lsResult" disabled="disabled"/>
+        </td>
+        <td>
+            落实部门：
+        </td>
+        <td>
+            <input type="text" name="lsDep" disabled="disabled"/>
+        </td>
+        <td>
+            日期：
+        </td>
+        <td>
+            <input type="text" name="lsDate" class="Wdate" disabled="disabled"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6" style="text-align: center; font-size: 18px;">
+            <b>满意调查</b>
+        </td>
+    </tr>
+    <!--<tr>
+        <td>
+            满意评价：
+        </td>
+        <td id="myPingjia">
+            &nbsp;
+        </td>
+        <td>
+            满意人：
+        </td>
+        <td id="myPerson">
+            &nbsp;
+        </td>
+        <td>
+            满意日期：
+        </td>
+        <td id="myDate">
+            &nbsp;
+        </td>
+    </tr>-->
+    <tr>
+        <td>
+            满意评价：
+        </td>
+        <td>
+            <select class="easyui-combobox" name="myPingjia" disabled="disabled">
+                <option value="非常满意5分">非常满意5分</option>
+                <option value="满意4分">满意4分</option>
+                <option value="一般3分">一般3分</option>
+                <option value="不满意2分">不满意2分</option>
+                <option value="非常不满意1分">非常不满意1分</option>
+                <option value="弃权--改善结果接触不到">弃权--改善结果接触不到</option>
+            </select>
+
+        </td>
+        <td>
+            满意人：
+        </td>
+        <td>
+            <input type="text" name="myPerson" id="myPerson" class="easyui-textbox" disabled="disabled"/>
+        </td>
+        <td>
+            满意日期：
+        </td>
+        <td>
+            <input type="text" name="myDate" class="Wdate" onfocus="WdatePicker({ minDate: '%y-%M-%d' })" disabled="disabled"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6" style="text-align: center; font-size: 18px;">
+            <b>第三方检核</b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            第三方检核：
+        </td>
+        <td>
+            <input type="text" name="dsJianhe"/>
+        </td>
+        <td>
+            第三方检核人：
+        </td>
+        <td>
+            <input type="text" name="dsPerson"/>
+        </td>
+        <td>
+            第三方简核时间：
+        </td>
+        <td>
+            <input type="text" name="dsDate" class="Wdate"
+                   onfocus="WdatePicker({ minDate: '%y-%M-%d' })"/>
+        </td>
+    </tr>
+</table>
+</form>
+</div>

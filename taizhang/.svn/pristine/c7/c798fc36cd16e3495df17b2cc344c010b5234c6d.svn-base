@@ -1,0 +1,101 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="f_neibutaizhang_add" method="post">
+    <table class="tableForm" width="100%">
+        <tr>
+
+            <td>
+                部门：
+            </td>
+            <td>
+                <input class="easyui-combobox" name="dep" data-options="
+		        valueField: 'label',
+		        textField: 'value',
+		        data: [{
+			        label: '轿车事业部',
+			        value: '轿车事业部'
+		        },{
+			        label: '微车事业部',
+			        value: '微车事业部'
+		        },{
+			        label: '发动机销售',
+			        value: '发动机销售'
+		        },{
+			        label: '发动机河南',
+			        value: '发动机河南'
+		        },{
+			        label: '发动机直营',
+			        value: '发动机直营'
+		        }]" />
+            </td>
+                        <td>
+                总件数：
+            </td>
+            <td>
+                <input class="easyui-textbox" name="total"></input>
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                品类：
+            </td>
+            <td>
+                <input class="easyui-textbox" name="category"></input>
+            </td>
+            <td>
+                厂家名称：
+            </td>
+            <td>
+                <input class="easyui-textbox" name="suppliername"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                分类
+            </td>
+            <td>
+                <input class="easyui-combobox" name="cate" data-options="
+		        valueField: 'label',
+		        textField: 'value',
+		        data: [{
+			        label: '成品类',
+			        value: '成品类'
+		        },{
+			        label: '未成品类',
+			        value: '未成品类'
+		        },{
+			        label: '包装品类',
+			        value: '包装品类'
+		        },{
+			        label: '非自有类',
+			        value: '非自有类'
+		        },{
+			        label: '赠品类',
+			        value: '赠品类'
+		        }]" />
+            </td>
+            <td>
+                预达时间：
+            </td>
+            <td>
+                <input id="yddate" name="yddate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"></input>
+            </td>
+        </tr>
+        <tr>
+
+        </tr>
+                <tr>
+            <td colspan="">
+                备注：
+            </td>
+            <td colspan="3">
+                <textarea class="easyui-textbox" id="Gremark" name="Gremark" rows="4"></textarea>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>

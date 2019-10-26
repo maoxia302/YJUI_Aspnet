@@ -1,0 +1,33 @@
+﻿<script>
+    $('#cb_wtDep').combobox({
+        editable: false,
+        url: '../ashx_ui/ui_neibuDep.ashx?action=getall',
+        valueField: 'departmentname',
+        textField: 'departmentname'
+
+    });
+</script>
+<div style="padding: 15px; overflow: hidden">
+    <form id="f_neibutaizhang_add" method="post">
+        <table class="tableForm" width="100%">
+             <tr>
+                <td colspan="4" style="text-align: center;font-size: 18px;"><b>反馈情况填写</b></td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    问题归属部门：</td>
+                <td>
+                    <input type="easyui-combobox" id="cb_wtDep" name="wtDep" class="easyui-validatebox" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    反馈内容：</td>
+                <td colspan="3">
+                    <textarea  class="easyui-textbox" cols="50" name="fkDesc" rows="6"></textarea></td>
+            </tr>
+        </table>
+    </form>
+</div>

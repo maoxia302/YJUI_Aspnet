@@ -1,0 +1,182 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="f_chuyun_add" method="post">
+        <table class="tableForm" width="100%">
+            <tr>
+                <td colspan="4" style="text-align: center;font-size: 18px;"><b>录入提货记录</b></td>
+            </tr>
+
+            <tr>
+                <td>
+                    到货/退货：
+                </td>
+                <td>
+                    <input class="easyui-combobox" id="dth" name="dth" data-options="editable: false,
+		valueField: 'label',
+		textField: 'value',
+		data: [{
+			label: '到货',
+			value: '到货'
+		},{
+			label: '退货',
+			value: '退货'
+		}]" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    分库：
+                </td>
+                <td>
+                    <input class="easyui-combobox" id="Fenku" name="Fenku" data-options="editable: false,
+		valueField: 'label',
+		textField: 'value',
+		data: [{
+			label: '郑州库',
+			value: '郑州库'
+		},{
+			label: '广州分库',
+			value: '广州分库'
+		},{
+			label: '杭州分库',
+			value: '杭州分库'
+		},{
+			label: '济南分库',
+			value: '济南分库'
+		},{
+			label: '沈阳分库',
+			value: '沈阳分库'
+		},{
+			label: '西安分库',
+			value: '西安分库'
+		},{
+			label: '长沙分库',
+			value: '长沙分库'
+		},{
+			label: '成都分库',
+			value: '成都分库'
+		}]" />
+                </td>
+            </tr>
+
+            <tr>
+
+
+                <td>
+                    到货地区：
+                </td>
+                <td>
+                    <input class="easyui-validatebox" id="dhdq" name="dhdq" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    客户名称：
+                </td>
+                <td>
+                    <input class="easyui-validatebox" id="khmc" name="khmc" data-options="required:true" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    到货物流：
+                </td>
+                <td>
+                    <input class="easyui-validatebox" id="dhwl" name="dhwl" data-options="required:true" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    物流电话：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="wldh" name="wldh" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    物流地址：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="wldz" name="wldz" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    收货人（物流单）：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="shr" name="shr" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    收货人电话（物流单）：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="shrtel" name="shrtel" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    件数：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="js" name="js" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    金额：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="yfje" name="yfje" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td>
+                    票号：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="ph" name="ph" />
+                </td>
+            </tr>
+            <!--<tr>
+
+
+                <td>
+                    实际运费金额：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="fee" name="fee" />
+                </td>
+            </tr>-->
+            <tr>
+                <td>
+                    备注：
+                </td>
+                <td colspan="3">
+                    <textarea class="easyui-textbox" cols="50" name="bz" rows="6"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

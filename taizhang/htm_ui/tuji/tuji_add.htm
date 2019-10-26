@@ -1,0 +1,95 @@
+﻿<script>
+    $('#cb_tjxh').combobox({
+        editable: false,
+        url: '../ashx_ui/ui_guzhang.ashx?action=tjxh',
+        valueField: 'guzhang',
+        textField: 'guzhang'
+    });
+</script>
+<div style="padding: 15px; overflow: hidden">
+    <form id="f_tuji_add" method="post">
+    <table class="tableForm" width="100%">
+        <tr>
+            <td>
+                凸机型号</td>
+            <td>
+                <input type="easyui-combobox" id="cb_tjxh" name="tjxh" class="easyui-validatebox"  />
+            </td>
+            <td>
+                发动机号：
+            </td>
+            <td>
+                <input type="text" name="fdjh" class="easyui-validatebox" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            
+            <td>
+                装机时间
+            </td>
+            <td>
+                <input type="text" name="zjrq" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" data-options="required:true"/>
+            </td>
+            <td>
+                激活保修
+            </td>
+            <td>
+                <input class="easyui-combobox" name="jhbx" data-options="editable: false,required:true,
+		valueField: 'label',
+		textField: 'value',
+		data: [{
+			label: '是',
+			value: '是'
+		},{
+			label: '否',
+			value: '否'
+		}]" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                代理地址</td>
+            <td>
+                <input type="text" name="gzfsdq" class="easyui-validatebox" data-options="required:true"  />
+            </td>
+            <td>
+                代理商</td>
+            <td>
+                <input type="text" name="dls" class="easyui-validatebox" data-options="required:true"  />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                修理厂</td>
+            <td>
+                <input type="text" name="xlc" class="easyui-validatebox" data-options="required:true"  />
+            </td>
+            <td>
+                联系人&nbsp;
+            </td>
+            <td>
+                <input type="text" name="lxr" class="easyui-validatebox"  data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                联系电话</td>
+            <td>
+                <input type="text" name="xlctel" class="easyui-validatebox"  data-options="required:true" />
+            </td>
+            <td>
+                反馈人</td>
+            <td>
+                <input class="easyui-validatebox" id="fkr" name="fkr" />
+            </td>
+        </tr>
+                        <tr>
+            <td>
+                故障现象描述：
+            </td>
+            <td colspan="3">
+                <textarea   cols="40" name="gzxx" rows="5"   data-options="required:true" class="easyui-validatebox" data-options="required:true" ></textarea></td>
+        </tr>
+    </table>
+    </form>
+</div>

@@ -1,0 +1,19 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="f_user_setorg" method="post">
+    <table class="tableForm" width="100%">
+        <tr>
+            <td>
+                用户组织：
+            </td>
+            <td>
+                <input name='ct_org' class="easyui-combotree" style="width: 260px;" data-options=" url: '../ashx_ui/ui_org.ashx?type=tree',
+                            textFiled: 'orgname',
+                            parentField: '_parentId',
+                            checkbox:true,multiple:true,
+                            cascadeCheck:false,
+                            lines:true">
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>

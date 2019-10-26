@@ -1,0 +1,46 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="form_orgadd" method="post">
+    <table style="width: 100%;" class="tableForm">
+        <tr>
+            <td>
+                组织名称：
+            </td>
+            <td>
+                <input name="txt_orgname" type="text" class="easyui-validatebox" data-options="required:true" />
+            </td>
+            <td>
+                组织图标：
+            </td>
+            <td>
+                <input name="txt_icon" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                属性A：
+            </td>
+            <td>
+                <input name="attr_a" id="Text3" type="text" />
+            </td>
+            <td>
+                属性B：
+            </td>
+            <td>
+                <input name="attr_b" id="Text4" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                父级节点：
+            </td>
+            <td colspan="3">
+                <select id="cc" name='cc' class="easyui-combotree" style="width: 260px;" data-options=" url: '../ashx_ui/ui_org.ashx?type=tree',
+                            textFiled: 'orgname',
+                            parentField: '_parentId',
+                            lines:true">
+                 </select>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>

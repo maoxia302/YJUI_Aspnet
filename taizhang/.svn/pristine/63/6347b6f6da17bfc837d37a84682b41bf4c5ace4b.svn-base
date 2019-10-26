@@ -1,0 +1,177 @@
+﻿<script type="text/javascript">
+    $(function () {
+        $("#dg_rk_quanxian").datagrid({
+            url: "../ashx_ui/ui_rk_quanxian.ashx?action=all",
+            idField: 'ID',
+            rownumbers: true,
+            fit: true,
+            fitColumns: false,
+            singleSelect: true,
+            nowrap: false,
+            pagination: false,
+            columns: [
+                [
+                    { field: "id", title: "ID", width: 70 },
+                    { field: "menuorder", title: "排序", width: 70 },
+                    { field: "fatherid", title: "父ID", width: 80 },
+                    { field: "menuname", title: "菜单名称", width: 120 },
+                    { field: "icon", title: "菜单图标", width: 100 },
+                    { field: "url", title: "路径", width: 300 }
+                ]
+            ],
+            toolbar: [
+                {
+                    text: '新增',
+                    iconCls: 'icon-edit',
+                    handler: add_rk_quanxian
+                }, '-',
+                {
+                    text: '修改',
+                    iconCls: 'icon-org',
+                    handler: edit_rk_quanxian
+
+                }, '-',
+                {
+                    text: '删除',
+                    iconCls: 'icon-org',
+                    handler: del_rk_quanxian
+                }
+            ]
+        });
+    });
+
+    function add_rk_quanxian() {
+        //判断权限
+        $("<div/>").dialog({
+            href: "htm_ui/sys/menu_add.htm",
+            title: "添加菜单",
+            height: 400,
+            width: 600,
+            modal: true,
+            iconCls: "icon-add",
+            buttons: [
+                         {
+                             text: '确定添加',
+                             iconCls: 'icon-add',
+                             handler: function () {
+                                 var d = $(this).closest('.window-body');
+                                 $("#f_menus_add").form("submit", {
+                                     url: "../ashx_ui/ui_menu.ashx",
+                                     onSubmit: function (param) {
+                                         param.action = 'add';
+                                         return $(this).form('validate');
+                                     },
+                                     success: function (result) {
+                                         dealAjaxResult(result, function (r) {
+                                             d.dialog('destroy');
+                                             $.show_warning("提示", "操作成功");
+                                             $("#dg_menulist").datagrid("reload");
+                                         });
+                                     }
+                                 });
+                             }
+                         },
+                         {
+                             text: '取消添加',
+                             iconCls: 'icon-cancel',
+                             handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                         }
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            }
+        });
+    }
+
+    function edit_rk_quanxian() {
+        var r = $("#dg_menulist").datagrid("getChecked");
+        if (r.length < 1) {
+            $.show_warning("错误", "请选择一个要修改一个信息");
+            return;
+        }
+        if (r.length > 1) {
+            $.show_warning("错误", "一次只能修改一个信息");
+            $("#dg_renkuan").datagrid('clearSelections').datagrid('clearChecked');
+            return;
+        }
+        //判断权限
+        $("<div/>").dialog({
+            href: "htm_ui/sys/menu_edit.html",
+            title: "修改菜单",
+            height: 400,
+            width: 600,
+            modal: true,
+            iconCls: "icon-add",
+            buttons: [
+                         {
+                             text: '确定添加',
+                             iconCls: 'icon-add',
+                             handler: function () {
+                                 var d = $(this).closest('.window-body');
+                                 $("#f_menu_edit").form("submit", {
+                                     url: "../ashx_ui/ui_menu.ashx",
+                                     onSubmit: function (param) {
+                                         param.action = 'update';
+                                         param.id = r[0].id;
+                                         return $(this).form('validate');
+                                     },
+                                     success: function (result) {
+                                         dealAjaxResult(result, function (r) {
+                                             d.dialog('destroy');
+                                             $.show_warning("提示", "操作成功");
+                                             $("#dg_menulist").datagrid('reload').datagrid('clearSelections').datagrid('clearChecked');
+                                         });
+                                     }
+                                 });
+                             }
+                         },
+                         {
+                             text: '取消添加',
+                             iconCls: 'icon-cancel',
+                             handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                         }
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            }, onLoad: function () {
+                $('#menuorder').val(r[0].menuorder);
+                $('#fatherid').val(r[0].fatherid);
+                $('#menuname').val(r[0].menuname);
+                $('#icon').val(r[0].icon);
+                $('#url').val(r[0].url);
+            }
+        });
+    }
+    function del_rk_quanxian() {
+        var row = $("#dg_rk_quanxian").datagrid("getSelected");
+        if (!row) { $.show_warning("错误", "请选择记录"); return; }
+        $.messager.confirm('提示！', '确定删除此条记录?', function (r) {
+            if (r) {
+                para = {};
+                para.action = "del";
+                para.id = row.id;
+                $.ajax({
+                    url: "/ashx_ui/ui_menu.ashx",
+                    data: para,
+                    type: "GET",
+                    dataType: "text",
+                    success: function (result) {
+                        dealAjaxResult(result, function (r) {
+                            $.show_warning("提示", "操作成功");
+                            $("#dg_rk_quanxian").datagrid("reload").datagrid("clearSelections").datagrid("clearChecked");
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>
+<div class="easyui-layout" data-options="fit : true,border : false">
+    <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
+        style="height: 100px; background: #f4f4f4;">
+    </div>
+    <div data-options="region:'center',border:false">
+        <table id="dg_rk_quanxian">
+        </table>
+    </div>
+</div>

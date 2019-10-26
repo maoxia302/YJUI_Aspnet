@@ -1,0 +1,19 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="f_user_setrole" method="post">
+    <table class="tableForm" width="100%">
+        <tr>
+            <td>
+                用户角色：
+            </td>
+            <td>
+                <input class="easyui-combobox" name="cb_role" data-options="  
+                    url:'../ashx_ui/ui_getRole.ashx?action=getall',  
+                    valueField:'id',  
+                    textField:'rolename',  
+                    multiple:true,  
+                    panelHeight:'auto' ">
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>

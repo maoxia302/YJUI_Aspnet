@@ -1,0 +1,37 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="f_menus_add" method="post">
+    <table class="tableForm" width="100%">
+        <tr>
+            <td>
+                排序</td>
+            <td>
+                <input type="text" name="menuorder"  id="menuorder" class ="easyui-validatebox"/>
+            </td>
+            <td>
+                父ID：
+            </td>
+            <td>
+               <input class="easyui-validatebox" name="fatherid" id="fatherid" />
+            </td>
+        </tr>
+        <tr> 
+            <td>
+                菜单名称
+            </td>
+            <td>
+                <input type="text" name="menuname" id="menuname" class="easyui-validatebox"/>
+            </td>
+            <td>
+                icon
+            </td>
+            <td>
+                <input type="text" name="icon" id="icon"  class="easyui-validatebox"/>
+            </td>
+        </tr>
+        <tr>
+            <td>url</td>
+            <td> <input type="text" name="url" id="url" class="easyui-validatebox"/></td>
+        </tr>
+    </table>
+    </form>
+</div>

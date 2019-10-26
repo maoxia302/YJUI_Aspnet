@@ -1,0 +1,460 @@
+﻿<style>
+    .datagrid-row-selected {
+        background-color: #fff;
+    }
+
+    .datagrid-header-row, .datagrid-row {
+        height: 36px;
+    }
+
+    .buttonNew {
+        display: inline-block;
+        padding: 2px 8px;
+        color: #444;
+        background: #fafafa;
+        background-repeat: repeat-x;
+        border: 1px solid #bbb;
+        background: -webkit-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+        background: -moz-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+        background: -o-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+        background: linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+        background-repeat: repeat-x;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#eeeeee,GradientType=0);
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+    }
+
+        .buttonNew:hover {
+            border: 1px solid red;
+        }
+
+    .disBtn {
+        border: 1px solid #eee;
+        color: #bbb;
+    }
+
+        .disBtn:hover {
+            border: 1px solid #eee;
+            color: #bbb;
+            text-decoration: none;
+        }
+</style>
+
+<div id="tb1">
+
+    <a href="#" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="add();">
+        录入提货记录
+    </a>
+
+</div>
+
+<input type="hidden" id="ExpandRow" />
+<div class="easyui-layout" data-options="fit : true,border : false">
+    <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
+         style="height: 60px; background: #f4f4f4;">
+        <div>
+            <form id="ff" method="POST">
+                <table>
+                    <tr>
+                        <td>
+                            通知时间<input type="text" class="Wdate bdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
+                            至
+                            <input type="text" class="Wdate edate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
+                        </td>
+                        <td>是否提货</td>
+                        <td>
+                            <input name="isTiHuo" class="easyui-combobox isTiHuo" data-options="
+    		                                                    valueField: 'label',
+    		                                                    textField: 'value',
+    		                                                    data: [{
+    			                                                    label: '全部',
+    			                                                    value: '全部',
+                                                                 selected:true
+    		                                                    },{
+    			                                                    label: '是',
+    			                                                    value: '是'
+    		                                                    },{
+    			                                                    label: '否',
+    			                                                    value: '否'
+    		                                                    }]" />
+                        </td>
+                        <td>物流票号</td>
+                        <td> <input type="text" class="ph" autocomplete="off" /></td>
+                        <td>到货物流</td>
+                        <td> <input type="text" class="dhwl" autocomplete="off" /></td>
+                        <td>
+                            <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                               onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                                                             onclick="toexcel();">导出</a>
+                        </td>
+
+
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div data-options="region:'center',border:false">
+        <table id="dg_chuyun"></table>
+    </div>
+</div>
+<script type="text/javascript">
+    var editRow, editId, editRow02;
+    var t = tabDyn();//tab切换获取动态t
+    $(function () {
+        $("#ExpandRow").attr("id", "ExpandRow" + t);
+        $("#dg_chuyun").attr("id", "dg_chuyun" + t);
+        $("#ff").attr("id", "ff" + t);
+        $("#dg_chuyun" + t).datagrid({
+            url: "../ashx_ui/chuyun.ashx?action=search",
+            queryParams: {
+                bdate: $('#bdate').val(),
+                edate: $('#edate').val(),
+                txt_word: '全部'
+            },
+            idField: 'ID',
+            striped: true, nowrap: false, fitColumns: false, pagination: false, autoRowHeight: false, rownumbers: true, singleSelect: true,
+            showFooter: false, remoteSort: false, sortable: "true", fit: true,//multiSort: true,
+            pagination: true, pageSize: 50, pageNumber: 1, pageList: [40, 50],//分页
+
+            columns: [[
+                { field: 'ID', title: '序号', align: 'center', width: 65 },
+                { field: 'riqi', title: '通知日期', halign: 'center', align: 'center', width: 150 },
+                { field: 'tzr', title: '通知人', halign: 'center', align: 'center', width: 80 },
+                { field: 'dth', title: '到货/退货', halign: 'center', align: 'center', width: 80 },
+                { field: 'fenku', title: '分库', halign: 'center', align: 'center', width: 100 },
+                { field: 'dhdq', title: '到货地区', halign: 'center', align: 'center', width: 100 },
+                { field: 'khmc', title: '客户名称', halign: 'center', align: 'center', width: 150 },
+                { field: 'dhwl', title: '到货物流', halign: 'center', align: 'center', width: 120 },
+                { field: 'wldh', title: '物流电话', halign: 'center', align: 'center', width: 100 },
+                { field: 'wldz', title: '物流地址', halign: 'center', align: 'center', width: 180 },
+                { field: 'shr', title: '收货人(物流单)', halign: 'center', align: 'center', width: 100 },
+                {
+                    field: 'bz', title: '备注', halign: 'center', align: 'left', width: 180,
+                    //editor: {
+                    //    type: 'textarea', options: { multiline: true, rows: 5 }
+                    //},
+                    //formatter: function (value, row, index) {
+
+                    //    return '<div style="width=100px;word-break:break-all; word-wrap:break-word;white-space:pre-wrap;">' + value + '</div>';
+                    //}
+
+                },
+            ]],
+            rowStyler: function (index, row) {
+                if (row.sfth == '是') {
+                    return 'background-color:SkyBlue;';
+                }
+            },
+            onClickCell: function (rowIndex, field, value) {
+                $("#" + editId).datagrid('clearSelections');
+                if (editRow != undefined && editId != undefined) {
+                    $("#" + editId).datagrid("endEdit", editRow);
+                }
+            }, toolbar: '#tb1',
+            //////////======================================================================================================================================================
+            view: detailview,
+            detailFormatter: function (index, row) {
+
+                return '<table id="wltable_' + t + index + '"></table><table id="zjtable_' + t + index + '"></table>';
+            },
+            onExpandRow: function (index, row) {
+                t = tabDyn();//tab切换获取动态t
+                var ExpandRow = $("#ExpandRow" + t).val();
+                if (ExpandRow != '' && ExpandRow != index) {
+                    $("#dg_chuyun" + t).datagrid("collapseRow", ExpandRow);
+                }
+                $("#ExpandRow" + t).val(index);
+                $('#wltable_' + t + index).datagrid({
+                    striped: false, nowrap: true, fitColumns: false, pagination: false, autoRowHeight: true, rownumbers: false, singleSelect: true,
+                    showFooter: false, remoteSort: false, sortable: "false", //multiSort: true,
+                    columns: [[
+                        { field: 'title', title: '司机填写', halign: 'center', align: 'center', width: 80 },
+                        { field: 'shrtel', title: '收货人电话(物流单)', halign: 'center', align: 'center', width: 140 },
+                        { field: 'js', title: '件数', halign: 'center', align: 'center', width: 80, editor: { type: 'text' } },
+                        { field: 'yfje', title: '金额', halign: 'center', align: 'center', width: 100, editor: { type: 'text' } },
+                        { field: 'ph', title: '票号', halign: 'center', align: 'center', width: 150, editor: { type: 'text' } },
+
+                        { field: 'thr', title: '提货人', halign: 'center', align: 'center', width: 100, editor: { type: 'text' } },
+                        {
+                            field: 'wlfl', title: '物流分类', halign: 'center', align: 'center', width: 100, editor: {
+                                type: 'combobox',
+                                options: {
+                                    valueField: 'id',
+                                    textField: 'text',
+                                    data: [
+                                        {
+                                            id: '合作物流',
+                                            text: '合作物流'
+                                        },
+                                        {
+                                            id: '非合作物流',
+                                            text: '非合作物流'
+                                        },
+                                    ]
+                                }
+                            }
+                        },
+                        { field: 'thsj', title: '提货时间', halign: 'center', align: 'center', width: 90, editor: { type: 'datebox' } },
+                        {
+                            field: 'sfth', title: '是否提货', halign: 'center', align: 'center', width: 80, editor: {
+                                type: 'combobox',
+                                options: {
+                                    valueField: 'id',
+                                    textField: 'text',
+                                    data: [
+                                        {
+                                            id: '是',
+                                            text: '是'
+                                        },
+                                        {
+                                            id: '否',
+                                            text: '否'
+                                        },
+                                    ]
+                                }
+                            }
+                        },
+                        { field: 'fee', title: '实际运费金额', halign: 'center', align: 'center', width: 100, editor: { type: 'numberbox', options: { min: 0, precision: 0 } } },
+                        {
+                            field: 'button', title: '操作', halign: 'center', align: 'center', width: 120,
+                            formatter: function (value, row, index02) {
+                                var wlId = 'wltable_' + t + index;
+                                if (t == 'wl') {
+                                    return '<a href="#" class="easyui-linkbutton buttonNew" onclick="wledit(' + index02 + ',\'' + wlId + '\')">编辑</a><a href="#" class="easyui-linkbutton buttonNew" style="margin-left:10px;" onclick="wlsave(' + index02 + ',\'' + index + '\',\'' + wlId + '\')">保存</a>';
+                                } else if (t == 'zj') {
+                                    return '<a href="#" class="easyui-linkbutton buttonNew disBtn">编辑</a><a href="#" class="easyui-linkbutton buttonNew disBtn" style="margin-left:10px;">保存</a>';
+                                }
+                            }
+                        },
+                    ]],
+                    data: [row],
+
+                    onResize: function () {
+                        $('#dg_chuyun' + t).datagrid('fixDetailRowHeight', index);
+                    },
+                    onLoadSuccess: function () {
+                        $('#dg_chuyun' + t).datagrid('fixDetailRowHeight', index);
+                    },
+
+
+                });
+                $('#zjtable_' + t + index).datagrid({
+                    striped: false, nowrap: true, fitColumns: false, pagination: false, autoRowHeight: true, rownumbers: false, singleSelect: true,
+                    showFooter: false, remoteSort: false, sortable: "false", //multiSort: true,
+                    columns: [[
+                        { field: 'zhijian', title: '质检', halign: 'center', align: 'center', width: 80, },
+                        { field: 'zjdate', title: '质检签收日期', halign: 'center', align: 'center', width: 100, editor: { type: 'datebox' } },
+                        { field: 's_piohao02', title: '提货总用时', halign: 'center', align: 'center', width: 150 },
+                        { field: 's_piohao02', title: '是否超时', halign: 'center', align: 'center', width: 150 },
+                        {
+                            field: 'button', title: '操作', halign: 'center', align: 'center', width: 120,
+                            formatter: function (value, row, index02) {
+                                var zjId = 'zjtable_' + t + index;
+                                if (t == 'zj') {
+                                    return '<a href="#" class="easyui-linkbutton buttonNew" onclick="zjedit(' + index02 + ',\'' + zjId + '\')">编辑</a><a href="#" class="easyui-linkbutton buttonNew" style="margin-left:10px;" onclick="zjsave(' + index02 + ',\'' + row + '\',\'' + zjId + '\')">保存</a>';
+                                } else if (t == 'wl') {
+                                    return '<a href="#" class="easyui-linkbutton buttonNew disBtn">编辑</a><a href="#" class="easyui-linkbutton buttonNew disBtn" style="margin-left:10px;">保存</a>';
+                                }
+                            }
+                        },
+                    ]],
+                    data: [row],
+                    onResize: function () {
+                        $('#dg_chuyun' + t).datagrid('fixDetailRowHeight', index);
+                    },
+                    onLoadSuccess: function () {
+                        $('#dg_chuyun' + t).datagrid('fixDetailRowHeight', index);
+                    },
+
+                });
+            }
+
+        });
+        /*//默认全部展开
+         var row = $("#dg").datagrid("getRows");
+         for (var r = 0; r < row.length; r++){
+            $("#dg").datagrid("expandRow",r);
+         }*/
+
+
+    });
+
+    function wledit(index, wlId) {
+        if (editRow != undefined) {
+            $("#" + editId).datagrid("endEdit", editRow);
+            $("#" + wlId).datagrid("endEdit", editRow);
+            $("#" + editId).datagrid('clearSelections');
+            $('#dg_chuyun' + t).datagrid('clearSelections');
+        }
+        $("#" + wlId).datagrid("beginEdit", index);
+        editRow = index;
+        editId = wlId;
+    }
+    function wlsave(index02, index, wlId) {
+        $("#" + wlId).datagrid("endEdit", index02);
+        var rows = $("#" + wlId).datagrid("getRows");
+        if (rows[index02].sfth == '是') {
+            $("#" + wlId).parents("tr").prev().css("background-color", "SkyBlue");
+            $("#td" + index).css("background-color", "SkyBlue");
+        } else {
+            $("#" + wlId).parents("tr").prev().css("background-color", "#fafafa");
+            $("#td" + index).css("background-color", "#fafafa");
+        }
+        $.ajax({
+            url: "../ashx_ui/chuyun.ashx?action=siji",
+            type: "POST",
+            data: { "param": JSON.stringify(rows[index02]) },
+            success: function (result) {
+                if (result == "ok") {
+                    $.show_warning("提示", "操作成功");
+                    $("#" + wlId).datagrid("reload");
+
+                }
+            }
+        });
+
+    }
+    function zjedit(index, zjId) {
+        if (editRow != undefined) {
+            $("#" + editId).datagrid("endEdit", editRow);
+            $("#" + zjId).datagrid("endEdit", editRow);
+            $("#" + editId).datagrid('clearSelections');
+            $('#dg_chuyun' + t).datagrid('clearSelections');
+        }
+        $("#" + zjId).datagrid("beginEdit", index);
+        editRow = index;
+        editId = zjId;
+    }
+    function zjsave(index, row, zjId) {
+        $("#" + zjId).datagrid("endEdit", index);
+        var rows = $("#" + zjId).datagrid("getRows");
+        $.ajax({
+            url: "../ashx_ui/chuyun.ashx?action=zhijian",
+            type: "POST",
+            data: { "param": JSON.stringify(rows[index]) },
+            success: function (result) {
+                if (result == "ok") {
+                    $.show_warning("提示", "操作成功");
+                    $("#" + zjId).datagrid("reload");
+
+                }
+            }
+        });
+
+
+    }
+
+    function Search() {
+        t = tabDyn();
+        $("#dg_chuyun" + t).datagrid({
+            method: "GET",
+            url: "../ashx_ui/chuyun.ashx?action=search",
+            queryParams: {
+                bdate: $("#ff" + t).find('.bdate').val(),
+                edate: $("#ff" + t).find('.edate').val(),
+                txt_word: $("#ff" + t).find('.isTiHuo').combobox('getValue'),//单选时
+                ph: $("#ff" + t).find('.ph').val(),
+                dhwl: $("#ff" + t).find('.dhwl').val(),
+            }
+        });
+    }
+
+    //扩展textarea
+    $.extend($.fn.datagrid.defaults.editors, {
+        textarea: {
+            init: function (container, options) {
+                var input = $('<textarea class="datagrid-editable-input" rows=' + options.rows + '></textarea>').appendTo(container);
+                return input;
+            },
+            getValue: function (target) {
+                return $(target).val();
+            },
+            setValue: function (target, value) {
+                $(target).val(value);
+            },
+            resize: function (target, width) {
+                var input = $(target);
+                if ($.boxModel == true) {
+                    input.width(width - (input.outerWidth() - input.width()));
+                } else {
+                    input.width(width);
+                }
+            }
+        }
+    });
+
+
+
+
+    function add() {
+        //判断权限
+        $("<div/>").dialog({
+            href: "htm_ui/chuyun/add.html",
+            title: "添加提货记录",
+            height: 300,
+            width: 800,
+            modal: true,
+            maximizable: true,
+            maximized: true,
+            iconCls: "icon-add",
+            buttons: [
+                {
+                    text: '确定添加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        var d = $(this).closest('.window-body');
+                        $("#f_chuyun_add").form("submit", {
+                            url: "../ashx_ui/chuyun.ashx",
+                            onSubmit: function (param) {
+                                param.action = 'add';
+                                return $(this).form('validate');
+                            },
+                            success: function (result) {
+                                dealAjaxResult(result, function (r) {
+                                    d.dialog('destroy');
+                                    $.show_warning("提示", "操作成功");
+                                    $("#dg_chuyun" + t).datagrid("reload");
+                                })
+                            }
+                        });
+                    }
+                },
+                {
+                    text: '取消添加',
+                    iconCls: 'icon-cancel',
+                    handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                }
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            }
+        });
+    }
+
+    function toexcel() {
+        var bdate = $("#ff" + t).find('.bdate').val();
+        var edate = $("#ff" + t).find('.edate').val();
+        var txt_word = $("#ff" + t).find('.isTiHuo').combobox('getValue');
+        var ph = $("#ff" + t).find('.ph').val();
+        var dhwl = $("#ff" + t).find('.dhwl').val();
+        window.open("../ashx_ui/chuyun.ashx?action=daochu&bdate=" + bdate + "&edate=" + edate + "&txt_word=" + txt_word + "&ph=" + ph + "&dhwl=" + dhwl);
+    }
+    //tab切换动态获取t
+    function tabDyn() {
+        var k = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var z = '';
+        if (k == '司机登记') {
+            z = 'wl';
+        } else if (k == '质检操作') {
+            z = 'zj';
+        } else if (k == '提货登记') {
+            z = 'dj';
+        }
+        return z;
+    }
+</script>
+
+

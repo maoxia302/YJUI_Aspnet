@@ -1,0 +1,79 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="f_sffc_edit" method="post">
+    <table class="tableForm" width="100%">
+        <tr>
+            <td style="width: 150px;">
+                单据名称：
+            </td>
+            <td id="djmc" style="width: 120px;">
+            </td>
+            <td style="width: 120px;">
+                销货单号：
+            </td>
+            <td id="xhdh" style="width: 120px;">
+            </td>
+            <td style="width: 120px;">
+                客户全称：
+            </td>
+            <td id="khqc" style="width: 120px;">
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 150px;">
+                总数量：
+            </td>
+            <td id="zsl" style="width: 120px;">
+            </td>
+            <td style="width: 120px;">
+                销货金额：
+            </td>
+            <td id="xhje" style="width: 120px;">
+            </td>
+            <td style="width: 120px;">
+                发货仓库：
+            </td>
+            <td id="fhck" style="width: 120px;">
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 150px;">
+                成品库是否点出：
+            </td>
+            <td id="sfdc">
+            </td>
+            <td style="width: 120px;">
+                预计点出时间
+            </td>
+            <td id="dcsj">
+            </td>
+            <td style="width: 120px;">
+                是否急单
+            </td>
+            <td id="sfjd"></td>
+        </tr>
+        <tr>
+            <td style="width: 120px;">
+                司机是否发出：
+            </td>
+            <td>
+                <input type="radio" name="siji" checked="checked" value="是" />是
+                <input type="radio" name="siji" value="否" />否
+            </td>
+            <td style="width: 150px;">
+                预计发出时间
+            </td>
+            <td>
+                <input name="fcsj" class="Wdate" type="text" onfocus="WdatePicker({minDate:'%y-%M-%d'})" readonly="readonly"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 150px;">
+                备注
+            </td>
+            <td colspan="5">
+                <textarea id="beizhu" rows="5" cols="40" name="beizhu"></textarea>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>

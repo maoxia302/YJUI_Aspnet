@@ -1,0 +1,164 @@
+﻿<script type="text/javascript">
+    $(function () {
+        $("#kfhf").datagrid({
+            url: "../ashx_ui/ui_jldl1.ashx?action=search",
+            idField: 'ID', fit: true, fitColumns: false, singleSelect: true,
+            rownumbers: false, nowrap: false, pagination: true, pageSize: 10,
+            pageList: [10, 20, 30, 40, 50],
+            //冻结列
+            frozenColumns: [[
+                { field: 'ck', checkbox: true },
+                { field: "ID", title: "编号", width: 30 },
+                { field: "fksj", title: "反馈时间", width: 50 },
+                 { field: "fkr", title: "反馈人", width: 50 },
+                 { field: "pj", title: "问题零部件", width: 65 },
+                 { field: "fssj", title: "问题发生时间", width: 75 },
+                 { field: "fsdq", title: "发生地区", width: 60 },
+                ]],
+
+            columns: [[
+                   { field: "dls", title: "代理商", width: 50 },
+                   { field: "dlsdh", title: "代理商电话", width: 100 },
+                   { field: "xlcxx", title: "修理厂电话", width: 100 },
+                   { field: "fknr", title: "反馈详细内容", width: 250 },
+                   { field: "fl", title: "分类", width: 50 },
+                   { field: "jjsfth", title: "旧件是否退回", width: 80 },
+                   { field: "zrbm", title: "责任部门", width: 80 },
+                  { field: "zrr", title: "责任人", width: 60 },
+                  { field: "ycclrq", title: "第一次处理日期", width: 100 },
+                  { field: "plga", title: "批量/个案", width: 60 },
+                  { field: "dkhcs", title: "对客户处理措施", width: 250 },
+                  { field: "wcsj", title: "完成日期", width: 80 },
+                  { field: "hfsjqk", title: "客服回访实际情况", width: 250 },
+                  { field: "hfwcrq", title: "完成日期", width: 80 },
+                  { field: "kcclcs", title: "对库存处理措施", width: 100 },
+                  { field: "kcwcrq", title: "完成日期", width: 100 },
+                  { field: "gysclcs", title: "对供应商处理措施", width: 100 },
+                  { field: "gysrq", title: "完成日期", width: 70 },
+                  { field: "nblcgygs", title: "内部流程工艺改善", width: 250 },
+                  { field: "nblcwcrq", title: "完成日期", width: 70 },
+                  { field: "zrbmsp", title: "	责任部门领导审批", width: 100 },
+                  { field: "dsfjh", title: "	第三方检核", width: 100 }
+                ]],
+            toolbar: [{
+                text: '查询',
+                iconCls: 'icon-search'
+
+            }, '-',
+
+                  {
+                      text: '客服回访',
+                      iconCls: 'icon-edit',
+                      handler: kfhf_peijian
+
+
+                  }, '-',
+                  {
+                      text: '导出数据',
+                      iconCls: 'icon-org',
+                     // handler: setorg
+
+                  }]
+        })
+    })
+         
+    //////////////////////客服回访
+    function kfhf_peijian() {
+        //alert(1);
+        var r = $("#kfhf").datagrid("getChecked");
+        if (r.length < 1) { $.show_warning("错误", "请选择一个要修改的台账"); return; }
+        if (r.length > 1) {
+            $.show_warning("错误", "一次只能修改一个台账");
+            $("#kfhf").datagrid('clearSelections').datagrid('clearChecked');
+            return;
+
+        }
+
+        $("<div/>").dialog({
+            href: "/htm_ui/peijian/kfhf/ui_kfhf_add.htm",
+            title: "客服回访",
+            height: 600,
+            width: 800,
+            modal: true,
+            iconCls: "icon-edit",
+            buttons: [
+                         {
+                             text: '确定修改',
+                             iconCls: 'icon-edit',
+                             handler: function () {
+                                 var d = $(this).closest('.window-body');
+                                 $("#f_kfhfsh_edit").form("submit", {
+                                     url: "../ashx_ui/ui_jldl1.ashx",
+                                     onSubmit: function (param) {
+                                         param.action = 'edit_kfhf';
+                                         param.ID = r[0].ID; //
+                                         // alert(param.ID);
+                                         return $(this).form('validate');
+                                     },
+                                     success: function (result) {
+                                         dealAjaxResult(result, function (r) {
+                                             d.dialog('destroy');
+                                             $.show_warning("提示", "操作成功");
+                                             $("#kfhf").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+                                         })
+                                     }
+                                 });
+                             }
+                         },
+                         {
+                             text: '取消修改',
+                             iconCls: 'icon-cancel',
+                             handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                         }
+                ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            },
+            onLoad: function () {
+              $("#fkr").html(r[0].fkr);
+              $("#fksj").html(r[0].fksj);
+              $("#fsdq").html(r[0].fsdq);
+              $("#fssj").html(r[0].fssj);
+              $("#dls").html(r[0].dls);
+              $("#dlsdh").html(r[0].dlsdh);
+              $("#xlcxx").html(r[0].xlcxx);
+              $("#fknr").html(r[0].fknr);
+              $("#fl").html(r[0].fl);
+              $("#jjsfth").html(r[0].jjsfth);
+              $("#zrbm").html(r[0].zrbm);
+
+              $("#zrr").html(r[0].zrr);
+              $("#ycclrq").html(r[0].ycclrq);
+              $("#plga").html(r[0].plga);
+              $("#dkhcs").html(r[0].dkhcs);//对客户处理
+              $("#wcsj").html(r[0].wcsj);
+              $("#kcclcs").html(r[0].kcclcs);
+              $("#kcwcrq").html(r[0].kcwcrq);
+              $("#gysclcs").html(r[0].gysclcs);//供应商处理
+              $("#gysrq").html(r[0].gysrq);
+              $("#nblcgygs").html(r[0].nblcgygs);
+              $("#nblcwcrq").html(r[0].nblcwcrq);
+              $("#qtcs").html(r[0].qtcs);
+              $("#zrbmsp").html(r[0].zrbmsp);
+               $("#dsfjh").html(r[0].dsfjh);
+
+              $("#f_kfhfsh_edit").form("load", r[0]);
+
+            }
+        });
+
+    }
+</script>
+<div class="easyui-layout" data-options="fit : true,border : false">
+    <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
+        style="height: 100px; background: #f4f4f4;">
+        <!-- <div id="p" class="easyui-panel" title="检索条件" style="padding: 10px; height: 100px;
+                background: #f4f4f4; border-bottom: none" data-options="iconCls:'icon-columns',closable:false,  
+                collapsible:true,minimizable:false,maximizable:false">
+            </div>-->
+    </div>
+    <div data-options="region:'center',border:false">
+        <table id="kfhf">
+        </table>
+    </div>
+</div>

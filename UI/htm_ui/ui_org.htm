@@ -1,0 +1,159 @@
+﻿<script type="text/javascript">
+    $(function () {
+
+        $("#dg_org").treegrid({
+            url: "../ashx_ui/ui_org.ashx?type=treegrid",
+            idField: 'id',
+            treeField: 'orgname',
+            fitColumns: true,
+            rownumbers: true,
+            fit: true,
+            collapsible: true,
+            striped: true,
+            title: "组织管理",
+            //  parentField: "fatherid",
+            columns: [
+            [
+                { checkbox: true },
+                { field: 'orgname', title: '组织名称', width: 180 },
+                { field: 'orgcode', title: '编号', width: 60, align: 'right' },
+                { field: 'iconCls', title: 'icon', width: 80 },
+                { field: 'attr_a', title: 'attr_a', width: 80 },
+                { field: 'attr_b', title: 'attr_b', width: 80 },
+                { field: 'crdate', title: '创立时间', width: 80 },
+                { field: '_parentId', title: '父节点', width: 80, hidden: true }
+
+                            ]
+                        ],
+
+            toolbar: [{
+                iconCls: 'icon-add',
+                text: "添加组织",
+                handler: addorg
+            }, '-', {
+                iconCls: 'icon-edit',
+                text: "修改组织",
+                handler: function () { editorg($("#dg_org").datagrid("getSelected")); }
+            },
+                '-', {
+                    iconCls: 'icon-remove',
+                    text: "删除组织",
+                    handler: deleteorg
+                }
+                , '-', {
+                    text: '展开全部',
+                    iconCls: 'icon-redo',
+                    handler: function () { $('#dg_org').treegrid('expandAll'); }
+                }, '-',
+                {
+                    text: '折叠全部',
+                    iconCls: 'icon-undo',
+                    handler: function () {
+                        $('#dg_org').treegrid('collapseAll');
+                    }
+                }
+                ]
+        });
+    })
+
+    function addorg() {
+        $('<div/>').dialog({
+            href: '/htm_ui/ui_org_add.htm',
+            width: 650,
+            height: 250,
+            modal: true,
+            title: '添加组织',
+            iconCls: 'icon-add',
+            buttons: [{
+                text: '确定添加',
+                iconCls: 'icon-add',
+                handler: function () {
+                    var d = $(this).closest('.window-body');
+
+                    $('#form_orgadd').form('submit', {
+                        url: '/ashx_ui/ui_org.ashx',
+                        onSubmit: function (param) {
+                            param.action = 'add';
+                            return $(this).form('validate');
+                        },
+                        success: function (result) {
+                            dealAjaxResult(result, function(r) {
+                                d.dialog('destroy');
+                                $.show_warning("提示", "操作成功");
+                                $("#dg_org").treegrid("reload");
+                            });
+                        }
+
+                    });
+                }
+            },
+                {
+                    text: '取消添加',
+                    iconCls: 'icon-cancel',
+                    handler: function () { $(this).closest('.window-body').dialog('destroy') }
+                }
+                ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            }
+        });
+    }
+    function deleteorg() {
+        alert("delete");
+    }
+    function editorg(row) {
+        if (!row) {
+            $.show_warning("错误", "请选择要修改的记录");
+            return;
+        }
+
+        $('<div/>').dialog({
+            href: '/htm_ui/ui_org_edit.htm',
+            width: 650,
+            height: 250,
+            modal: true,
+            title: '修改组织',
+            iconCls: 'icon-edit',
+            buttons: [{
+                text: '确定修改',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    var d = $(this).closest('.window-body');
+
+                    $('#form_orgedit').form('submit', {
+                        url: '/ashx_ui/ui_org.ashx',
+                        onSubmit: function (param) {
+                            param.action = 'edit';
+                            param.id = row.id;
+                            return $(this).form('validate');
+                        },
+                        success: function (result) {
+                            dealAjaxResult(result, function(r) {
+                                d.dialog('destroy');
+                                $.show_warning("提示", "操作成功");
+                                $("#dg_org").treegrid("reload");
+                            });
+                        }
+
+                    });
+                }
+            },
+                {
+                    text: '取消修改',
+                    iconCls: 'icon-cancel',
+                    handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                }
+                ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            },
+            onLoad: function () {
+                $("#form_orgedit").form("load", row);  
+            }
+        });
+
+
+    }    
+</script>
+<table id="dg_org">
+</table>

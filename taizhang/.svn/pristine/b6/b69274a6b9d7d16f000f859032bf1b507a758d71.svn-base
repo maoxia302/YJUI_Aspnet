@@ -1,0 +1,69 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="f_buliangpin_add" method="post">
+        <table class="tableForm" width="100%">
+        <tr>
+            <td>
+                到货时间：
+            </td>
+            <td id="arrdate">
+            </td>
+            <td>
+                部门：
+            </td>
+            <td id="dep">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                品类：
+            </td>
+            <td id="category">
+            </td>
+            <td>
+                厂家名称：
+            </td>
+            <td id="suppliername">
+            </td>
+        </tr>
+                <tr>
+            <td>
+                分类：
+            </td>
+            <td id="cate" >
+            </td>
+            <td>
+              登记人
+            </td>
+            <td id="regperson" >
+            </td>
+        </tr>
+        <tr>
+            <td >
+                总件数：
+            </td>
+            <td id="total">
+            </td>
+            <td >
+                总数量：
+            </td>
+            <td id="totals">
+            </td>
+        </tr>
+            <tr>
+                <td>
+                    不良品入库实际完成时间：
+                </td>
+                <td>
+                    <input type="text" id="badrealdate" name="badrealdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                           data-options="required:true" />
+                </td>
+                <td>
+                    备注：
+                </td>
+                <td>
+                    <textarea class="easyui-textbox" id="badremark" name="badremark" rows="4"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

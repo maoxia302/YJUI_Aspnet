@@ -1,0 +1,88 @@
+﻿<div style="padding: 15px; overflow: hidden">
+    <form id="f_sfrz_add" method="post">
+        <table class="tableForm" style="width: 100%;">
+            <tr>
+                <td style="width: 25%;">编号:
+                </td>
+                <td id="ID" style="width: 25%;"></td>
+                <td style="width: 25%;">单号:
+                </td>
+                <td id="dh" style="width: 25%;"></td>
+            </tr>
+            <tr>
+                <td>部门名称</td>
+                <td id="bmmc"></td>
+
+
+                <td>转入仓库</td>
+                <td id="zrck"></td>
+            </tr>
+            <tr>
+
+                <td>是否缺货</td>
+                <td id="sfqh"></td>
+
+                <td>缺货备注</td>
+                <td id="qhbz">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>原调拨单别</td>
+                <td>
+                    <input type="text" id="yuandanbie" name="yuandanbie" class="easyui-validatebox" />
+                </td>
+                <td>原调拨单号</td>
+                <td>
+                    <input type="text" id="yuandanhao" name="yuandanhao" class="easyui-validatebox" /></td>
+            </tr>
+            <tr>
+                <td>新调拨单别</td>
+                <td>
+                    <input type="text" id="xindanbie" name="xindanbie" class="easyui-validatebox" /></td>
+                <td>部门</td>
+                <td>
+                    <input class="easyui-combobox" name="bumen" id="bumen" data-options="editable:false">
+                </td>
+            </tr>
+
+            <tr>
+                <td>新调拨单号</td>
+                <td>
+                    <input type="text" id="xindanhao" name="xindanhao" class="easyui-validatebox" />（手工录入）</td>
+
+                <td>调出仓库</td>
+                <td>
+                    <input class="easyui-validatebox" name="diaochucangku" id="diaochucangku" data-options="editable:false">
+                </td>
+            </tr>
+            <tr>
+                <td>调入仓库</td>
+                <td>
+                    <input type="text" id="diaorucangku" name="diaorucangku" class="easyui-validatebox" />（手工录入）</td>
+
+                <td>帐套</td>
+                <td><input type="text" id="zhangtao" name="zhangtao" class="easyui-validatebox" /></td>
+            </tr>
+            <tr>
+                <td>新调拨单备注
+                </td>
+                <td>
+                    <textarea class="easyui-textbox" cols="20" id="beizhu" name="beizhu" rows="6"></textarea></td>
+                <td>是否入账</td>
+                <td>
+                    <select id="sfrz" class="”easyui-combobox”" name="sfrz">
+                        <option value="是">是</option>
+                        <option value="否">否</option>
+                    </select>
+                </td>
+            </tr>
+             <tr>
+                <td>&nbsp;</td>
+                <td>
+                    &nbsp;</td>
+                <td>&nbsp;</td>
+                <td></td>
+
+            </tr>
+        </table>
+    </form>
+</div>

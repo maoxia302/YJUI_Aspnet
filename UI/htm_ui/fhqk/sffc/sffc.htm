@@ -1,0 +1,135 @@
+﻿<script type="text/javascript">
+    $(function () {
+        $("#dg_sffc").datagrid({
+            url: "../ashx_ui/ui_fhqk.ashx?action=search",
+            idField: 'ID', fit: true, fitColumns: false, singleSelect: true,
+            rownumbers: true, nowrap: false, pagination: true, pageSize: 20,
+            pageList: [20, 30, 40, 50],
+            columns: [[
+                //{ field: 'ck', checkbox: true },
+                { field: 'djmc', title: '单据名称', width: 100 },
+                { field: 'xhdh', title: '销货单号', width: 100 },
+                { field: 'khqc', title: '客户全称', width: 150 },
+                { field: 'zsl', title: '总数量', width: 60 },
+                { field: 'xhje', title: '销货金额', width: 60 },
+                { field: 'fhck', title: '发货仓库', width: 100 },
+                { field: 'sfdc', title: '成品库是否点出', width: 100 },
+                { field: 'dcsj', title: '预计点出时间', width: 100 },
+                { field: 'sffc', title: '司机是否发出', width: 100 },
+                { field: 'fcsj', title: '预计出发时间', width: 100 },
+                { field: 'sfjd', title: '是否急单', width: 50 },
+                { field: 'beizhu', title: '备注', width: 150 }
+
+                ]],
+            toolbar:'#tb1'
+//            toolbar: [{
+//                text: '查询',
+//                iconCls: 'icon-search'
+
+//            }, '-',
+//                  {
+//                      text: '成品库是否发出',
+//                      iconCls: 'icon-org',
+//                      handler: edit_sffc
+//                     
+//                  }]
+        })
+    })
+    function edit_sffc() {
+        //alert(1);
+        var r = $("#dg_sffc").datagrid("getChecked");
+        if (r.length < 1) { $.show_warning("错误", "请选择一个要修改一个信息"); return; }
+        if (r.length > 1) {
+            $.show_warning("错误", "一次只能修改一个信息");
+            $("#dg_sffc").datagrid('clearSelections').datagrid('clearChecked');
+            return;
+
+        }
+
+        $("<div/>").dialog({
+            href: "/htm_ui/fhqk/sffc/ui_sffc_add.htm",
+            title: "司机是否发出",
+            height: 350,
+            width: 800,
+            modal: true,
+            iconCls: "icon-edit",
+            buttons: [
+                         {
+                             text: '确定修改',
+                             iconCls: 'icon-edit',
+                             handler: function () {
+                                 var d = $(this).closest('.window-body');
+                                 $("#f_sffc_edit").form("submit", {
+                                     url: "../ashx_ui/ui_fhqk.ashx",
+                                     onSubmit: function (param) {
+                                         param.action = 'edit_sffc';
+                                         param.ID = r[0].ID;
+                                         return $(this).form('validate');
+                                     },
+                                     success: function (result) {
+                                         dealAjaxResult(result, function(r) {
+                                             d.dialog('destroy');
+                                             $.show_warning("提示", "操作成功");
+                                             $("#dg_sffc").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+                                         });
+                                     }
+                                 });
+                             }
+                         },
+                         {
+                             text: '取消修改',
+                             iconCls: 'icon-cancel',
+                             handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                         }
+                ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            },
+            onLoad: function () {
+                $("#djmc").html(r[0].djmc);
+                $("#xhdh").html(r[0].xhdh);
+                $("#khqc").html(r[0].khqc);
+                $("#zsl").html(r[0].zsl);
+                $("#xhje").html(r[0].xhje);
+                $("#fhck").html(r[0].fhck);
+                $("#sfdc").html(r[0].sfdc);
+                $("#dcsj").html(r[0].dcsj);
+                $("#sfjd").html(r[0].sfjd);
+                $("#f_sffc_edit").form("load", r[0]); //dg_sfdb
+
+            }
+        });
+
+    }
+    $('#ss1').searchbox({
+        searcher: function (value, name) {
+            $('#dg_sffc').datagrid('load', {
+                url: "../ashx_ui/ui_fhqk.ashx?action=search",
+                "searchValue": value
+            });
+        },
+        prompt: '请输入关键字'
+    }); 
+</script>
+<div class="easyui-layout" data-options="fit : true,border : false"> 
+    <div data-options="region:'center',border:false">
+                <div id="tb1">
+            <table>
+                <tr>
+                    <td>查询</td>
+                    <td>
+                        <form>
+                            <input id="ss1" class="easyui-searchbox" style="width:200px;"/>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="#" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="edit_sffc();">
+                            司机是否发出</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table id="dg_sffc">
+        </table>
+    </div>
+</div>
