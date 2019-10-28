@@ -114,3 +114,10 @@
 	background: url('icons/mini_refresh.png') no-repeat center center;
 }
 .icon-delete1{background:url('icons/delete.png') no-repeat}
+.icon-cangku {
+    background: url('icons/house.png') no-repeat
+}
+.icon-dbtype {
+    background: url('icons/application_double.png') no-repeat
+}
+    

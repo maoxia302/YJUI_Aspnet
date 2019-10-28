@@ -1,10 +1,745 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>tz</title>
-</head>
-<body>
-    <h1>这个页面是错误的</h1>
-</body>
-</html>
+﻿<style>
+    .tiaozhang_cont {
+        padding: 10px;
+    }
+     
+    .tiaozhang_form td {
+        padding: 2px 20px 2px 0;
+    }
+    .tiaozhang_form td > input,.tiaozhang_form td  textarea {
+        display: inline-block;
+        width: 138px;
+        padding: 6px 5px;
+        margin-left: 5px;
+        border: 1px solid #95B8E7;
+        background-color: #fff;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .tiaozhang_form td > input.Wdate{
+        padding:3px 5px;
+    }
+    .tiaozhang_form td > input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        vertical-align: middle;
+    }
+    .tiaozhang_form td  textarea {
+        vertical-align:top;
+        resize:none;
+    }
+    .tiaozhang_form td > .combo {
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        margin-left: 5px;
+    }
+    .dgBar {
+        clear:both;
+    }
+    .dgBar .tiaozhang_form td{
+        padding:2px;
+    }
+    .dgBar:after{display:block;clear:both;height:0;visibility:hidden;content:" "}
+    .tiaozhang_win {
+        margin: 10px;
+    }
+    .tiaozhang_win input.winType {
+        display: inline-block;
+        width: 300px;
+        padding:8px 4px;
+        border: 1px solid #95B8E7;
+        background-color: #fff;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        margin-left:3px;
+    }
+    .upFile {
+        display: inline-block;
+        width: 307px;
+        font-size: 0;
+        resize: none;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        border: 1px solid #95B8E7;
+    }
+
+    .upFile > input {
+        display: inline-block;
+        width: 238px;
+        padding: 0 4px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+        border: none;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        vertical-align: middle;
+    }
+
+    .upFile > span {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+        text-align: center;
+        font-style: normal;
+        background-color: #efefef;
+        vertical-align: middle;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        border-left: 1px solid #ddd;
+    }
+
+    .upFile > span > input {
+        display: inline-block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    .dbCont {
+        padding:0 10px;
+    }
+    .dbCont > p .combo{
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .dbCont > p > input {
+        display: inline-block;
+        width: 130px;
+        padding: 6px 5px;
+        margin-left: 5px;
+        margin-right: 4px;
+        border: 1px solid #95B8E7;
+        background-color: #fff;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    .buttonNew {
+        display: inline-block;
+        padding: 2px 8px;
+        color: #444;
+        background: #fafafa;
+        background-repeat: repeat-x;
+        border: 1px solid #bbb;
+        background-color: #eaf2ff;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        border: 1px solid #b7d2ff;
+    }
+        .buttonNew:hover {
+            color:#000;
+            text-decoration:none;
+            opacity:0.8;
+        }
+    .tabDetail {
+    position:relative;
+    }
+    .tabDetail > i.pass, .tabDetail > i.noPass {
+        position: absolute;
+        top: 35px;
+        right: 180px;
+        width: 90px;
+        display: none;
+    }
+        .tabDetail > i.pass > img, .tabDetail > i.noPass > img {
+            display:block;
+            width:100%;
+        }
+        .tabDetail > i.pass {
+            display: block;
+        }
+</style>
+<div class="tiaozhang_cont">
+    <!--tabs切换内容开始-->
+    <div class="easyui-tabs">
+        <div title="详细字段" style="padding:10px">
+            <div class="tabDetail">
+                <table class="tiaozhang_form">
+                    <tr>
+                        <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid" id="orderType" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">盘存差异单</a></td>
+                        <td>部门编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'">轿车损益</a></td>
+                        <td>人员编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'"></a></td>
+                        <td><input type="checkbox" />生成分录</td>
+                    </tr>
+                    <tr>
+                        <td>&ensp;&ensp;&emsp;单号:<input type="text" /></td>
+                        <td>&ensp;&ensp;&emsp;工厂:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'"></a></td>
+                        <td>交易日期:<input type="text" /></td>
+
+                    </tr>
+                    <tr>
+                        <td>单据日期:<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" /></td>
+                        <td>&ensp;&ensp;&emsp;件数:<input type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td>&ensp;&ensp;&emsp;备注:<textarea style="height:50px;"></textarea></td>
+                        <td>项目编号:<input type="text" /></td>
+                    </tr>
+                </table>
+                <i class="pass"><img src="../../images/icon_pass.png" alt="" /></i>
+                <i class="noPass"><img src="../../images/icon_noPass.png" alt="" /></i>
+            </div>
+        </div>
+        <div title="其他信息" style="padding:10px">
+            <table class="tiaozhang_form">
+                <tr>
+                    <td>业务人员:<input type="text" /></td>
+                    <td>部门编号:<input type="text" /></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!--tabs切换内容结束-->
+    <!--table内容开始-->
+    <div>
+        <div id="dgToolbar" class="dgBar" style="padding:6px 10px;background-color:#F4F4F4;border:1px solid #95B8E7;border-bottom:none;clear:both">
+            <table class="tiaozhang_form" style="float:left;">
+                <tr>
+                    <td>品号:<input class="text" /></td>
+                    <td><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="proQty()" style="margin-left:10px">搜索</a></td>
+                    <td><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addTr()">添加一行</a></td>
+                </tr>
+            </table>
+            <table class="tiaozhang_form" style="float:right;">
+                <tr>
+                    <td>修改字段:<input id="modifyType" class="easyui-combobox" style="height:30px;" /></td>
+                    <td>修改内容:<input type="text" id="modifyTxt" /></td>
+                    <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="batchModify()">批量修改</a></td>
+                    <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="batchImp()">批量导入</a></td>
+                </tr>
+            </table>
+        </div>
+        <table id="dg"></table>
+        <div id="idToolbar" style="padding:10px;display: none;">
+            品号:
+            <input class="easyui-textbox" style="width:200px" />
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="toSearch()" style="margin-left:10px">搜索</a>
+        </div>
+    </div>
+    <!--table内容结束-->
+    <!--批量导入内容开始-->
+    <div id="win">
+        <div class="easyui-layout tiaozhang_win">
+            <p>
+                &ensp;&ensp;数据源类型：<input class="winType" value="Excel文件" readonly="readonly" />
+            </p>
+            <div>
+                选择导入文件：
+                <p class="upFile">
+                    <input type="text" value="" id="fileName" readonly="readonly" />
+                    <span>
+                        <input type="file" onchange="importf(this)" />
+                        选择
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!--批量导入内容结束-->
+
+    <div id="batchTr">
+        <div class="easyui-layout" style="margin:10px;height:300px">
+            <table id="proList"></table>
+        </div>
+    </div>
+
+    <!--单别弹层内容开始-->
+    <div id="dbWin">
+        <div class="dbCont">
+            <p>
+                单别：
+                <input class="easyui-combobox" id="dbCombox" style="height:28px;" />
+                <input type="text" />
+                <a href="#" class="buttonNew" style="padding:5px 8px;">重新查找</a>
+            </p>
+            <div data-options="region:'center',border:false" style="width:100%;height:260px;overflow-y:auto">
+                <table id="dbList"></table>
+            </div>
+            <!--单别弹层内容结束-->
+        </div>
+    <script type="text/javascript">
+        //批量导入插件----开始
+        var excelData = [];//导入excel转json数据
+		/*
+    FileReader共有4种读取方法：
+    1.readAsArrayBuffer(file)：将文件读取为ArrayBuffer。
+    2.readAsBinaryString(file)：将文件读取为二进制字符串
+    3.readAsDataURL(file)：将文件读取为Data URL
+    4.readAsText(file, [encoding])：将文件读取为文本，encoding缺省值为'UTF-8'
+                 */
+        var wb;//读取完成的数据
+        var rABS = false; //是否将文件读取为二进制字符串
+
+        function importf(obj) {//导入
+            if (!obj.files) {
+                return;
+            }
+            var f = obj.files[0];
+            $("#fileName").val(f.name);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+
+                if (rABS) {
+                    wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                        type: 'base64'
+                    });
+                } else {
+                    wb = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                }
+                //wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+                //wb.Sheets[Sheet名]获取第一个Sheet的数据
+                //document.getElementById("demo").innerHTML= JSON.stringify( XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]) );
+                excelData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+
+            };
+            if (rABS) {
+                reader.readAsArrayBuffer(f);
+            } else {
+                reader.readAsBinaryString(f);
+            }
+        }
+
+        function fixdata(data) { //文件流转BinaryString
+            var o = "",
+                l = 0,
+                w = 10240;
+            for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+            o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+            return o;
+        }
+
+        $(function () {
+            var modifyArr = [
+                { 'id': 'qty', 'text': '数量' },
+                { 'id': 'price', 'text': '单价' },
+            ];
+            $('#modifyType').combobox({
+                data: modifyArr,
+                valueField: 'id',
+                textField: 'text',
+
+            });
+            //datagrid加载
+            var batchData = {
+                rows: [
+                    { id: '', mb001: '活塞环', mb002: '474/强化', qty: '2', price: '23.00', money: '89' }
+                ],
+                footer: [{ id: '总计', qty: '' }]
+            };
+            var products = [
+                { id: 'FI-SW-01', mb001: 'Koi', mb002: 'a', qty: '1', price: '1.0', money: '34.0' },
+                { id: 'FI-SW-02', mb001: 'Dalmation', mb002: 'b', qty: '2', price: '2.6', money: '67.0' },
+                { id: 'FI-SW-03', mb001: 'Rattlesnake', mb002: 'c', qty: '3', price: '3.9', money: '34.0' },
+                { id: 'FI-SW-04', mb001: 'Iguana', mb002: 'd', qty: '4', price: '4.9', money: '78.0' },
+                { id: 'FI-SW-05', mb001: 'Manx', mb002: 'e', qty: '5', price: '5.7', money: '34.0' },
+                { id: 'FI-SW-06', mb001: 'Persian', mb002: 'f', qty: '6', price: '6.6', money: '28.0' },
+                { id: 'FI-SW-07', mb001: 'Amazon Parrot', mb002: 'g', qty: '7', price: '6.6', money: '97.0' }
+            ];
+            var editRow;
+            $('#dg').datagrid({
+                striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: true, singleSelect: false,
+                showFooter: true, remoteSort: false, sortable: "true", fit: true,
+                toolbar: dgToolbar,
+                columns: [[
+                    { field: 'ck', checkbox: true },
+                    {
+                        field: 'id', title: '品号', halign: 'center', align: 'center', width: 50,
+                        editor: {
+                            type: 'combogrid',
+                            options: {
+                                panelWidth: 550,
+                                idField: 'id',
+                                textField: 'id',
+                                required: false,
+                                editable: true,
+                                toolbar: idToolbar,
+                                columns: [[
+                                    { field: 'id', title: '品号', width: 130 },
+                                    { field: 'mb001', title: '品名', width: 100 },
+                                    { field: 'mb002', title: '规格', width: 120 },
+                                    { field: 'qty', title: '数量', width: 100 },
+                                    { field: 'price', title: '单价', width: 100 },
+                                    { field: 'money', title: '金额', width: 100 }
+                                ]],
+                                data: products,
+                                //required:true,
+                                onSelect: function (index, row) {
+                                    var id = $('#dg').datagrid('getEditor', { index: editRow, field: 'id' });
+                                    $(id.target).val(row.id); //赋值
+                                    var mb001 = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb001' });
+                                    $(mb001.target).val( row.mb001); //赋值
+                                },
+                                events: {
+                                    keyup: function (e) {
+                                        if (e.keyCode == 13) {
+                                            //enter键
+                                            var ed = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb001' });
+                                            $(ed.target).next().children().focus();
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        field: 'mb001', title: '品名', halign: 'center', align: 'center', width: 50,
+                        editor: {
+                            type: 'text',
+                            options: {
+                                events: {
+                                    keyup: function (e) {
+                                        if (e.keyCode == 13) {
+                                            //点击enter健
+                                            var ed = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb002' });
+                                            $(ed.target).next().children().focus();
+                                        } else if (e.keyCode == 38) {
+                                            //点击上箭头
+                                            if (editRow > 0) {
+                                                $("#dg").datagrid("endEdit", editRow);
+                                                editRow = editRow - 1;
+                                                $("#dg").datagrid("beginEdit", editRow);
+                                                var ed = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb001' });
+                                                $(ed.target).next().children().focus();
+                                            }
+
+                                        } else if (e.keyCode == 40) {
+                                            //点击下箭头
+                                            var data = $('#dg').datagrid('getData');
+                                            if (editRow < data.rows.length - 1) {
+                                                $("#dg").datagrid("endEdit", editRow);
+                                                editRow = editRow + 1;
+                                                $("#dg").datagrid("beginEdit", editRow);
+                                                var ed = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb001' });
+                                                $(ed.target).next().children().focus();
+                                            }
+
+                                        }
+
+                                    }
+                                }
+                            }
+                        },
+                    },
+                    {
+                        field: 'mb002', title: '规格', halign: 'center', align: 'center', width: 50,
+                        editor: {
+                            type: 'text',
+                            options: {
+                                events: {
+                                    keyup: function (e) {
+                                        if (e.keyCode == 13) {
+                                            var ed = $('#dg').datagrid('getEditor', { index: editRow, field: 'qty' });
+                                            $(ed.target).next().children().focus();
+                                        }
+
+                                    }
+                                }
+                            }
+                        },
+                    },
+                    { field: 'qty', title: '数量', halign: 'center', align: 'center', width: 50, editor: { type: 'text' }, },
+                    { field: 'price', title: '单价', halign: 'center', align: 'center', width: 50, editor: { type: 'text' }, },
+                    { field: 'money', title: '金额', halign: 'center', align: 'center', width: 50, editor: { type: 'text' }, },
+                    {
+                        field: 'button', title: '操作', halign: 'center', align: 'center', width: 40,
+                        formatter: function (value, row, index) {
+                            if (row.id == '总计') {
+                                return '';
+                            } else {
+                                return '<a href="#" class="buttonNew" onclick="delet(' + index + ')">删除</a>';
+                            }
+
+                        }
+                    },
+                ]],
+                data: batchData,
+                onClickCell: function (rowIndex, field, value) {
+                    var idAttr = this.getAttribute("id");
+                    var row = $("#" + idAttr).datagrid('getData').rows[rowIndex];
+                    if (editRow != undefined) {
+                        $("#" + idAttr).datagrid("endEdit", editRow);
+                    }
+                    $("#" + idAttr).datagrid("beginEdit", rowIndex);
+                    editRow = rowIndex;
+                },
+                onAfterEdit: function (rowIndex, rowData, changes) {
+                    CalcFooter();//刷新footer
+                }
+            });
+            CalcFooter();//刷新footer
+
+            //单别
+            var orderData = [
+                { 'itemid': '1407', 'djname': '智秀重工领', 'danju': '智秀重工领料单' },
+                { 'itemid': '1408', 'djname': '智秀费用领', 'danju': '智秀费用领料单' },
+                { 'itemid': '1409', 'djname': '智秀生产入', 'danju': '智秀生产入库单' },
+                { 'itemid': '1410', 'djname': '智秀重工入', 'danju': '智秀重工入库单' },
+                { 'itemid': '1411', 'djname': '沃森打标领', 'danju': '沃森打标领料单' },
+                { 'itemid': '1412', 'djname': '沃森达标入', 'danju': '沃森打标入库单' },
+                { 'itemid': '1601', 'djname': '豫发重工领', 'danju': '豫发重工入库单' },
+                { 'itemid': '1602', 'djname': '豫发费用领', 'danju': '豫发费用领' },
+            ];
+            $("#orderType").combogrid({
+                panelWidth: 500,
+                idField: 'itemid',
+                textField: 'itemid',
+                data:orderData,
+                columns: [[
+                    { field: 'itemid', title: '单别', width: 80 },
+                    { field: 'djname', title: '单据名称', width: 120 },
+                    { field: 'danju', title: '单据全称', width: 80 },
+                ]],
+                fitColumns: true
+            });
+            //单别弹层
+            var modifyArr = [
+                { 'id': 'db', 'text': '单别' },
+                { 'id': 'djname', 'text': '单据名称' },
+            ];
+            $('#dbCombox').combobox({
+                data: modifyArr,
+                valueField: 'id',
+                textField: 'text',
+            });
+            $("#dbList").datagrid({
+                striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: true, singleSelect: true,
+                showFooter: false, remoteSort: false, sortable: "true", fit: true,
+                toolbar: dgToolbar,
+                columns: [[
+                    { field: 'itemid', title: '单别', halign: 'center', align: 'center', width: 50 },
+                    { field: 'djname', title: '单别名称', halign: 'center', align: 'center', width: 50 },
+                    { field: 'danju', title: '单别全称', halign: 'center', align: 'center', width: 50 },
+                ]],
+                data: orderData,
+                onClickCell: function (rowIndex, field, value) {
+                    var idAttr = this.getAttribute("id");
+                    var row = $("#" + idAttr).datagrid('getData').rows[rowIndex];
+                    $('#orderType').combogrid('setValue', row.itemid);
+                    $("#panchun").find(".l-btn-text").text(row.djname);
+                    $("#dbWin").dialog('close');
+                },
+            });
+        });
+
+        function CalcFooter() {
+            var rs = $('#dg').datagrid('getRows');
+            var qtyTotal = 0;
+            for (var i = 0; i < rs.length; i++) {
+                if (!isEmpty(rs[i]['qty'])) {
+                    qtyTotal += parseFloat(rs[i]['qty']);
+                }
+            }
+            var fs = $('#dg').datagrid('getFooterRows');
+            fs[0].qty = qtyTotal;
+            $('#dg').datagrid('reloadFooter', fs);
+        }
+        //点击品号列弹层
+        $("#batchTr").dialog({
+            title: '选择产品',
+            width: 600,
+            height: 400,
+
+            buttons: [
+                {
+                    text: '取消',
+                    iconCls: 'icon-cancel',
+                    handler: function () {
+                        $("#batchTr").dialog('close');
+                    }
+                }, {
+                    text: '确认',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        var ckData = $("#proList").datagrid('getChecked');
+                        for (var i = 0; i < ckData.length; i++) {
+                            var rows = $('#dg').datagrid("getRows");
+                            $("#dg").datagrid("insertRow", { index: rows.length, row: ckData[i] });
+                        }
+                        CalcFooter();//刷新footer
+                        $("#batchTr").dialog('close');
+                    }
+                }
+            ]
+        });
+        $("#batchTr").dialog('close');
+
+        //toolbar录入品号，点击“搜索”
+        function proQty() {
+            proLoad();
+        }
+
+        //品号查询弹层内容加载
+        function proLoad() {
+            $("#batchTr").dialog('open');
+            var proData = [
+                { 'id': '1235534', 'mb001': '活塞环1', 'mb002': '345/强化', 'qty': '2', 'price': '23.00' },
+                { 'id': '3143014', 'mb001': '活塞环2', 'mb002': '474/强化', 'qty': '5', 'price': '45.00' },
+                { 'id': '3407826', 'mb001': '活塞环3', 'mb002': '768/强化', 'qty': '3', 'price': '26.00' },
+                { 'id': '4572737', 'mb001': '活塞环4', 'mb002': '127/强化', 'qty': '9', 'price': '28.00' },
+                { 'id': '6701918', 'mb001': '活塞环5', 'mb002': '474/强化', 'qty': '2', 'price': '35.00' }
+            ];
+            $("#proList").datagrid({
+                striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: true, singleSelect: false,
+                showFooter: false, remoteSort: false, sortable: "true", fit: true,
+                columns: [[
+                    { field: 'ck', checkbox: true },
+                    { field: 'id', title: '品号', halign: 'center', align: 'center', width: 50 },
+                    { field: 'mb001', title: '品名', halign: 'center', align: 'center', width: 50 },
+                    { field: 'mb002', title: '规格', halign: 'center', align: 'center', width: 50 },
+                    { field: 'qty', title: '数量', halign: 'center', align: 'center', width: 50 },
+                    { field: 'price', title: '单价', halign: 'center', align: 'center', width: 50 },
+                    { field: 'money', title: '金额', halign: 'center', align: 'center', width: 50 },
+                ]],
+                data: proData,
+            });
+        }
+
+        //添加行
+        function addTr() {
+            var rows = $('#dg').datagrid("getRows");
+            $("#dg").datagrid("insertRow", { index: rows.length, row: { 'id': '', 'mb001': '', 'mb002': '', 'qty': '', 'price': '' } });
+        }
+
+        //删除行
+        function delet(index) {
+            $('#dg').datagrid('deleteRow', index);
+            var rows = $("#dg").datagrid('getRows');
+            $("#dg").datagrid('loadData', rows);
+            CalcFooter();//刷新footer
+        }
+
+        //批量导入弹层
+        $("#win").dialog({
+            title: '批量导入',
+            width: 600,
+            height: 400,
+
+            buttons: [
+                {
+                    text: '下载模板',
+                    iconCls: 'icon-save',
+                    handler: function () {
+
+                    }
+                }, {
+                    text: '确认导入',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        if (excelData.length > 0) {
+                            for (var i = 0; i < excelData.length; i++) {
+                                var rows = $('#dg').datagrid("getRows");
+                                $("#dg").datagrid("insertRow", { index: rows.length, row: excelData[i] });
+                            }
+                            //$("#dg").datagrid('loadData', excelData);//execle导入插件数据回显datagrid
+                            CalcFooter();//刷新footer
+                            $("#win").dialog('close');//弹层关闭
+                        } else {
+                            alert("数据为空")
+                        }
+                    }
+                }
+            ]
+        });
+        $("#win").dialog('close');
+
+        //”批量导入”点击事件
+        function batchImp() {
+            $("#win").dialog('open');
+        }
+
+        //点击“批量修改”
+        function batchModify() {
+            var comType = $('#modifyType').combobox('getValues')[0];
+            var txt = $("#modifyTxt").val();
+            var modifyPar = {};
+            modifyPar[comType] = txt;
+            var selData = $("#dg").datagrid("getSelections");
+            if (selData.length > 0) {
+                for (var i = 0; i < selData.length; i++) {
+                    var index = $("#dg").datagrid('getRowIndex', selData[i]);
+                    $("#dg").datagrid('updateRow', {
+                        index: index,
+                        row: modifyPar
+                    });
+                }
+                CalcFooter();//刷新footer
+            }
+
+        }
+
+        //combogrid中toobar查询按钮
+        function toSearch() {
+
+        }
+
+        //单别
+        $("#dbWin").dialog({
+            title: '选择单别',
+            width: 600,
+            height: 400,
+        });
+        $("#dbWin").dialog('close');
+        $("#batchTr").dialog('close');
+        function orderTypeQty() {
+            $("#dbWin").dialog('open');
+        }
+
+        //判断是否为空
+        function isEmpty(target) {
+            if (target == null || target == "null" || target == "" || target == "undefined" || target == undefined) {
+                return true;
+            }
+            return false;
+        }
+        $.extend($.fn.datagrid.defaults.editors, {
+
+            combogrid: {
+
+                init: function (container, options) {
+
+                    var input = $('<inputtype="text" class="datagrid-editable-input">').appendTo(container);
+
+                    input.combogrid(options);
+
+                    return input;
+
+                },
+
+                destroy: function (target) {
+
+                    $(target).combogrid('destroy');
+
+                },
+
+                getValue: function (target) {
+
+                    return $(target).combogrid('getValue');
+
+                },
+
+                setValue: function (target, value) {
+
+                    $(target).combogrid('setValue', value);
+
+                },
+
+                resize: function (target, width) {
+
+                    $(target).combogrid('resize', width);
+
+                },
+
+            }
+
+        });
+    </script>
