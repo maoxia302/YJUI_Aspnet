@@ -33,20 +33,44 @@
         border: 1px solid #eee;
         color: #bbb;
     }
-
-        .disBtn:hover {
-            border: 1px solid #eee;
-            color: #bbb;
-            text-decoration: none;
-        }
+    .disBtn:hover {
+        border: 1px solid #eee;
+        color: #bbb;
+        text-decoration: none;
+    }
+    .tbBoor {
+       position:relative;
+    }
+    .tbBoor > label {
+        position:absolute;
+        right:20px;
+        top:4px;
+        text-align:right;
+    }
+    .tbBoor > label > span {
+        display:inline-block;
+        vertical-align:middle;
+    }
+    .tbBoor > label > span > i, .tbBoor > label > span > em {
+        display: inline-block;
+        width: 20px;
+        height: 12px;
+        background-color: SkyBlue;
+        margin-right:5px;
+    }
+    .tbBoor > label > span > em {
+        background-color:#fff;
+    }
 </style>
 
-<div id="tb1">
-
+<div id="tb1" class="tbBoor">
     <a href="#" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="add();">
         录入提货记录
     </a>
-
+    <label>
+        <span><i></i>已录入</span>
+        <span><em></em>未录入</span>
+    </label>
 </div>
 
 <input type="hidden" id="ExpandRow" />
