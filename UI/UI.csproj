@@ -252,6 +252,10 @@
     <Content Include="javascript\开发包\skin\whyGreen\bg.jpg" />
     <Content Include="javascript\开发包\skin\whyGreen\datepicker.css" />
     <Content Include="javascript\开发包\skin\whyGreen\img.gif" />
+    <Content Include="juicer\expressjs-wrapper\for-2.x\express-juicer-min.js" />
+    <Content Include="juicer\expressjs-wrapper\for-3.x\express-juicer-min.js" />
+    <Content Include="juicer\juicer-min.js" />
+    <Content Include="juicer\yui-wrapper\yui-juicer-min.js" />
     <Content Include="locale\easyui-lang-zh_CN.js" />
     <Content Include="login.htm" />
     <Content Include="plugins\jquery.accordion.js" />
