@@ -171,14 +171,14 @@
         <div title="详细字段" style="padding:10px">
             <table class="tiaozhang_form">
                 <tr>
-                    <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid" id="orderType" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">盘存差异单</a></td>
-                    <td>部门编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'">轿车损益</a></td>
+                    <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid" id="orderType" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">选择</a></td>
+                    <td>部门编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'">选择</a></td>
                     <td>人员编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'"></a></td>
                     <td><input type="checkbox" />生成分录</td>
                 </tr>
                 <tr>
                     <td>&ensp;&ensp;&emsp;单号:<input type="text" /></td>
-                    <td>&ensp;&ensp;&emsp;工厂:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'"></a></td>
+                    <td>&ensp;&ensp;&emsp;工厂:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'">选择</a></td>
                     <td>交易日期:<input type="text" /></td>
                     <td class="isPass">
                         <i class="pass"><img src="../../images/icon_pass.png" alt="" /></i>
@@ -523,7 +523,10 @@
                     { field: 'MQ002', title: '单据名称', width: 120 }
                     
                 ]],
-                fitColumns: true
+                fitColumns: true,
+                onSelect: function (rec,row) {
+                    $("#panchun").find(".l-btn-text").text(row.MQ002);
+                }
             });
             //单别弹层
             var modifyArr = [
