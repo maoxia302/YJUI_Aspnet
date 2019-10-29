@@ -43,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="chuyun.cs" />
+    <Compile Include="INVMB.cs" />
+    <Compile Include="INVTB.cs" />
+    <Compile Include="IVNTA.cs" />
     <Compile Include="jldl1.cs" />
     <Compile Include="neibutaizhang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

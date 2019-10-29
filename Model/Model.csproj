@@ -38,6 +38,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="chuyun.cs" />
+    <Compile Include="CMSMQ.cs" />
+    <Compile Include="INVMB.cs" />
+    <Compile Include="INVTA.cs" />
+    <Compile Include="INVTB.cs" />
     <Compile Include="jldl1.cs" />
     <Compile Include="neibutaizhang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
