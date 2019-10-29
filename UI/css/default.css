@@ -169,3 +169,19 @@ a:hover
 	padding: 5px;
 }
 
+.pjtz_bar input[type='text'] {
+    height:20px;
+    margin-left: 5px;
+    border: 1px solid #95B8E7;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+.pjtz_bar input[type='checkbox'] {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.pjtz_bar td {
+    padding-right: 10px;
+}
