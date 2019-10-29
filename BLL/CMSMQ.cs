@@ -6,26 +6,26 @@ using YJUI.Model;
 namespace YJUI.BLL
 {
     /// <summary>
-    /// INVTB
+    /// CMSMQ
     /// </summary>
-    public partial class INVTB
+    public partial class CMSMQ
     {
-        private readonly YJUI.DAL.INVTB dal = new YJUI.DAL.INVTB();
-        public INVTB()
+        private readonly YJUI.DAL.CMSMQ dal = new YJUI.DAL.CMSMQ();
+        public CMSMQ()
         { }
         #region  BasicMethod
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string TB003, string TB001, string TB002)
+        public bool Exists(string MQ001)
         {
-            return dal.Exists(TB003, TB001, TB002);
+            return dal.Exists(MQ001);
         }
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public bool Add(YJUI.Model.INVTB model)
+        public bool Add(YJUI.Model.CMSMQ model)
         {
             return dal.Add(model);
         }
@@ -33,7 +33,7 @@ namespace YJUI.BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(YJUI.Model.INVTB model)
+        public bool Update(YJUI.Model.CMSMQ model)
         {
             return dal.Update(model);
         }
@@ -41,20 +41,29 @@ namespace YJUI.BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(string TB003, string TB001, string TB002)
+        public bool Delete(string MQ001)
         {
 
-            return dal.Delete(TB003, TB001, TB002);
+            return dal.Delete(MQ001);
+        }
+        /// <summary>
+        /// 删除一条数据
+        /// </summary>
+        public bool DeleteList(string MQ001list)
+        {
+            return dal.DeleteList(MQ001list);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public YJUI.Model.INVTB GetModel(string TB003, string TB001, string TB002)
+        public YJUI.Model.CMSMQ GetModel(string MQ001)
         {
 
-            return dal.GetModel(TB003, TB001, TB002);
+            return dal.GetModel(MQ001);
         }
+
+
         /// <summary>
         /// 获得数据列表
         /// </summary>
@@ -72,7 +81,7 @@ namespace YJUI.BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<YJUI.Model.INVTB> GetModelList(string strWhere)
+        public List<YJUI.Model.CMSMQ> GetModelList(string strWhere)
         {
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
@@ -80,13 +89,13 @@ namespace YJUI.BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<YJUI.Model.INVTB> DataTableToList(DataTable dt)
+        public List<YJUI.Model.CMSMQ> DataTableToList(DataTable dt)
         {
-            List<YJUI.Model.INVTB> modelList = new List<YJUI.Model.INVTB>();
+            List<YJUI.Model.CMSMQ> modelList = new List<YJUI.Model.CMSMQ>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                YJUI.Model.INVTB model;
+                YJUI.Model.CMSMQ model;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);
@@ -121,16 +130,18 @@ namespace YJUI.BLL
         {
             return dal.GetListByPage(strWhere, orderby, startIndex, endIndex);
         }
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        //public DataSet GetList(int PageSize,int PageIndex,string strWhere)
-        //{
-        //return dal.GetList(PageSize,PageIndex,strWhere);
-        //}
+
 
         #endregion  BasicMethod
         #region  ExtensionMethod
+        public string GetCmsmqToJson(string strWhere)
+        {
+            DataTable dt = dal.GetList(strWhere).Tables[0];
+            string strjson = Common.JsonHelper.ToJson(dt);
+            return strjson;
+        }
+
+
 
         #endregion  ExtensionMethod
     }

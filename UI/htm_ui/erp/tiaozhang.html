@@ -502,32 +502,33 @@
             });
             CalcFooter();//刷新footer
             //单别
-            var orderData = [
-                { 'itemid': '1407', 'djname': '智秀重工领', 'danju': '智秀重工领料单' },
-                { 'itemid': '1408', 'djname': '智秀费用领', 'danju': '智秀费用领料单' },
-                { 'itemid': '1409', 'djname': '智秀生产入', 'danju': '智秀生产入库单' },
-                { 'itemid': '1410', 'djname': '智秀重工入', 'danju': '智秀重工入库单' },
-                { 'itemid': '1411', 'djname': '沃森打标领', 'danju': '沃森打标领料单' },
-                { 'itemid': '1412', 'djname': '沃森达标入', 'danju': '沃森打标入库单' },
-                { 'itemid': '1601', 'djname': '豫发重工领', 'danju': '豫发重工入库单' },
-                { 'itemid': '1602', 'djname': '豫发费用领', 'danju': '豫发费用领' },
-            ];
+            //var orderData = [
+            //    { 'itemid': '1407', 'djname': '智秀重工领', 'danju': '智秀重工领料单' },
+            //    { 'itemid': '1408', 'djname': '智秀费用领', 'danju': '智秀费用领料单' },
+            //    { 'itemid': '1409', 'djname': '智秀生产入', 'danju': '智秀生产入库单' },
+            //    { 'itemid': '1410', 'djname': '智秀重工入', 'danju': '智秀重工入库单' },
+            //    { 'itemid': '1411', 'djname': '沃森打标领', 'danju': '沃森打标领料单' },
+            //    { 'itemid': '1412', 'djname': '沃森达标入', 'danju': '沃森打标入库单' },
+            //    { 'itemid': '1601', 'djname': '豫发重工领', 'danju': '豫发重工入库单' },
+            //    { 'itemid': '1602', 'djname': '豫发费用领', 'danju': '豫发费用领' },
+            //];
             $("#orderType").combogrid({
                 panelWidth: 500,
-                idField: 'itemid',
-                textField: 'itemid',
-                data:orderData,
+                idField: 'MQ001',
+                textField: 'MQ001',
+                //data:orderData,
+                url:"../ashx_ui/CMSMQ.ashx?action=search",
                 columns: [[
-                    { field: 'itemid', title: '单别', width: 80 },
-                    { field: 'djname', title: '单据名称', width: 120 },
-                    { field: 'danju', title: '单据全称', width: 80 },
+                    { field: 'MQ001', title: '单别', width: 80 },
+                    { field: 'MQ002', title: '单据名称', width: 120 }
+                    
                 ]],
                 fitColumns: true
             });
             //单别弹层
             var modifyArr = [
-                { 'id': 'db', 'text': '单别' },
-                { 'id': 'djname', 'text': '单据名称' },
+                { 'id': 'MQ001', 'text': '单别' },
+                { 'id': 'MQ002', 'text': '单据名称' },
             ];
             $('#dbCombox').combobox({
                 data: modifyArr,
@@ -539,16 +540,15 @@
                 showFooter: false, remoteSort: false, sortable: "true", fit: true,
                 toolbar: dgToolbar,
                 columns: [[
-                    { field: 'itemid', title: '单别', halign: 'center', align: 'center', width: 50 },
-                    { field: 'djname', title: '单别名称', halign: 'center', align: 'center', width: 50 },
-                    { field: 'danju', title: '单别全称', halign: 'center', align: 'center', width: 50 },
+                    { field: 'MQ001', title: '单别', halign: 'center', align: 'center', width: 50 },
+                    { field: 'MQ002', title: '单别名称', halign: 'center', align: 'center', width: 50 }
                 ]],
-                data: orderData,
+                url: "../ashx_ui/CMSMQ.ashx?action=search",
                 onClickCell: function (rowIndex, field, value) {
                     var idAttr = this.getAttribute("id");
                     var row = $("#" + idAttr).datagrid('getData').rows[rowIndex];
-                    $('#orderType').combogrid('setValue', row.itemid);
-                    $("#panchun").find(".l-btn-text").text(row.djname);
+                    $('#orderType').combogrid('setValue', row.MQ001);
+                    $("#panchun").find(".l-btn-text").text(row.MQ002);
                     $("#dbWin").dialog('close');
                 },
             });

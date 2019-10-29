@@ -2065,6 +2065,9 @@
     <Compile Include="ashx_ui\chuyun.ashx.cs">
       <DependentUpon>chuyun.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx_ui\CMSMQ.ashx.cs">
+      <DependentUpon>CMSMQ.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx_ui\datalist.ashx.cs">
       <DependentUpon>datalist.ashx</DependentUpon>
     </Compile>
@@ -2073,6 +2076,15 @@
     </Compile>
     <Compile Include="ashx_ui\getsession.ashx.cs">
       <DependentUpon>getsession.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\INVMB.ashx.cs">
+      <DependentUpon>INVMB.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\INVTA.ashx.cs">
+      <DependentUpon>INVTA.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\INVTB.ashx.cs">
+      <DependentUpon>INVTB.ashx</DependentUpon>
     </Compile>
     <Compile Include="ashx_ui\login.ashx.cs">
       <DependentUpon>login.ashx</DependentUpon>
@@ -2195,6 +2207,10 @@
     <Content Include="ashx_ui\datalist.ashx" />
     <Content Include="ashx_ui\wentitaizhang.ashx" />
     <Content Include="ashx_ui\chuyun.ashx" />
+    <Content Include="ashx_ui\INVTA.ashx" />
+    <Content Include="ashx_ui\INVTB.ashx" />
+    <Content Include="ashx_ui\INVMB.ashx" />
+    <Content Include="ashx_ui\CMSMQ.ashx" />
     <None Include="themes\black\images\Thumbs.db" />
     <None Include="themes\default\bootstrap\images\Thumbs.db" />
     <None Include="themes\default\images\Thumbs.db" />

@@ -1254,7 +1254,7 @@ namespace YJUI.DAL
             {
                 strSql.Append(" where " + strWhere);
             }
-            return DbHelperSQL.Query(strSql.ToString());
+            return VOCEN2018DbHelperSQL.Query(strSql.ToString());
         }
 
         /// <summary>
