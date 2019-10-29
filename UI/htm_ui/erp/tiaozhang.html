@@ -132,59 +132,68 @@
         border-radius: 5px 5px 5px 5px;
         border: 1px solid #b7d2ff;
     }
-        .buttonNew:hover {
-            color:#000;
-            text-decoration:none;
-            opacity:0.8;
-        }
-    .tabDetail {
-    position:relative;
+    .buttonNew:hover {
+        color:#000;
+        text-decoration:none;
+        opacity:0.8;
     }
-    .tabDetail > i.pass, .tabDetail > i.noPass {
+    .isPass {
+        position: relative;
+    }
+    .isPass > i.pass, .isPass > i.noPass {
         position: absolute;
-        top: 35px;
-        right: 180px;
+        top: -10px;
+        left: -65px;
         width: 90px;
         display: none;
     }
-        .tabDetail > i.pass > img, .tabDetail > i.noPass > img {
-            display:block;
-            width:100%;
-        }
-        .tabDetail > i.pass {
-            display: block;
-        }
+    .isPass > i.pass > img, .isPass > i.noPass > img {
+        display: block;
+        width: 100%;
+    }
+    .isPass > i.pass {
+        display: block;
+    }
+    .dgCont .datagrid-header-row, .dgCont .datagrid-row {
+        height: 36px;
+    }
+    .dgCont .datagrid-editable-input {
+        height: 30px;
+    }
+    .combo {
+        height: 34px;
+    }
+    
 </style>
 <div class="tiaozhang_cont">
     <!--tabs切换内容开始-->
     <div class="easyui-tabs">
         <div title="详细字段" style="padding:10px">
-            <div class="tabDetail">
-                <table class="tiaozhang_form">
-                    <tr>
-                        <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid" id="orderType" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">盘存差异单</a></td>
-                        <td>部门编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'">轿车损益</a></td>
-                        <td>人员编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'"></a></td>
-                        <td><input type="checkbox" />生成分录</td>
-                    </tr>
-                    <tr>
-                        <td>&ensp;&ensp;&emsp;单号:<input type="text" /></td>
-                        <td>&ensp;&ensp;&emsp;工厂:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'"></a></td>
-                        <td>交易日期:<input type="text" /></td>
-
-                    </tr>
-                    <tr>
-                        <td>单据日期:<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" /></td>
-                        <td>&ensp;&ensp;&emsp;件数:<input type="text" /></td>
-                    </tr>
-                    <tr>
-                        <td>&ensp;&ensp;&emsp;备注:<textarea style="height:50px;"></textarea></td>
-                        <td>项目编号:<input type="text" /></td>
-                    </tr>
-                </table>
-                <i class="pass"><img src="../../images/icon_pass.png" alt="" /></i>
-                <i class="noPass"><img src="../../images/icon_noPass.png" alt="" /></i>
-            </div>
+            <table class="tiaozhang_form">
+                <tr>
+                    <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid" id="orderType" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">盘存差异单</a></td>
+                    <td>部门编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'">轿车损益</a></td>
+                    <td>人员编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'"></a></td>
+                    <td><input type="checkbox" />生成分录</td>
+                </tr>
+                <tr>
+                    <td>&ensp;&ensp;&emsp;单号:<input type="text" /></td>
+                    <td>&ensp;&ensp;&emsp;工厂:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'"></a></td>
+                    <td>交易日期:<input type="text" /></td>
+                    <td class="isPass">
+                        <i class="pass"><img src="../../images/icon_pass.png" alt="" /></i>
+                        <i class="noPass"><img src="../../images/icon_noPass.png" alt="" /></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>单据日期:<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" /></td>
+                    <td>&ensp;&ensp;&emsp;件数:<input type="text" /></td>
+                </tr>
+                <tr>
+                    <td>&ensp;&ensp;&emsp;备注:<textarea style="height:50px;"></textarea></td>
+                    <td>项目编号:<input type="text" /></td>
+                </tr>
+            </table>
         </div>
         <div title="其他信息" style="padding:10px">
             <table class="tiaozhang_form">
@@ -215,7 +224,13 @@
                 </tr>
             </table>
         </div>
-        <table id="dg"></table>
+        <div class="easyui-layout dgCont" data-options="fit : true,border : false" style="height:320px;">
+            <div data-options="region:'center',border:false">
+                <table id="dg"></table>
+            </div>
+        </div>
+        
+        
         <div id="idToolbar" style="padding:10px;display: none;">
             品号:
             <input class="easyui-textbox" style="width:200px" />
@@ -263,6 +278,8 @@
             </div>
             <!--单别弹层内容结束-->
         </div>
+    </div>
+</div>
     <script type="text/javascript">
         //批量导入插件----开始
         var excelData = [];//导入excel转json数据
@@ -373,10 +390,17 @@
                                 data: products,
                                 //required:true,
                                 onSelect: function (index, row) {
-                                    var id = $('#dg').datagrid('getEditor', { index: editRow, field: 'id' });
-                                    $(id.target).val(row.id); //赋值
-                                    var mb001 = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb001' });
-                                    $(mb001.target).val( row.mb001); //赋值
+                                    /*var dgId = $('#dg').datagrid('getEditor', { index: editRow, field: 'id' });
+                                    console.log("zzzzzzzzzzz");
+                                    console.log(editRow)
+                                    console.log(dgId)
+                                    //if (!isEmpty(dgId)) {
+                                        $(dgId.target).val(row.id); //赋值
+                                        var mb001 = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb001' });
+                                        $(mb001.target).val(row.mb001); //赋值
+
+                                    //}*/
+                                    
                                 },
                                 events: {
                                     keyup: function (e) {
@@ -477,7 +501,6 @@
                 }
             });
             CalcFooter();//刷新footer
-
             //单别
             var orderData = [
                 { 'itemid': '1407', 'djname': '智秀重工领', 'danju': '智秀重工领料单' },
@@ -612,6 +635,7 @@
 
         //删除行
         function delet(index) {
+            window.event? window.event.cancelBubble = true : e.stopPropagation();//阻止冒泡事件
             $('#dg').datagrid('deleteRow', index);
             var rows = $("#dg").datagrid('getRows');
             $("#dg").datagrid('loadData', rows);
