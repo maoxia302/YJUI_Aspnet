@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandInfo.cs" />
+    <Compile Include="ErpUtil.cs" />
     <Compile Include="VOCEN2018DbHelperSQL.cs" />
     <Compile Include="DbHelperSQL.cs" />
     <Compile Include="JsonHelper.cs" />

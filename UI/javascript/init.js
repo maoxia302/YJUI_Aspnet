@@ -197,6 +197,10 @@ function loginout() {
         }
     });
 }
+///几位补零操作
+function PrefixInteger(num, length) {
+    return (Array(length).join('0') + num).slice(-length);
+}
 
 
 

@@ -177,7 +177,7 @@
                     <td><input type="checkbox" />生成分录</td>
                 </tr>
                 <tr>
-                    <td>&ensp;&ensp;&emsp;单号:<input type="text" /></td>
+                    <td>&ensp;&ensp;&emsp;单号:<input type="text"  id="danhao"/></td>
                     <td>&ensp;&ensp;&emsp;工厂:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'">选择</a></td>
                     <td>交易日期:<input type="text" /></td>
                     <td class="isPass">
@@ -186,7 +186,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>单据日期:<input type="text" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" /></td>
+                    <td>单据日期:<input type="text" class="Wdate" id="djDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',onpicking: function (dp) {if (dp.cal.getDateStr() != dp.cal.getNewDateStr()) { Func(dp.cal.getNewDateStr())}}})" autocomplete="off" /></td>
                     <td>&ensp;&ensp;&emsp;件数:<input type="text" /></td>
                 </tr>
                 <tr>
@@ -281,6 +281,32 @@
     </div>
 </div>
     <script type="text/javascript">
+
+
+
+
+        function Func(tim) {
+            //console.log(tim)//将选好的时间携带过来
+            //console.log($("#orderType").combogrid('getValue'))
+            GetOrderId($("#orderType").combogrid('getValue'),tim);
+        }
+        function GetOrderId(orderId,tim) {
+            var data = {
+                "orderId": orderId,
+                "tim": tim
+            };
+            $.ajax({
+                //url: "ashx_ui/login.ashx",
+                url: "ashx_ui/INVTA.ashx?action=searchErpNum",
+                type: "POST",
+                data: data,
+                success: function (result) {
+                    $("#danhao").val(result);
+                }
+            });
+
+        }
+
         //批量导入插件----开始
         var excelData = [];//导入excel转json数据
 		/*
@@ -335,6 +361,19 @@
         }
 
         $(function () {
+
+    
+            var today = new Date();
+            var y = today.getFullYear();
+            var m = today.getMonth() + 1;
+            var d = today.getDate();
+            m = m < 10 ? "0" + m : m;
+            d = d < 10 ? "0" + d : d;
+            var nowDate = y + "-" + m + "-" + d;
+            $("#djData").val(nowDate);
+
+
+
             var modifyArr = [
                 { 'id': 'qty', 'text': '数量' },
                 { 'id': 'price', 'text': '单价' },
@@ -501,17 +540,7 @@
                 }
             });
             CalcFooter();//刷新footer
-            //单别
-            //var orderData = [
-            //    { 'itemid': '1407', 'djname': '智秀重工领', 'danju': '智秀重工领料单' },
-            //    { 'itemid': '1408', 'djname': '智秀费用领', 'danju': '智秀费用领料单' },
-            //    { 'itemid': '1409', 'djname': '智秀生产入', 'danju': '智秀生产入库单' },
-            //    { 'itemid': '1410', 'djname': '智秀重工入', 'danju': '智秀重工入库单' },
-            //    { 'itemid': '1411', 'djname': '沃森打标领', 'danju': '沃森打标领料单' },
-            //    { 'itemid': '1412', 'djname': '沃森达标入', 'danju': '沃森打标入库单' },
-            //    { 'itemid': '1601', 'djname': '豫发重工领', 'danju': '豫发重工入库单' },
-            //    { 'itemid': '1602', 'djname': '豫发费用领', 'danju': '豫发费用领' },
-            //];
+
             $("#orderType").combogrid({
                 panelWidth: 500,
                 idField: 'MQ001',
@@ -526,6 +555,9 @@
                 fitColumns: true,
                 onSelect: function (rec,row) {
                     $("#panchun").find(".l-btn-text").text(row.MQ002);
+                },
+                onChange: function (newValue, oldValue) {
+                    GetOrderId(newValue, $("#djDate").val()); 
                 }
             });
             //单别弹层
@@ -617,6 +649,7 @@
             $("#proList").datagrid({
                 striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: true, singleSelect: false,
                 showFooter: false, remoteSort: false, sortable: "true", fit: true,
+
                 columns: [[
                     { field: 'ck', checkbox: true },
                     { field: 'id', title: '品号', halign: 'center', align: 'center', width: 50 },
@@ -769,4 +802,9 @@
             }
 
         });
+
+
+
+
+
     </script>

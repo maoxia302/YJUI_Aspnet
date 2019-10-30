@@ -817,8 +817,23 @@ namespace YJUI.DAL
 
 
         #endregion  BasicMethod
-        #region  ExtensionMethod
 
+        #region  ExtensionMethod
+        /// <summary>
+        /// 通过单别和日期生成ERP号
+        /// </summary>
+        /// <param name="danbie">单别</param>
+        /// <param name="date">日期</param>
+        /// <returns></returns>
+        public string GetInvtaErpNum(string danbie,string date) {
+            string num = null;
+            if (danbie != null && date != null&&danbie!=""&&date!="")
+            {
+                // orderNoField, table, columnName, SingleName, datecolumnName, date
+                num = ErpUtil.GetErpNum("INVTA",  "TA001", danbie,"TA002", "TA014", date);
+            }
+            return num;
+        }
         #endregion  ExtensionMethod
     }
 }
