@@ -282,11 +282,16 @@
 </div>
     <script type="text/javascript">
 
-
-
+        var today = new Date();
+        var y = today.getFullYear();
+        var m = today.getMonth() + 1;
+        var d = today.getDate();
+        m = m < 10 ? "0" + m : m;
+        d = d < 10 ? "0" + d : d;
+        $("#djDate").val(y + "-" + m + "-" + d);
 
         function Func(tim) {
-            //console.log(tim)//将选好的时间携带过来
+            console.log(tim)//将选好的时间携带过来
             //console.log($("#orderType").combogrid('getValue'))
             GetOrderId($("#orderType").combogrid('getValue'),tim);
         }
@@ -361,19 +366,6 @@
         }
 
         $(function () {
-
-    
-            var today = new Date();
-            var y = today.getFullYear();
-            var m = today.getMonth() + 1;
-            var d = today.getDate();
-            m = m < 10 ? "0" + m : m;
-            d = d < 10 ? "0" + d : d;
-            var nowDate = y + "-" + m + "-" + d;
-            $("#djData").val(nowDate);
-
-
-
             var modifyArr = [
                 { 'id': 'qty', 'text': '数量' },
                 { 'id': 'price', 'text': '单价' },
