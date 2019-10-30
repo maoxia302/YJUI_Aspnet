@@ -172,14 +172,14 @@
             <table class="tiaozhang_form">
                 <tr>
                     <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid" id="orderType" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">选择</a></td>
-                    <td>部门编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'">选择</a></td>
-                    <td>人员编号:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'"></a></td>
+                    <td>部门编号:<input type="text" class="easyui-combogrid" id="dep" style="height:28px;"  /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'" id="depname" onclick="depmentQty()">选择</a></td>
+                    <td>人员编号:<input type="text" class="easyui-combogrid" id="emp" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'" id="empname" onclick="empQty()">选择</a></td>
                     <td><input type="checkbox" />生成分录</td>
                 </tr>
                 <tr>
                     <td>&ensp;&ensp;&emsp;单号:<input type="text"  id="danhao"/></td>
                     <td>&ensp;&ensp;&emsp;工厂:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'">选择</a></td>
-                    <td>交易日期:<input type="text" /></td>
+                    <td>交易日期:<input type="text" class="Wdate" id="jyDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off"/></td>
                     <td class="isPass">
                         <i class="pass"><img src="../../images/icon_pass.png" alt="" /></i>
                         <i class="noPass"><img src="../../images/icon_noPass.png" alt="" /></i>
@@ -289,12 +289,14 @@
         m = m < 10 ? "0" + m : m;
         d = d < 10 ? "0" + d : d;
         $("#djDate").val(y + "-" + m + "-" + d);
+        $("#jyDate").val(y + "-" + m + "-" + d);
 
         function Func(tim) {
             console.log(tim)//将选好的时间携带过来
             //console.log($("#orderType").combogrid('getValue'))
             GetOrderId($("#orderType").combogrid('getValue'),tim);
         }
+
         function GetOrderId(orderId,tim) {
             var data = {
                 "orderId": orderId,
@@ -552,6 +554,30 @@
                     GetOrderId(newValue, $("#djDate").val()); 
                 }
             });
+
+            //部门
+
+            $("#dep").combogrid({
+                panelWidth: 500,
+                idField: 'ME001',
+                textField: 'ME001',
+                //data:orderData,
+                url: "../ashx_ui/CMSME.ashx?action=search",
+                columns: [[
+                    { field: 'ME001', title: '单别', width: 80 },
+                    { field: 'ME002', title: '单据名称', width: 120 }
+
+                ]],
+                fitColumns: true,
+                onSelect: function (rec, row) {
+                    $("#depname").find(".l-btn-text").text(row.ME002);
+                },
+                onChange: function (newValue, oldValue) {
+                    // GetOrderId(newValue, $("#djDate").val());
+                }
+            });
+
+
             //单别弹层
             var modifyArr = [
                 { 'id': 'MQ001', 'text': '单别' },
@@ -732,8 +758,9 @@
         //combogrid中toobar查询按钮
         function toSearch() {
 
-        }
 
+
+        }
         //单别
         $("#dbWin").dialog({
             title: '选择单别',
@@ -744,6 +771,35 @@
         $("#batchTr").dialog('close');
         function orderTypeQty() {
             $("#dbWin").dialog('open');
+        }
+        //部门查询对话框
+        function depmentQty() {
+            $('<div/>').dialog({
+                href: '/htm_ui/common/dep.html',
+                width: 600,
+                height: 350,
+                modal: true,
+                title: '部门查询',
+                iconCls: 'icon-add',
+                onClose: function () {
+                    $(this).dialog('destroy');
+                }
+            });
+        }
+
+        //员工查询对话框
+        function empQty() {
+            $('<div id="aa"><div/>').dialog({
+                href: '/htm_ui/common/emp.html',
+                width: 600,
+                height: 350,
+                modal: true,
+                title: '员工查询',
+                iconCls: 'icon-add',
+                onClose: function () {
+                    $(this).dialog('destroy');
+                }
+            });
         }
 
         //判断是否为空

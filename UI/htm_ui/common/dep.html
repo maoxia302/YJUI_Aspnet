@@ -1,0 +1,55 @@
+﻿    <!--单别弹层内容开始-->
+<div id="dbWin">
+    <div class="dbCont">
+        <p>
+            单别：
+            <input class="easyui-combobox" id="depCombox" style="height:28px;" />
+            <input type="text" />
+            <a href="#" class="buttonNew" style="padding:5px 8px;">重新查找</a>
+        </p>
+        <div data-options="region:'center',border:false" style="width:100%;height:260px;overflow-y:auto">
+            <table id="depList"></table>
+        </div>
+        <!--单别弹层内容结束-->
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        depLoad();
+    });
+
+    //部门弹层
+            var modifyArr = [
+                { 'id': 'ME001', 'text': '部门编码' },
+                { 'id': 'ME002', 'text': '部门名称' },
+            ];
+            $('#depCombox').combobox({
+                data: modifyArr,
+                valueField: 'id',
+                textField: 'text',
+            });
+    //品号查询弹层内容加载
+    function depLoad() {
+        $("#depList").datagrid({
+            striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: true, singleSelect: true,
+            showFooter: false, remoteSort: false, sortable: "true", fit: true,
+            url: "../ashx_ui/CMSME.ashx?action=search",
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'ME001', title: '部门编号', halign: 'center', align: 'center', width: 50 },
+                { field: 'ME002', title: '部门名称', halign: 'center', align: 'center', width: 120 },
+                { field: 'ME004', title: '科目', halign: 'center', align: 'center', width: 50 }
+            ]],
+            onClickCell: function (rowIndex, field, value) {
+                var idAttr = this.getAttribute("id");//获取当前datagrid的ID
+                var row = $("#" + idAttr).datagrid('getData').rows[rowIndex];
+                $('#depment').combogrid('setValue', row.ME001);
+                $("#depname").find(".l-btn-text").text(row.ME002);
+                var d = $(this).closest('.window-body');
+                d.dialog('destroy');
+            },
+        });
+    }
+</script>

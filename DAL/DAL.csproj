@@ -40,7 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="chuyun.cs" />
+    <Compile Include="CMSME.cs" />
     <Compile Include="CMSMQ.cs" />
+    <Compile Include="CMSMV.cs" />
     <Compile Include="INVMB.cs" />
     <Compile Include="INVTA.cs" />
     <Compile Include="INVTB.cs" />

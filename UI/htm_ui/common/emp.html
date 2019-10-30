@@ -1,0 +1,54 @@
+﻿    <!--单别弹层内容开始-->
+<div id="dbWin">
+    <div class="dbCont">
+        <p>
+            单别：
+            <input class="easyui-combobox" id="empCombox" style="height:28px;" />
+            <input type="text" />
+            <a href="#" class="buttonNew" style="padding:5px 8px;">重新查找</a>
+        </p>
+        <div data-options="region:'center',border:false" style="width:100%;height:260px;overflow-y:auto">
+            <table id="empList"></table>
+        </div>
+        <!--单别弹层内容结束-->
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        empLoad();
+    });
+
+    //部门弹层
+            var modifyArr = [
+                { 'id': 'MV001', 'text': '员工编码' },
+                { 'id': 'MV002', 'text': '姓名' },
+            ];
+            $('#empCombox').combobox({
+                data: modifyArr,
+                valueField: 'id',
+                textField: 'text',
+            });
+    //品号查询弹层内容加载
+    function empLoad() {
+        $("#empList").datagrid({
+            striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: true, singleSelect: true,
+            showFooter: false, remoteSort: false, sortable: "true", fit: true,
+            url: "../ashx_ui/CMSMV.ashx?action=search",
+            columns: [[
+                { field: 'ck', checkbox: true },
+                { field: 'MV001', title: '员工编号', halign: 'center', align: 'center', width: 50 },
+                { field: 'MV002', title: '姓名', halign: 'center', align: 'center', width: 120 },
+            ]],
+            onClickCell: function (rowIndex, field, value) {
+                var idAttr = this.getAttribute("id");//获取当前datagrid的ID
+                var row = $("#" + idAttr).datagrid('getData').rows[rowIndex];
+                $('#emp').combogrid('setValue', row.MV001);
+                $("#empname").find(".l-btn-text").text(row.MV002);
+                var d = $(this).closest('.window-body');
+                d.dialog('destroy');
+            },
+        });
+    }
+</script>

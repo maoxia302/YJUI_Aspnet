@@ -86,6 +86,8 @@
     <Content Include="css\tablefrom.css" />
     <Content Include="htm_ui\chuyun\add.html" />
     <Content Include="htm_ui\chuyun\chuyun.html" />
+    <Content Include="htm_ui\common\dep.html" />
+    <Content Include="htm_ui\common\emp.html" />
     <Content Include="htm_ui\diaobo\clzk\clzk.htm" />
     <Content Include="htm_ui\diaobo\clzk\clzk_add.htm" />
     <Content Include="htm_ui\diaobo\diaobo.htm" />
@@ -2065,8 +2067,14 @@
     <Compile Include="ashx_ui\chuyun.ashx.cs">
       <DependentUpon>chuyun.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx_ui\CMSME.ashx.cs">
+      <DependentUpon>CMSME.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx_ui\CMSMQ.ashx.cs">
       <DependentUpon>CMSMQ.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\CMSMV.ashx.cs">
+      <DependentUpon>CMSMV.ashx</DependentUpon>
     </Compile>
     <Compile Include="ashx_ui\datalist.ashx.cs">
       <DependentUpon>datalist.ashx</DependentUpon>
@@ -2211,6 +2219,8 @@
     <Content Include="ashx_ui\INVTB.ashx" />
     <Content Include="ashx_ui\INVMB.ashx" />
     <Content Include="ashx_ui\CMSMQ.ashx" />
+    <Content Include="ashx_ui\CMSME.ashx" />
+    <Content Include="ashx_ui\CMSMV.ashx" />
     <None Include="themes\black\images\Thumbs.db" />
     <None Include="themes\default\bootstrap\images\Thumbs.db" />
     <None Include="themes\default\images\Thumbs.db" />
