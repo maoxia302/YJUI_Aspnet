@@ -220,6 +220,7 @@
     <Content Include="javascript\jquery-1.4.4.js" />
     <Content Include="javascript\jquery-1.8.0.min.js" />
     <Content Include="javascript\jquery.easyui.min.js" />
+    <Content Include="javascript\jquery.min.js" />
     <Content Include="javascript\lang\en.js" />
     <Content Include="javascript\lang\zh-cn.js" />
     <Content Include="javascript\lang\zh-tw.js" />

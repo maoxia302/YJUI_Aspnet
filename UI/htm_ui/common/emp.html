@@ -41,14 +41,19 @@
                 { field: 'MV001', title: '员工编号', halign: 'center', align: 'center', width: 50 },
                 { field: 'MV002', title: '姓名', halign: 'center', align: 'center', width: 120 },
             ]],
-            onClickCell: function (rowIndex, field, value) {
+            onClickRow: function (index,r) {
                 var idAttr = this.getAttribute("id");//获取当前datagrid的ID
-                var row = $("#" + idAttr).datagrid('getData').rows[rowIndex];
+                var row = $("#" + idAttr).datagrid('getData').rows[index];
                 $('#emp').combogrid('setValue', row.MV001);
                 $("#empname").find(".l-btn-text").text(row.MV002);
-                var d = $(this).closest('.window-body');
-                d.dialog('destroy');
+                //var d = $(this).closest('.window-body');
+               // var d = parent.$("<div/>")
+              //d.dialog('destroy');
+                top.d_close();
             },
         });
+    }
+    function d_close() {
+        $('#aa').dialog('close');
     }
 </script>

@@ -42,14 +42,19 @@
                 { field: 'ME002', title: '部门名称', halign: 'center', align: 'center', width: 120 },
                 { field: 'ME004', title: '科目', halign: 'center', align: 'center', width: 50 }
             ]],
-            onClickCell: function (rowIndex, field, value) {
+            onClickRow: function (index, r) {
                 var idAttr = this.getAttribute("id");//获取当前datagrid的ID
-                var row = $("#" + idAttr).datagrid('getData').rows[rowIndex];
-                $('#depment').combogrid('setValue', row.ME001);
+                var row = $("#" + idAttr).datagrid('getData').rows[index];
+                $('#dep').combogrid('setValue', row.ME001);
                 $("#depname").find(".l-btn-text").text(row.ME002);
+                //top.d_close();
                 var d = $(this).closest('.window-body');
                 d.dialog('destroy');
             },
         });
+    }
+
+    function d_close() {
+        $('#dd').dialog('close');
     }
 </script>
