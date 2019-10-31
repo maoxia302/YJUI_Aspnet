@@ -303,7 +303,8 @@
             //datagrid加载
             var batchData = {
                 rows: [
-                    { id: '', mb001: '活塞环', mb002: '474/强化', qty: '2', price: '23.00', money: '89' }
+                    { sortId: '0001', id: '', mb001: '活塞环', mb002: '474/强化', qty: '2', price: '23.00', money: '89' },
+                    { sortId: '0002', id: '', mb001: '活塞环', mb002: '474/强化', qty: '2', price: '23.00', money: '89' },
                 ],
                 footer: [{ id: '总计', qty: '' }]
             };
@@ -319,11 +320,12 @@
             var editRow;
 
             $('#dg').datagrid({
-                striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: true, singleSelect: false,
+                striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: false, singleSelect: false,
                 showFooter: true, remoteSort: false, sortable: "true", fit: true,
                 toolbar: dgToolbar,
                 columns: [[
                     { field: 'ck', checkbox: true },
+                    { field: 'sortId', title: '序号', halign: 'center', align: 'center', width: 50 },
                     {
                         field: '品号', title: '品号', halign: 'center', align: 'center', width: 50,
                         editor: {
@@ -607,10 +609,21 @@
             });
         }
 
+        //获取table最后一行序号
+        function getSortId(elId) {
+            var rows = $(elId).datagrid("getRows");
+            var sortIndex = 1;
+            if (rows.length > 0) {
+                var lastId = $(elId).datagrid('getData').rows[rows.length - 1].sortId;
+                sortIndex = parseInt(lastId) + 1;
+            }
+            return PrefixInteger(sortIndex, 4);
+        }
+
         //添加行
         function addTr() {
             var rows = $('#dg').datagrid("getRows");
-            $("#dg").datagrid("insertRow", { index: rows.length, row: { 'id': '', 'mb001': '', 'mb002': '', 'qty': '', 'price': '' } });
+            $("#dg").datagrid("insertRow", { index: rows.length, row: { 'sortId': getSortId('#dg'), 'id': '', 'mb001': '', 'mb002': '', 'qty': '', 'price': '' } });
         }
 
         //删除行
@@ -675,7 +688,6 @@
                         text: '确认导入',
                         iconCls: 'icon-ok',
                         handler: function () {
-                            //alert("");
                             var d = $(this).closest('.window-body');
                             $("#formToUpdate").ajaxSubmit({
                                 type: 'post',
@@ -685,11 +697,17 @@
                                 success: function (data1) {
                                     d.dialog('destroy');
                                     var data = JSON.parse(data1);
+                                    //获取table最后一行序号
+                                    var rows = $('#dg').datagrid("getRows");
+                                    var lastId = 0;
+                                    if (rows.length > 0) {
+                                        lastId = $('#dg').datagrid('getData').rows[rows.length - 1].sortId;
+                                    }
                                     if (data.rows.length > 0) {
                                         for (var i = 0; i < data.rows.length; i++) {
                                             var rows = $('#dg').datagrid("getRows");
-                                            console.log(rows.length);
-
+                                            var sortIndex = parseInt(lastId) + i + 1;
+                                            data.rows[i].sortId = PrefixInteger(sortIndex,4);
                                             $("#dg").datagrid("insertRow", { index: rows.length, row: data.rows[i] });
                                         }
                                         CalcFooter();//刷新footer
@@ -782,6 +800,10 @@
                 return true;
             }
             return false;
+        }
+        //不足补零
+        function PrefixInteger(num, length) {
+            return (Array(length).join('0') + num).slice(-length);
         }
         $.extend($.fn.datagrid.defaults.editors, {
 
