@@ -1,0 +1,97 @@
+﻿<!--批量导入内容开始-->
+<style>
+    .tiaozhang_win {
+        margin: 10px;
+    }
+
+        .tiaozhang_win input.winType {
+            display: inline-block;
+            width: 300px;
+            padding: 8px 4px;
+            border: 1px solid #95B8E7;
+            background-color: #fff;
+            border-radius: 4px;
+            -webkit-border-radius: 4px;
+            margin-left: 3px;
+        }
+
+    .upFile {
+        display: inline-block;
+        width: 307px;
+        font-size: 0;
+        resize: none;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        border: 1px solid #95B8E7;
+    }
+
+        .upFile > input {
+            display: inline-block;
+            width: 238px;
+            padding: 0 4px;
+            height: 28px;
+            line-height: 28px;
+            font-size: 14px;
+            border: none;
+            -moz-border-radius: 5px 5px 5px 5px;
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+            vertical-align: middle;
+        }
+
+        .upFile > span {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 28px;
+            line-height: 28px;
+            font-size: 14px;
+            text-align: center;
+            font-style: normal;
+            background-color: #efefef;
+            vertical-align: middle;
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+            border-left: 1px solid #ddd;
+        }
+
+            .upFile > span > input {
+                display: inline-block;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+            }
+</style>
+    <div class="tiaozhang_win">
+        <p>
+            &ensp;&ensp;数据源类型：<input class="winType" value="Excel文件" readonly="readonly" />
+        </p>
+        <form id="formToUpdate" method="post" action="#" enctype="multipart/form-data">
+            选择导入文件：
+            <p class="upFile">
+                <input type="text" value="" id="fileName" readonly="readonly" />
+                <span>
+                    <input type="file" id="upFile" name="f" />
+                    选择
+                </span>
+            </p>
+        </form>
+    </div>
+<script>
+    $(function () {
+        $(document).on('change', '#upFile', function () {
+            var file = this.files[0];
+            var extIndex = file.name.split(".").length - 1;
+            var ext = file.name.split(".")[extIndex];
+            if (ext.toLowerCase() == 'xls' || ext.toLowerCase() == 'xlsx') {
+                $("#fileName").val(file.name);
+            } else {
+                $("#upFile").val("");
+                alert("EXCEL文件扩展名必须是.xls.xlsx文件!");
+            }
+        });
+    });
+</script>
+<!--批量导入内容结束-->
