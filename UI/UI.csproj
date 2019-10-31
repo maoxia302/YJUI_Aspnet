@@ -88,6 +88,7 @@
     <Content Include="htm_ui\chuyun\chuyun.html" />
     <Content Include="htm_ui\common\dep.html" />
     <Content Include="htm_ui\common\emp.html" />
+    <Content Include="htm_ui\common\upFile.html" />
     <Content Include="htm_ui\diaobo\clzk\clzk.htm" />
     <Content Include="htm_ui\diaobo\clzk\clzk_add.htm" />
     <Content Include="htm_ui\diaobo\diaobo.htm" />
