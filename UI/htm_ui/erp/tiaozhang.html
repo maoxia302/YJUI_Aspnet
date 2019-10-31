@@ -40,67 +40,6 @@
         padding:2px;
     }
     .dgBar:after{display:block;clear:both;height:0;visibility:hidden;content:" "}
-    .tiaozhang_win {
-        margin: 10px;
-    }
-    .tiaozhang_win input.winType {
-        display: inline-block;
-        width: 300px;
-        padding:8px 4px;
-        border: 1px solid #95B8E7;
-        background-color: #fff;
-        border-radius: 4px;
-        -webkit-border-radius: 4px;
-        margin-left:3px;
-    }
-    .upFile {
-        display: inline-block;
-        width: 307px;
-        font-size: 0;
-        resize: none;
-        -moz-border-radius: 5px 5px 5px 5px;
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-        border: 1px solid #95B8E7;
-    }
-
-    .upFile > input {
-        display: inline-block;
-        width: 238px;
-        padding: 0 4px;
-        height: 28px;
-        line-height: 28px;
-        font-size: 14px;
-        border: none;
-        -moz-border-radius: 5px 5px 5px 5px;
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-        vertical-align: middle;
-    }
-
-    .upFile > span {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 28px;
-        line-height: 28px;
-        font-size: 14px;
-        text-align: center;
-        font-style: normal;
-        background-color: #efefef;
-        vertical-align: middle;
-        border-bottom-right-radius: 5px;
-        border-top-right-radius: 5px;
-        border-left: 1px solid #ddd;
-    }
-
-    .upFile > span > input {
-        display: inline-block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-    }
     .dbCont {
         padding:0 10px;
     }
@@ -238,26 +177,7 @@
         </div>
     </div>
     <!--table内容结束-->
-    <!--批量导入内容开始-->
-    <div id="win">
-        <div class="easyui-layout tiaozhang_win">
-            <p>
-                &ensp;&ensp;数据源类型：<input class="winType" value="Excel文件" readonly="readonly" />
-            </p>
-            <div>
-                选择导入文件：
-                <p class="upFile">
-                    <input type="text" value="" id="fileName" readonly="readonly" />
-                    <span>
-                        <input type="file" onchange="importf(this)" />
-                        选择
-                    </span>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!--批量导入内容结束-->
+    
 
     <div id="batchTr">
         <div class="easyui-layout" style="margin:10px;height:300px">
@@ -698,7 +618,7 @@
         }
 
         //批量导入弹层
-        $("#win").dialog({
+        /*$("#win").dialog({
             title: '批量导入',
             width: 600,
             height: 400,
@@ -728,12 +648,56 @@
                     }
                 }
             ]
-        });
-        $("#win").dialog('close');
+        });*/
 
         //”批量导入”点击事件
         function batchImp() {
-            $("#win").dialog('open');
+            $('<div/>').dialog({
+                href: '/htm_ui/common/upFile.html',
+                width: 600,
+                height: 400,
+                modal: true,
+                title: '上传文件',
+                iconCls: 'icon-file',
+                buttons: [
+                    {
+                        text: '下载模板',
+                        iconCls: 'icon-save',
+                        handler: function () {
+                            window.open("");
+                        }
+                    }, {
+                        text: '确认导入',
+                        iconCls: 'icon-ok',
+                        handler: function () {
+                            var d = $(this).closest('.window-body');
+                            $("#formToUpdate").ajaxSubmit({
+                                type: 'post',
+                                enctype: 'multipart/form-data',
+                                fileElementId: 'upFile',
+                                url: '../ashx_ui/ui_baocaishenqing.ashx?action=import',
+                                success: function (data) {
+                                    d.dialog('destroy');
+                                    if (data.length > 0) {
+                                        for (var i = 0; i < data.length; i++) {
+                                            var rows = $('#dg').datagrid("getRows");
+                                            $("#dg").datagrid("insertRow", { index: rows.length, row: data[i] });
+                                        }
+                                        CalcFooter();//刷新footer
+                                        $.show_warning("提示", "操作成功");
+                                    } else {
+                                        $.show_warning("提示", "数据为空");
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                ],
+                onClose: function () {
+                    $(this).dialog('destroy');
+                }
+            });
         }
 
         //点击“批量修改”
