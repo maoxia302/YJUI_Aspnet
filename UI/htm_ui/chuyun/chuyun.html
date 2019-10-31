@@ -67,11 +67,14 @@
         list-style:none;
         font-size:0;
     }
-        .chuyun_table > li {
-            display:inline-block;
-            width:202px;
-            margin-bottom:3px;
-        }
+    .chuyun_table > li {
+        display:inline-block;
+        width:210px;
+        margin-bottom:4px;
+    }
+    .ph, .dhwl {
+        padding:2px 0;
+    }
 </style>
 
 <div id="tb1" class="tbBoor">
@@ -87,7 +90,7 @@
 <input type="hidden" id="ExpandRow" />
 <div class="easyui-layout" data-options="fit : true,border : false">
     <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
-         style="height: 80px; background: #f4f4f4;">
+         style="display:table-cell;vertical-align:middle;height:90px; background: #f4f4f4;">
         <div>
             <form id="ff" method="POST">
                 <ul class="chuyun_table">
