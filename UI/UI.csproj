@@ -14,7 +14,7 @@
     <RootNamespace>YJUI.UI</RootNamespace>
     <AssemblyName>UI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <TargetFrameworkProfile />
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -221,6 +221,7 @@
     <Content Include="javascript\jquery-1.4.4.js" />
     <Content Include="javascript\jquery-1.8.0.min.js" />
     <Content Include="javascript\jquery.easyui.min.js" />
+    <Content Include="javascript\jquery.form.min.js" />
     <Content Include="javascript\jquery.min.js" />
     <Content Include="javascript\lang\en.js" />
     <Content Include="javascript\lang\zh-cn.js" />
@@ -2185,6 +2186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx_ui\ui_leftmenu.ashx" />
@@ -2258,12 +2260,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>15237</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:15237/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

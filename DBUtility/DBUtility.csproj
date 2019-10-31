@@ -42,7 +42,6 @@
     <Compile Include="ErpUtil.cs" />
     <Compile Include="VOCEN2018DbHelperSQL.cs" />
     <Compile Include="DbHelperSQL.cs" />
-    <Compile Include="JsonHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

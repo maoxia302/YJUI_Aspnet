@@ -36,6 +36,15 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\UI\bin\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\UI\bin\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\UI\bin\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
@@ -52,6 +61,7 @@
     <Compile Include="ColumeToString.cs" />
     <Compile Include="Const.cs" />
     <Compile Include="DataHelper.cs" />
+    <Compile Include="ExcelHelper.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="GetTreeJsonByTable.cs" />
     <Compile Include="Json.cs" />
