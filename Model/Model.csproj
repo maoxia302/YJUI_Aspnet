@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="chuyun.cs" />
+    <Compile Include="CMSMC.cs" />
     <Compile Include="CMSME.cs" />
     <Compile Include="CMSMQ.cs" />
     <Compile Include="CMSMV.cs" />

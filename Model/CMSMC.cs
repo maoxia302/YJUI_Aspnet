@@ -2,12 +2,12 @@
 namespace YJUI.Model
 {
     /// <summary>
-    /// INVTB:实体类(属性说明自动提取数据库字段的描述信息)
+    /// CMSMC:实体类(属性说明自动提取数据库字段的描述信息)
     /// </summary>
     [Serializable]
-    public partial class INVTB
+    public partial class CMSMC
     {
-        public INVTB()
+        public CMSMC()
         { }
         #region Model
         private string _company;
@@ -17,43 +17,30 @@ namespace YJUI.Model
         private string _modifier;
         private string _modi_date;
         private decimal? _flag;
-        private string _tb001;
-        private string _tb002;
-        private string _tb003;
-        private string _tb004 = "";
-        private string _tb005;
-        private string _tb006;
-        private decimal? _tb007 = 0M;
-        private string _tb008 = "";
-        private decimal? _tb009 = 0M;
-        private decimal? _tb010 = 0M;
-        private decimal? _tb011 = 0M;
-        private string _tb012 = "";
-        private string _tb013 = "";
-        private string _tb014 = "";
-        private string _tb015 = "";
-        private string _tb016 = "";
-        private string _tb017;
-        private string _tb018 = "";
-        private string _tb019 = "";
-        private string _tb020 = "";
-        private string _tb021 = "";
-        private decimal? _tb022 = 0M;
-        private string _tb023 = "";
-        private string _tb024 = "";
-        private decimal? _tb025 = 0M;
-        private decimal? _tb026 = 0M;
-        private decimal? _tb027 = 0M;
-        private string _tb028;
-        private string _tb029 = "";
-        private string _tb030 = "";
-        private string _tb031 = "";
-        private string _tb032 = "";
-        private string _tb033 = "";
-        private string _tb034;
-        private decimal? _tb035 = 0M;
-        private decimal? _tb036 = 0M;
-        private decimal? _tb037 = 0M;
+        private string _mc001;
+        private string _mc002 = "";
+        private string _mc003 = "";
+        private string _mc004 = "";
+        private string _mc005 = "";
+        private string _mc006 = "";
+        private string _mc007;
+        private string _mc008 = "N";
+        private string _mc009 = "";
+        private string _mc010 = "";
+        private string _mc011 = "";
+        private decimal? _mc012 = 0M;
+        private decimal? _mc013 = 0M;
+        private decimal? _mc014 = 0M;
+        private decimal? _mc015 = 0M;
+        private string _mc016 = "N";
+        private string _mc017 = "";
+        private string _mc018 = "Y";
+        private string _mc019 = "";
+        private string _mc020 = "";
+        private string _mc021;
+        private decimal? _mc022 = 0M;
+        private decimal? _mc023 = 0M;
+        private decimal? _mc024 = 0M;
         private string _udf01;
         private string _udf02;
         private string _udf03;
@@ -78,7 +65,6 @@ namespace YJUI.Model
         private decimal? _udf60 = 0M;
         private decimal? _udf61 = 0M;
         private decimal? _udf62 = 0M;
-        private CMSMC _cmsmc;
         /// <summary>
         /// 
         /// </summary>
@@ -138,298 +124,194 @@ namespace YJUI.Model
         /// <summary>
         /// 
         /// </summary>
-        public string TB001
+        public string MC001
         {
-            set { _tb001 = value; }
-            get { return _tb001; }
+            set { _mc001 = value; }
+            get { return _mc001; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB002
+        public string MC002
         {
-            set { _tb002 = value; }
-            get { return _tb002; }
+            set { _mc002 = value; }
+            get { return _mc002; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB003
+        public string MC003
         {
-            set { _tb003 = value; }
-            get { return _tb003; }
+            set { _mc003 = value; }
+            get { return _mc003; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB004
+        public string MC004
         {
-            set { _tb004 = value; }
-            get { return _tb004; }
+            set { _mc004 = value; }
+            get { return _mc004; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB005
+        public string MC005
         {
-            set { _tb005 = value; }
-            get { return _tb005; }
+            set { _mc005 = value; }
+            get { return _mc005; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB006
+        public string MC006
         {
-            set { _tb006 = value; }
-            get { return _tb006; }
+            set { _mc006 = value; }
+            get { return _mc006; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public decimal? TB007
+        public string MC007
         {
-            set { _tb007 = value; }
-            get { return _tb007; }
+            set { _mc007 = value; }
+            get { return _mc007; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB008
+        public string MC008
         {
-            set { _tb008 = value; }
-            get { return _tb008; }
+            set { _mc008 = value; }
+            get { return _mc008; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public decimal? TB009
+        public string MC009
         {
-            set { _tb009 = value; }
-            get { return _tb009; }
+            set { _mc009 = value; }
+            get { return _mc009; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public decimal? TB010
+        public string MC010
         {
-            set { _tb010 = value; }
-            get { return _tb010; }
+            set { _mc010 = value; }
+            get { return _mc010; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public decimal? TB011
+        public string MC011
         {
-            set { _tb011 = value; }
-            get { return _tb011; }
+            set { _mc011 = value; }
+            get { return _mc011; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB012
+        public decimal? MC012
         {
-            set { _tb012 = value; }
-            get { return _tb012; }
+            set { _mc012 = value; }
+            get { return _mc012; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB013
+        public decimal? MC013
         {
-            set { _tb013 = value; }
-            get { return _tb013; }
+            set { _mc013 = value; }
+            get { return _mc013; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB014
+        public decimal? MC014
         {
-            set { _tb014 = value; }
-            get { return _tb014; }
+            set { _mc014 = value; }
+            get { return _mc014; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB015
+        public decimal? MC015
         {
-            set { _tb015 = value; }
-            get { return _tb015; }
+            set { _mc015 = value; }
+            get { return _mc015; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB016
+        public string MC016
         {
-            set { _tb016 = value; }
-            get { return _tb016; }
+            set { _mc016 = value; }
+            get { return _mc016; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB017
+        public string MC017
         {
-            set { _tb017 = value; }
-            get { return _tb017; }
+            set { _mc017 = value; }
+            get { return _mc017; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB018
+        public string MC018
         {
-            set { _tb018 = value; }
-            get { return _tb018; }
+            set { _mc018 = value; }
+            get { return _mc018; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB019
+        public string MC019
         {
-            set { _tb019 = value; }
-            get { return _tb019; }
+            set { _mc019 = value; }
+            get { return _mc019; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB020
+        public string MC020
         {
-            set { _tb020 = value; }
-            get { return _tb020; }
+            set { _mc020 = value; }
+            get { return _mc020; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB021
+        public string MC021
         {
-            set { _tb021 = value; }
-            get { return _tb021; }
+            set { _mc021 = value; }
+            get { return _mc021; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public decimal? TB022
+        public decimal? MC022
         {
-            set { _tb022 = value; }
-            get { return _tb022; }
+            set { _mc022 = value; }
+            get { return _mc022; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB023
+        public decimal? MC023
         {
-            set { _tb023 = value; }
-            get { return _tb023; }
+            set { _mc023 = value; }
+            get { return _mc023; }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string TB024
+        public decimal? MC024
         {
-            set { _tb024 = value; }
-            get { return _tb024; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal? TB025
-        {
-            set { _tb025 = value; }
-            get { return _tb025; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal? TB026
-        {
-            set { _tb026 = value; }
-            get { return _tb026; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal? TB027
-        {
-            set { _tb027 = value; }
-            get { return _tb027; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string TB028
-        {
-            set { _tb028 = value; }
-            get { return _tb028; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string TB029
-        {
-            set { _tb029 = value; }
-            get { return _tb029; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string TB030
-        {
-            set { _tb030 = value; }
-            get { return _tb030; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string TB031
-        {
-            set { _tb031 = value; }
-            get { return _tb031; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string TB032
-        {
-            set { _tb032 = value; }
-            get { return _tb032; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string TB033
-        {
-            set { _tb033 = value; }
-            get { return _tb033; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string TB034
-        {
-            set { _tb034 = value; }
-            get { return _tb034; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal? TB035
-        {
-            set { _tb035 = value; }
-            get { return _tb035; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal? TB036
-        {
-            set { _tb036 = value; }
-            get { return _tb036; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal? TB037
-        {
-            set { _tb037 = value; }
-            get { return _tb037; }
+            set { _mc024 = value; }
+            get { return _mc024; }
         }
         /// <summary>
         /// 
@@ -622,19 +504,6 @@ namespace YJUI.Model
         {
             set { _udf62 = value; }
             get { return _udf62; }
-        }
-
-        public CMSMC Cmsmc
-        {
-            get
-            {
-                return _cmsmc;
-            }
-
-            set
-            {
-                _cmsmc = value;
-            }
         }
         #endregion Model
 

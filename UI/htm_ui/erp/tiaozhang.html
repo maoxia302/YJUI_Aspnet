@@ -303,10 +303,9 @@
             //datagrid加载
             var batchData = {
                 rows: [
-                    { sortId: '0001', id: '', mb001: '活塞环', mb002: '474/强化', qty: '2', price: '23.00', money: '89' },
-                    { sortId: '0002', id: '', mb001: '活塞环', mb002: '474/强化', qty: '2', price: '23.00', money: '89' },
+                   // { sortId: '0001', id: '', mb001: '活塞环', mb002: '474/强化', 数量: '2', price: '23.00', money: '89' },
                 ],
-                footer: [{ id: '总计', qty: '' }]
+                footer: [{ sortId: '总计', 数量: '' }]
             };
             var products = [
                 { id: 'FI-SW-01', mb001: 'Koi', mb002: 'a', qty: '1', price: '1.0', money: '34.0' },
@@ -325,9 +324,9 @@
                 toolbar: dgToolbar,
                 columns: [[
                     { field: 'ck', checkbox: true },
-                    { field: 'sortId', title: '序号', halign: 'center', align: 'center', width: 50 },
+                    { field: 'sortId', title: '序号', halign: 'center', align: 'center', width: 20 },
                     {
-                        field: '品号', title: '品号', halign: 'center', align: 'center', width: 50,
+                        field: '品号', title: '品号', halign: 'center', align: 'center', width: 30,
                         editor: {
                             type: 'combogrid',
                             options: {
@@ -413,7 +412,7 @@
                         },
                     },
                     {
-                        field: 'mb002', title: '规格', halign: 'center', align: 'center', width: 50,
+                        field: '规格', title: '规格', halign: 'center', align: 'center', width: 50,
                         editor: {
                             type: 'text',
                             options: {
@@ -429,13 +428,59 @@
                             }
                         },
                     },
-                    { field: 'qty', title: '数量', halign: 'center', align: 'center', width: 50, editor: { type: 'text' }, },
-                    { field: 'price', title: '单价', halign: 'center', align: 'center', width: 50, editor: { type: 'text' }, },
-                    { field: 'money', title: '金额', halign: 'center', align: 'center', width: 50, editor: { type: 'text' }, },
+                    { field: '数量', title: '数量', halign: 'center', align: 'center', width: 20, editor: { type: 'text' }, },
+                    {
+                        field: '仓库编码', title: '仓库编码', halign: 'center', align: 'center', width: 50, editor: { type: 'text' },
+                        editor: {
+                            type: 'combogrid',
+                            options: {
+                                panelWidth: 550,
+                                idField: 'id',
+                                textField: 'id',
+                                required: false,
+                                editable: true,
+                                toolbar: idToolbar,
+                                columns: [[
+                                    { field: 'id', title: '品号', width: 130 },
+                                    { field: 'mb001', title: '品名', width: 100 },
+                                    { field: 'mb002', title: '规格', width: 120 },
+                                    { field: 'qty', title: '数量', width: 100 },
+                                    { field: 'price', title: '单价', width: 100 },
+                                    { field: 'money', title: '金额', width: 100 }
+                                ]],
+                                data: products,
+                                //required:true,
+                                onSelect: function (index, row) {
+                                    /*var dgId = $('#dg').datagrid('getEditor', { index: editRow, field: 'id' });
+                                    console.log("zzzzzzzzzzz");
+                                    console.log(editRow)
+                                    console.log(dgId)
+                                    //if (!isEmpty(dgId)) {
+                                        $(dgId.target).val(row.id); //赋值
+                                        var mb001 = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb001' });
+                                        $(mb001.target).val(row.mb001); //赋值
+
+                                    //}*/
+
+                                },
+                                events: {
+                                    keyup: function (e) {
+                                        if (e.keyCode == 13) {
+                                            //enter键
+                                            var ed = $('#dg').datagrid('getEditor', { index: editRow, field: 'mb001' });
+                                            $(ed.target).next().children().focus();
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    { field: '仓库名称', title: '仓库名称', halign: 'center', align: 'center', width: 50, editor: { type: 'text' }, },
                     {
                         field: 'button', title: '操作', halign: 'center', align: 'center', width: 40,
                         formatter: function (value, row, index) {
-                            if (row.id == '总计') {
+                            if (row.sortId == '总计') {
                                 return '';
                             } else {
                                 return '<a href="#" class="buttonNew" onclick="delet(' + index + ')">删除</a>';
@@ -444,7 +489,7 @@
                         }
                     },
                 ]],
-                data: batchData,
+               data: batchData,
                 onClickCell: function (rowIndex, field, value) {
                     var idAttr = this.getAttribute("id");
                     var row = $("#" + idAttr).datagrid('getData').rows[rowIndex];
@@ -537,12 +582,12 @@
             var rs = $('#dg').datagrid('getRows');
             var qtyTotal = 0;
             for (var i = 0; i < rs.length; i++) {
-                if (!isEmpty(rs[i]['qty'])) {
-                    qtyTotal += parseFloat(rs[i]['qty']);
+                if (!isEmpty(rs[i]['数量'])) {
+                    qtyTotal += parseFloat(rs[i]['数量']);
                 }
             }
             var fs = $('#dg').datagrid('getFooterRows');
-            fs[0].qty = qtyTotal;
+            fs[0].数量 = qtyTotal;
             $('#dg').datagrid('reloadFooter', fs);
         }
 

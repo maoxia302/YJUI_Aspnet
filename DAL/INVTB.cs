@@ -479,6 +479,7 @@ namespace YJUI.DAL
         public YJUI.Model.INVTB DataRowToModel(DataRow row)
         {
             YJUI.Model.INVTB model = new YJUI.Model.INVTB();
+
             if (row != null)
             {
                 if (row["COMPANY"] != null)
@@ -553,9 +554,11 @@ namespace YJUI.DAL
                 {
                     model.TB011 = decimal.Parse(row["TB011"].ToString());
                 }
-                if (row["TB012"] != null)
+                if (row["TB012"] != null)//仓库
                 {
                     model.TB012 = row["TB012"].ToString();
+                    model.Cmsmc = new DAL.CMSMC().GetModel(row["TB012"].ToString());//获取CMSMC所有的数据
+                    model.Cmsmc.MC002 = "";
                 }
                 if (row["TB013"] != null)
                 {
