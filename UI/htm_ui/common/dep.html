@@ -17,6 +17,9 @@
 <script>
 
     $(function () {
+        var obj = $('#dd').dialog('options');
+        var queryParams = obj["queryParams"];
+        console.log(queryParams);
         depLoad();
     });
 
