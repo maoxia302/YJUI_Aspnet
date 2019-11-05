@@ -79,12 +79,6 @@ namespace YJUI.UI.ashx_ui
                     dtC.Columns.Add("项目编号");
                     dtC.Columns.Add("备注");
 
-
-
-
-
-
-
                     string[] arrPinhao = dt1.AsEnumerable().Select(d => d.Field<string>("品号")).ToArray();
 
                     string s = "'" + string.Join("','", dt1.AsEnumerable().Select(d => d.Field<string>("品号")).ToArray()) + "'";
@@ -116,7 +110,7 @@ namespace YJUI.UI.ashx_ui
                                     bz = t.Field<string>("备注"),
                                 };
                     query.ToList().ForEach(q => dtC.Rows.Add(q.pinhao, q.pinming, q.guige, q.oem, q.shuliang, q.dw, q.xdw, q.chengben, q.money, q.cangku, q.ckName, q.pihao, q.pihaoshuoming, q.scDate, q.yxDate, q.fjDate, q.xmbh, q.bz));
-                    double sum = dtC.AsEnumerable().Select(d => Convert.ToDouble(d.Field<string>("数量"))).Sum();
+                    //double sum = dtC.AsEnumerable().Select(d => Convert.ToDouble(d.Field<string>("数量"))).Sum();
                     string strjson = Common.JsonHelper.ToJson(dtC);
                    // context.Response.Write("{\"rows\":" + strjson + ",\"footer\":[{ \"品号\":\"合计:\",\"数量\":" + sum + "}]}");
                     context.Response.Write("{\"rows\":" + strjson + "}");
