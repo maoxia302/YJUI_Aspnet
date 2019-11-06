@@ -650,19 +650,20 @@
                 { 'id': '6701918', 'mb001': '活塞环5', 'mb002': '474/强化', 'qty': '2', 'price': '35.00' }
             ];
             $("#proList").datagrid({
-                striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: true, singleSelect: false,
+                striped: false, nowrap: false, fitColumns: true, autoRowHeight: false, rownumbers: false, singleSelect: false,
                 showFooter: false, remoteSort: false, sortable: "true", fit: true,
-
+                pagination: true,
+                pageSize: 40,
+                pageList: [40, 50],
+                url:"../ashx_ui/INVMB.ashx?action=search",
                 columns: [[
-                    { field: 'ck', checkbox: true },
-                    { field: 'id', title: '品号', halign: 'center', align: 'center', width: 50 },
-                    { field: 'mb001', title: '品名', halign: 'center', align: 'center', width: 50 },
-                    { field: 'mb002', title: '规格', halign: 'center', align: 'center', width: 50 },
-                    { field: 'qty', title: '数量', halign: 'center', align: 'center', width: 50 },
-                    { field: 'price', title: '单价', halign: 'center', align: 'center', width: 50 },
-                    { field: 'money', title: '金额', halign: 'center', align: 'center', width: 50 },
+                    { field: 'ck', checkbox: true, width: 10  },
+                    { field: 'MB001', title: '品号', halign: 'center', align: 'center', width: 30 },
+                    { field: 'MB002', title: '品名', halign: 'center', align: 'center', width: 40 },
+                    { field: 'MB003', title: '规格', halign: 'center', align: 'center', width: 60 },
+                    { field: 'MB004', title: '单位', halign: 'center', align: 'center', width: 50 },
                 ]],
-                data: proData,
+                //data: proData,
             });
         }
 
@@ -888,7 +889,6 @@
         }
 
         //combogrid中toobar查询按钮
-        <a href="../../ashx_ui/renkuan.ashx">../../ashx_ui/renkuan.ashx</a>
         function toSearch() {
 
 

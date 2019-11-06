@@ -125,13 +125,21 @@ namespace YJUI.BLL
         /// <summary>
         /// 分页获取数据列表
         /// </summary>
-        public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
+        public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex,ref  int total )
         {
-            return dal.GetListByPage(strWhere, orderby, startIndex, endIndex);
+            return dal.GetListByPage(strWhere, orderby, startIndex, endIndex,ref total);
         }
         #endregion  BasicMethod
 
         #region  ExtensionMethod
+
+        public string GetListToJson(string strWhere, string orderby, int startIndex, int endIndex)
+        {
+            int total = 0;
+            DataTable dt = GetListByPage(strWhere, orderby, startIndex, endIndex, ref total).Tables[0];
+            string strjson = Common.JsonHelper.ToJson(dt);
+            return "{\"total\": " + total.ToString() + ",\"rows\":" + strjson + "}";
+        }
 
         #endregion  ExtensionMethod
     }

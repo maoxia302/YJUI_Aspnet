@@ -25,7 +25,6 @@ namespace YJUI.DAL
             SqlParameter[] parameters = {
                     new SqlParameter("@MC001", SqlDbType.Char,10)           };
             parameters[0].Value = MC001;
-
             return DbHelperSQL.Exists(strSql.ToString(), parameters);
         }
 
@@ -710,6 +709,7 @@ namespace YJUI.DAL
         /// </summary>
         public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
         {
+
             StringBuilder strSql = new StringBuilder();
             strSql.Append("SELECT * FROM ( ");
             strSql.Append(" SELECT ROW_NUMBER() OVER (");

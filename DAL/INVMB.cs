@@ -2828,10 +2828,11 @@ namespace YJUI.DAL
         /// <summary>
         /// 分页获取数据列表
         /// </summary>
-        public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
+        public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex, ref int total)
         {
+            total = Convert.ToInt32(VOCEN2018DbHelperSQL.GetSingle("select count(1) from INVMB where " + strWhere));
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT * FROM ( ");
+            strSql.Append("SELECT MB001,MB002,MB003,MB004  FROM ( ");
             strSql.Append(" SELECT ROW_NUMBER() OVER (");
             if (!string.IsNullOrEmpty(orderby.Trim()))
             {
@@ -2848,11 +2849,8 @@ namespace YJUI.DAL
             }
             strSql.Append(" ) TT");
             strSql.AppendFormat(" WHERE TT.Row between {0} and {1}", startIndex, endIndex);
-            return DbHelperSQL.Query(strSql.ToString());
+            return VOCEN2018DbHelperSQL.Query(strSql.ToString());
         }
-
-
-
         #endregion  BasicMethod
         #region  ExtensionMethod
 
