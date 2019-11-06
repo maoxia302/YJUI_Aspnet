@@ -159,7 +159,7 @@ namespace YJUI.DAL
             parameters[15].Value = model.thsj;
             parameters[16].Value = model.sfth;
             parameters[17].Value = model.fee;
-            parameters[18].Value = model.CreatedTime;
+            parameters[18].Value = DateTime.Now;
             parameters[19].Value = model.ID;
             parameters[20].Value = model.shr;
             parameters[21].Value = model.Wlfl;
@@ -510,7 +510,7 @@ namespace YJUI.DAL
             strSql.Append("select  [ID],[riqi] ,[tzr] ,[fenku] ,[dth] ,[dhdq]");
             strSql.Append(" , [khmc],[dhwl] ,[wlfl] ,[wldh] ,[wldz]");
             strSql.Append(", [shr],[shrtel] ,[js] ,[yfje] ,[ph],[bz]");
-            strSql.Append(", [thr],[thsj] ,[sfth] ,[fee] ,[zjdate]");
+            strSql.Append(", [thr],[thsj] ,[sfth] ,[fee] ,[CreatedTime],[zjdate]");
 
             strSql.Append("   FROM [chuyun] ");
             if (strWhere.Trim() != "")
