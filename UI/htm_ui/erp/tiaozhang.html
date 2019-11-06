@@ -114,11 +114,11 @@
                     <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid" id="orderType" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">选择</a></td>
                     <td>部门编号:<input type="text" class="easyui-combogrid" id="dep" style="height:28px;"  /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'" id="depname" onclick="depmentQty()">选择</a></td>
                     <td>人员编号:<input type="text" class="easyui-combogrid" id="emp" style="height:28px;" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'" id="empname" onclick="empQty()">选择</a></td>
-                    <td><input type="checkbox" />生成分录</td>
+                    <td><input type="checkbox" id="creatEntry" />生成分录</td>
                 </tr>
                 <tr>
                     <td>&ensp;&ensp;&emsp;单号:<input type="text"  id="danhao"/></td>
-                    <td>&ensp;&ensp;&emsp;工厂:<input type="text" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'">选择</a></td>
+                    <td>&ensp;&ensp;&emsp;工厂:<input type="text" class="easyui-combogrid" id="gongchang" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'">选择</a></td>
                     <td>交易日期:<input type="text" class="Wdate" id="jyDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off"/></td>
                     <td class="isPass">
                         <i class="pass"><img src="../../images/icon_pass.png" alt="" /></i>
@@ -127,11 +127,11 @@
                 </tr>
                 <tr>
                     <td>单据日期:<input type="text" class="Wdate" id="djDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',onpicking: function (dp) {if (dp.cal.getDateStr() != dp.cal.getNewDateStr()) { Func(dp.cal.getNewDateStr())}}})" autocomplete="off" /></td>
-                    <td>&ensp;&ensp;&emsp;件数:<input type="text" /></td>
+                    <td>&ensp;&ensp;&emsp;件数:<input type="text" id="jianshu" /></td>
                 </tr>
                 <tr>
-                    <td>&ensp;&ensp;&emsp;备注:<textarea style="height:50px;"></textarea></td>
-                    <td>项目编号:<input type="text" /></td>
+                    <td>&ensp;&ensp;&emsp;备注:<textarea id="beizhu" style="height:50px;"></textarea></td>
+                    <td>项目编号:<input type="text" id="proId" /></td>
                 </tr>
             </table>
         </div>
@@ -667,8 +667,79 @@
 
         //添加行
         function addTr() {
+            if (!headerCheck()) {
+                return false;
+            }
             var rows = $('#dg').datagrid("getRows");
             $("#dg").datagrid("insertRow", { index: rows.length, row: { 'sortId': getSortId('#dg'), 'id': '', 'mb001': '', 'mb002': '', 'qty': '', 'price': '' } });
+        }
+
+        //校验header内容
+        function headerCheck() {
+            var orderTypeTxt = $("#orderType").combogrid('getValue');//单别
+            var depTxt = $("#dep").combogrid('getValue');//部门
+            var empTxt = $("#emp").combogrid('getValue');//人员编号
+            var creatEntyTxt = $("#creatEntry").is(":checked");//生成分录
+            //单号
+            var danhaoTxt = $("#danhao").val();
+            //工厂
+            var gcTxt = $("#gongchang").combogrid('getValue');
+            //交易日期
+            var jyDateTxt = $("#jyDate").val();
+            //单据日期
+            var djDateTxt = $("#djDate").val();
+            //件数
+            var jianshuTxt = $("#jianshu").val();
+            //备注
+            var bezhuTxt = $("#beizhu").val();
+            //项目编号
+            var proIdTxt = $("#proId").val();
+            if (isEmpty(orderTypeTxt)) {
+                //判断单别为空
+                $.show_warning("提示", "单别为空");
+                return false;
+            } else if (isEmpty(depTxt)) {
+                //判断部门为空
+                $.show_warning("提示", "部门为空");
+                return false;
+            } else if (isEmpty(empTxt)) {
+                //判断人员编号为空
+                $.show_warning("提示", "人员编号为空");
+                return false;
+            } else if (!creatEntyTxt) {
+                //判断生成分录未勾选
+                $.show_warning("提示", "生成分录未勾选");
+                return false;
+            } else if (isEmpty(danhaoTxt)) {
+                //判断单号为空
+                $.show_warning("提示", "单号为空");
+                return false;
+            } else if (isEmpty(gcTxt)) {
+                //判断工厂为空
+                $.show_warning("提示", "工厂为空");
+                return false;
+            } else if (isEmpty(jyDateTxt)) {
+                //判断交易日期为空
+                $.show_warning("提示", "交易日期为空");
+                return false;
+            } else if (isEmpty(djDateTxt)) {
+                //判断单据日期为空
+                $.show_warning("提示", "单据日期为空");
+                return false;
+            } else if (isEmpty(jianshuTxt)) {
+                //判断件数为空
+                $.show_warning("提示", "件数为空");
+                return false;
+            } else if (isEmpty(bezhuTxt)) {
+                //判断备注为空
+                $.show_warning("提示", "备注为空");
+                return false;
+            } else if (isEmpty(proIdTxt)) {
+                //判断项目编号为空
+                $.show_warning("提示", "项目编号为空");
+                return false;
+            }
+            return true;
         }
 
         //删除行
