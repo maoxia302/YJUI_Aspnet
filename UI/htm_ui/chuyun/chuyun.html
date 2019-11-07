@@ -348,7 +348,12 @@
                 if (result == "ok") {
                     $.show_warning("提示", "操作成功");
             
-                    $("#" + wlId).datagrid("reload");
+                    $("#" + wlId).datagrid("updateRow", {
+                        index: index02, //行索引
+                        row: {
+                            CreatedTime: getNowDate() //行中的某个字段
+                        }
+                    });
 
                 }
             }
@@ -492,6 +497,26 @@
             z = 'dj';
         }
         return z;
+    }
+
+
+
+    //获取当前时间（年月日时分秒）
+    function getNowDate() {
+        var nowDate = new Date;
+        var y = nowDate.getFullYear()
+        var m = nowDate.getMonth() + 1
+        m = m < 10 ? '0' + m : m
+        var d = nowDate.getDate()
+        d = d < 10 ? ('0' + d) : d
+        var hour = nowDate.getHours();
+        hour = hour < 10 ? '0' + hour : hour
+        var minute = nowDate.getMinutes();
+        minute = minute < 10 ? '0' + minute : minute
+        var second = nowDate.getSeconds();
+        second = second < 10 ? '0' + second : second
+        var curDate = y + '-' + m + '-' + d + ' ' + hour + ':' + minute + ':' + second;
+        return curDate;
     }
 </script>
 
