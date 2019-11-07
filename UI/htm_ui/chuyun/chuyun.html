@@ -329,6 +329,7 @@
         editRow = index;
         editId = wlId;
     }
+    //司机填写爆存
     function wlsave(index02, index, wlId) {
         $("#" + wlId).datagrid("endEdit", index02);
         var rows = $("#" + wlId).datagrid("getRows");
@@ -346,6 +347,7 @@
             success: function (result) {
                 if (result == "ok") {
                     $.show_warning("提示", "操作成功");
+            
                     $("#" + wlId).datagrid("reload");
 
                 }

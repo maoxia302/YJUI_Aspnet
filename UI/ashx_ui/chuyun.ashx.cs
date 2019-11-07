@@ -183,7 +183,7 @@ namespace YJUI.UI.ashx_ui
             }
             if (isTiHuo == "全部")
             {
-                sqlWhere += "     and (sfth is null or sfth= '是' or sfth='')";
+                sqlWhere += "     and (sfth is null or sfth= '是' or sfth='' or sfth='否')";
             }
             if (!string.IsNullOrEmpty(ph)) {
                 sqlWhere += string.Format("and ph like '%{0}%'",ph);

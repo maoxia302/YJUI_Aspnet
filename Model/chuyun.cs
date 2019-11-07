@@ -31,7 +31,7 @@ namespace YJUI.Model
         private string _thsj;
         private string _sfth;
         private string _fee;
-        private DateTime? _createdtime = DateTime.Now;
+        private DateTime? _createdtime;
         private string _siji;
         private DateTime? _zjdate = DateTime.Now;
         private string _zhijian;
