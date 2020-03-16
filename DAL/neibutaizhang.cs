@@ -38,19 +38,23 @@ namespace YJUI.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into neibutaizhang(");
-            strSql.Append("fkDate,fkPerson,wtDep,fkDesc)");
+            strSql.Append("fkDate,fkPerson,fkDep,wtDep,fkDesc,fkItem)");
             strSql.Append(" values (");
-            strSql.Append("@fkDate,@fkPerson,@wtDep,@fkDesc)");
+            strSql.Append("@fkDate,@fkPerson,@fkDep,@wtDep,@fkDesc,@fkItem)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@fkDate", SqlDbType.DateTime),
 					new SqlParameter("@fkPerson", SqlDbType.VarChar,50),
-					new SqlParameter("@wtDep", SqlDbType.VarChar,50),
-					new SqlParameter("@fkDesc", SqlDbType.Text)};
+                    new SqlParameter("@fkDep", SqlDbType.VarChar,50),
+                    new SqlParameter("@wtDep", SqlDbType.VarChar,50),
+					new SqlParameter("@fkDesc", SqlDbType.Text),
+                    new SqlParameter("@fkItem", SqlDbType.VarChar,50)};
             parameters[0].Value = model.fkDate;
             parameters[1].Value = model.fkPerson;
-            parameters[2].Value = model.wtDep;
-            parameters[3].Value = model.fkDesc;
+            parameters[2].Value = model.FkDep;
+            parameters[3].Value = model.wtDep;
+            parameters[4].Value = model.fkDesc;
+            parameters[5].Value = model.fkItem;
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
             {
@@ -377,6 +381,20 @@ namespace YJUI.DAL
             }
             return DbHelperSQL.Query(strSql.ToString());
         }
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
+        public IDataReader neiBuTaiZhangGetList(string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select ID,fkDate,fkPerson,fkDep,fkItem,wtDep,fkDesc,dyDep,dyPerson,dyDate,dyGaishan,cqFangan,cqDate,lsJianhe,lsDep,lsDate,myPingjia,myPerson,myDate,dsJianhe,dsPerson,dsDate ");
+            strSql.Append(" FROM neibutaizhang ");
+            if (strWhere.Trim() != "")
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            return DbHelperSQL.ExecuteReader(strSql.ToString());
+        }
 
         /// <summary>
         /// 获得前几行数据
@@ -458,8 +476,23 @@ namespace YJUI.DAL
             sb.Append(string.Format(" order By {0}))", strOrder));
             sb.Append(string.Format(" order by {0}",strOrder));
             return DbHelperSQL.Query(sb.ToString()).Tables[0];
-
         }
+
+        /// <summary>
+        /// 查询分页
+        /// </summary>
+        /// <param name="tblName"></param>
+        /// <param name="fldName"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="page"></param>
+        /// <param name="fldSort"></param>
+        /// <param name="Sort"></param>
+        /// <param name="strCondition"></param>
+        /// <param name="ID"></param>
+        /// <param name="Dist"></param>
+        /// <param name="pageCount"></param>
+        /// <param name="Counts"></param>
+        /// <returns></returns>
         public DataTable GetList(string tblName, string fldName, int pageSize, int page, string fldSort, string Sort, string strCondition, string ID, string Dist, out int pageCount, out int Counts)
         {
             SqlParameter[] parameters =

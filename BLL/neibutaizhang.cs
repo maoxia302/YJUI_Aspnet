@@ -173,6 +173,14 @@ namespace YJUI.BLL
             }
             return "{\"total\": " + total.ToString() + ",\"rows\":" + strjson + "}";
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <returns></returns>
+        public IDataReader neiBuTaiZhangGetList(string strWhere) {
+            return dal.neiBuTaiZhangGetList(strWhere);
+        }
 
         #endregion  ExtensionMethod
     }

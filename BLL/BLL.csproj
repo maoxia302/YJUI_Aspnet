@@ -50,6 +50,9 @@
     <Compile Include="INVTB.cs" />
     <Compile Include="IVNTA.cs" />
     <Compile Include="jldl1.cs" />
+    <Compile Include="LRPTA.cs" />
+    <Compile Include="LRPTB.cs" />
+    <Compile Include="LRPTE.cs" />
     <Compile Include="neibutaizhang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="quanxian.cs" />

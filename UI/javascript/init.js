@@ -54,6 +54,44 @@ function InitLeftMenu() {
 
 }
 
+/* 请求Ajax 带返回值
+--------------------------------------------------*/
+function getAjax(url, parm, callBack) {
+    $.ajax({
+        type: 'post',
+        dataType: "text",
+        url: url,
+        data: parm,
+        cache: false,
+        async: false,
+        success: function (msg) {
+            callBack(msg);
+        }
+    });
+}
+
+//自动获取页面控件值
+function GetWebControls(element) {
+    var reVal = "";
+    $(element).find('input,select,textarea').each(function (r) {
+        var id = $(this).attr('id');
+        var value = $(this).val();
+        var type = $(this).attr('type');
+        switch (type) {
+            case "checkbox":
+                if ($(this).is(':checked')) {
+                    reVal += '"' + id + '"' + ':' + '"1",';
+                } else {
+                    reVal += '"' + id + '"' + ':' + '"0",';
+                }
+                break;
+            default:
+                reVal += '"' + id + '"' + ':' + '"' + $.trim(value) + '",';
+                break;
+        }
+    });
+}
+
 function initLogin() {
     getSession(function f(r) {
         try {
@@ -200,8 +238,4 @@ function loginout() {
 ///几位补零操作
 function PrefixInteger(num, length) {
     return (Array(length).join('0') + num).slice(-length);
-}
-
-
-
-
+    }

@@ -37,6 +37,13 @@ namespace YJUI.UI.ashx_ui
                 context.Response.Write(guzhang);
                 context.Response.End();
             }
+            //反馈所属项目
+            else if (context.Request.Params["action"] == "getItem")
+            {
+                string guzhang = new BLL.ui_guzhang().GetItemToJson();
+                context.Response.Write(guzhang);
+                context.Response.End();
+            }
         }
         public bool IsReusable
         {

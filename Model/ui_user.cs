@@ -15,6 +15,8 @@ namespace YJUI.Model
         private string _password;
         private string _xingming;
         private string _sex;
+        private string _depid;
+        private string _depname;
         private string _birth;
         private string _sfz;
         private string _tel;
@@ -117,6 +119,35 @@ namespace YJUI.Model
         {
             set { _crdate = value; }
             get { return _crdate; }
+        }
+        /// <summary>
+        /// 部门ID
+        /// </summary>
+        public string depid
+        {
+            get
+            {
+                return _depid;
+            }
+
+            set
+            {
+                _depid = value;
+            }
+        }
+        /// <summary>
+        /// 部门名称
+        /// </summary>
+        public string depname
+        {
+            get
+            {
+                return _depname;
+            }
+            set
+            {
+                _depname = value;
+            }
         }
         #endregion Model
 

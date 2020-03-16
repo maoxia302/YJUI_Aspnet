@@ -12,15 +12,16 @@
             pageSize: 10,
             pageList: [10, 20, 30, 40, 50],
             //冻结列
-            frozenColumns: [[{ "title": "反馈内容", "colspan": 6 }],
-                    [
-                    //{ field: 'ck', checkbox: true },
-                    { field: "ID", title: "编号", width: 50 },
-                    { field: "fkDate", title: "反馈时间", width: 70 },
-                    { field: "fkPerson", title: "反馈人", width: 50 },
-                    { field: "wtDep", title: "问题归属部门", width: 80 },
-                    { field: "fkDesc", title: "反馈描述", width: 200 }
-                ]],
+            frozenColumns: [[{ "title": "反馈内容", "colspan": 7 }],
+            [
+                { field: "ID", title: "编号", width: 50 },
+                { field: "fkDate", title: "反馈时间", width: 70 },
+                { field: "fkPerson", title: "反馈人", width: 50 },
+                { field: "fkDep", title: "反馈部门", width: 50 },
+                { field: "wtDep", title: "问题归属部门", width: 120 },
+                { field: "fkItem", title: "所属项目", width: 120 },
+                { field: "fkDesc", title: "反馈描述", width: 200 }
+            ]],
             columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 6 }, { title: "问题检核（问题登记后的30天内）", colspan: 3 }, { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 }, { title: "第三方检核", colspan: 3}],
                 [{ field: "dyDep", title: "领取部门", width: 70 },
                     { field: "dyPerson", title: "第一责任人", width: 80 },
@@ -133,11 +134,9 @@ function add_wentichuli() {
     function toexcel() {
         var begindate = $('#begindate').val();
         var enddate = $('#enddate').val();
-        if (begindate == "" || enddate == "") {
-            alert("请选择开始日期和结束日期");
-        } else {
-            window.open("../ashx_ui/neibu_toexcel.ashx?begindate=" + begindate + "&enddate=" + enddate);
-        }
+        var txt_dep = $('#txt_dep').val();
+        var txt_search = $('#txt_search').val();
+        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&begindate=" + begindate + "&enddate=" + enddate + "&txt_dep=" + txt_dep + "&txt_search=" + txt_search);
 
     }
     function submitForm() {
@@ -149,7 +148,7 @@ function add_wentichuli() {
         $('#dg_disanfangjianhe').datagrid('load', {
             begindate: $('#begindate').val(),
             enddate: $('#enddate').val(),
-            chk: document.getElementById("chk").checked,
+            txt_dep: $('#txt_dep').val(),
             txt_search: $('#txt_search').val()
 
         });
@@ -159,31 +158,30 @@ function add_wentichuli() {
 <div class="easyui-layout" data-options="fit : true,border : false">
     <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
          style="height: 130px; background: #f4f4f4;">
-                <div>
+        <div>
             <form id="ff" method="POST">
-            <table>
-                <tr>
-                    <td>
-                        反馈时间<input type="text" id="begindate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
-                        至
-                        <input type="text" id="enddate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
-                    </td>
-                    <td>
-                        <input type="checkbox" id="chk" />关键字<input type="text" id="txt_search" style="height: 18px;" />
-                    </td>
-                    <td>
-                        <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                            onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                                onclick="toexcel();">导出</a>
-                </tr>
-            </table>
+                <table>
+                    <tr>
+                        <td>
+                            反馈时间<input type="text" id="begindate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            至
+                            <input type="text" id="enddate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                        </td>
+                        <td>
+                            <!--<input type="checkbox" id="chk" />-->
+                            关键字<input type="text" id="txt_search" style="height: 18px;" />
+                            反馈部门<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                        </td>
+                        <td>
+                            <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                               onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                                                             onclick="toexcel();">导出</a>
+                    </tr>
+                </table>
             </form>
-        </div>   
-
-
+        </div>
     </div>
     <div data-options="region:'center',border:false">
-        <table id="dg_disanfangjianhe">
-        </table>
+        <table id="dg_disanfangjianhe"></table>
     </div>
 </div>

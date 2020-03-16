@@ -95,6 +95,7 @@
     <Content Include="htm_ui\diaobo\diaobo_add.htm" />
     <Content Include="htm_ui\diaobo\sfrz\sfrz.htm" />
     <Content Include="htm_ui\diaobo\sfrz\sfrz_add.htm" />
+    <Content Include="htm_ui\erp\lrp.html" />
     <Content Include="htm_ui\erp\tiaozhang.html" />
     <Content Include="htm_ui\fhqk\sfdc\sfdc.htm" />
     <Content Include="htm_ui\fhqk\sfdc\ui_sfdc.htm" />
@@ -2100,6 +2101,9 @@
     <Compile Include="ashx_ui\login.ashx.cs">
       <DependentUpon>login.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx_ui\LRPLA.ashx.cs">
+      <DependentUpon>LRPLA.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx_ui\neibu_toexcel.ashx.cs">
       <DependentUpon>neibu_toexcel.ashx</DependentUpon>
     </Compile>
@@ -2225,6 +2229,7 @@
     <Content Include="ashx_ui\CMSMQ.ashx" />
     <Content Include="ashx_ui\CMSME.ashx" />
     <Content Include="ashx_ui\CMSMV.ashx" />
+    <Content Include="ashx_ui\LRPLA.ashx" />
     <None Include="themes\black\images\Thumbs.db" />
     <None Include="themes\default\bootstrap\images\Thumbs.db" />
     <None Include="themes\default\images\Thumbs.db" />

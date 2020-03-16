@@ -12,14 +12,14 @@
             pageSize: 10,
             pageList: [10, 20, 30, 40, 50],
             //冻结列
-            frozenColumns: [[{ "title": "反馈内容", "colspan": 6}],
-                [
-                //{ field: 'ck', checkbox: true },
-               { field: "ID", title: "编号", width: 50 },
-
+            frozenColumns: [[{ "title": "反馈内容", "colspan": 7 }],
+            [
+                { field: "ID", title: "编号", width: 50 },
                 { field: "fkDate", title: "反馈时间", width: 70 },
                 { field: "fkPerson", title: "反馈人", width: 50 },
-                { field: "wtDep", title: "问题归属部门", width: 80 },
+                { field: "fkDep", title: "反馈部门", width: 50 },
+                { field: "wtDep", title: "问题归属部门", width: 120 },
+                { field: "fkItem", title: "所属项目", width: 120 },
                 { field: "fkDesc", title: "反馈描述", width: 200 }
             ]],
             columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 6 }, { title: "问题检核（问题登记后的30天内）", colspan: 3 }, { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 }, { title: "第三方检核", colspan: 3}],
@@ -47,10 +47,6 @@
                     text: '满意度调查',
                     iconCls: 'icon-edit',
                     handler: add_manyidupingjia
-                }, '-',
-                {
-                    text: '导出数据',
-                    iconCls: 'icon-org'
                 }]
         });
     })
@@ -136,17 +132,37 @@
         });
     }
 
+
+
+
 </script>
 <div class="easyui-layout" data-options="fit : true,border : false">
     <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
-        style="height: 100px; background: #f4f4f4;">
-        <!-- <div id="p" class="easyui-panel" title="检索条件" style="padding: 10px; height: 100px;
-                background: #f4f4f4; border-bottom: none" data-options="iconCls:'icon-columns',closable:false,  
-                collapsible:true,minimizable:false,maximizable:false">
-            </div>-->
+         style="height: 130px; background: #f4f4f4;">
+        <div>
+            <form id="ff" method="POST">
+                <table>
+                    <tr>
+                        <td>
+                            反馈时间<input type="text" id="begindate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            至
+                            <input type="text" id="enddate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                        </td>
+                        <td>
+                            <!--<input type="checkbox" id="chk" />-->
+                            关键字<input type="text" id="txt_search" style="height: 18px;" />
+                            反馈部门<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                        </td>
+                        <td>
+                            <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                               onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                                                             onclick="toexcel();">导出</a>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
     <div data-options="region:'center',border:false">
-        <table id="dg_manyidupingjia">
-        </table>
+        <table id="dg_manyidupingjia"></table>
     </div>
 </div>

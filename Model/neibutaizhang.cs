@@ -13,9 +13,12 @@ namespace YJUI.Model
         private int _id;
         private DateTime _fkdate;
         private string _fkperson;
+        private string _fkDep;
         private string _wtdep;
         private string _fkdesc;
         private string _dydep;
+        private string _fkItem;
+
         private string _dyperson;
         private DateTime? _dydate;
         private string _dygaishan;
@@ -189,6 +192,34 @@ namespace YJUI.Model
         {
             set { _dsdate = value; }
             get { return _dsdate; }
+        }
+        /// <summary>
+        /// 反馈部门
+        /// </summary>
+        public string FkDep
+        {
+            get
+            {
+                return _fkDep;
+            }
+
+            set
+            {
+                _fkDep = value;
+            }
+        }
+
+        public string fkItem
+        {
+            get
+            {
+                return _fkItem;
+            }
+
+            set
+            {
+                _fkItem = value;
+            }
         }
         #endregion Model
 
