@@ -5,12 +5,14 @@ using System.Data.Common;
 using System.Reflection;
 using System.Data;
 using System.Collections;
-
-using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json.Converters;
+
 namespace YJUI.Common
 {
-    public class JsonHelper
+    public static class JsonHelper
     {
         #region 私有方法
         /// <summary>
@@ -280,10 +282,9 @@ namespace YJUI.Common
             jsonString.Remove(jsonString.Length - 1, 1);
             jsonString.Append("]");
             return jsonString.ToString();
-        }
-        /// <summary>    
-        /// DataTable转换为Json     
-        /// </summary>    
+        }/// <summary>    
+         /// DataTable转换为Json     
+         /// </summary>    
         public static string ToJson(DataTable dt, string jsonName)
         {
             StringBuilder Json = new StringBuilder();
@@ -319,8 +320,7 @@ namespace YJUI.Common
 
         #region DataReader转换为Json
         /// <summary>     
-        /// DataReader转换为Json     
-        /// </summary>     
+        /// DataReader转换为Json      </summary>     
         /// <param name="dataReader">DataReader对象</param>     
         /// <returns>Json字符串</returns>  
         public static string ToJson(DbDataReader dataReader)
@@ -355,6 +355,51 @@ namespace YJUI.Common
         }
         #endregion
 
+
+        #region 解析json
+        public static void JsonToObj(string json)
+        {
+            JArray jArray = JArray.Parse(json);//解析成其他；
+
+
+        }
+        #endregion
+
+
+        /// <summary>
+        /// 将json数据反序列化为Dictionary
+        /// </summary>
+        /// <param name="jsonData">json数据</param>
+        /// <returns></returns>
+        /// 
+        public static Dictionary<string, object> JsonToDictionary(string jsonData)
+        {
+            //实例化JavaScriptSerializer类的新实例
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            try
+            {
+                //将指定的 JSON 字符串转换为 Dictionary<string, object> 类型的对象
+                return jss.Deserialize<Dictionary<string, object>>(jsonData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string ObjToJson(this object obj)
+        {
+            var timeConverter = new IsoDateTimeConverter { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" };
+            return JsonConvert.SerializeObject(obj, timeConverter);
+        }
+
+
+
         #region 返回错误
 
         public static string error()
@@ -367,94 +412,5 @@ namespace YJUI.Common
             return ToJson(dt);
         }
         #endregion
-
-        #region 数据表转键值对集合
-        /// <summary> 
-        /// 数据表转键值对集合
-        /// 把DataTable转成 List集合, 存每一行 
-        /// 集合中放的是键值对字典,存每一列 
-        /// </summary> 
-        /// <param name="dt">数据表</param> 
-        /// <returns>哈希表数组</returns> 
-        public static List<Dictionary<string, object>> DataTableToList(DataTable dt)
-        {
-            List<Dictionary<string, object>> list
-                 = new List<Dictionary<string, object>>();
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                Dictionary<string, object> dic = new Dictionary<string, object>();
-                foreach (DataColumn dc in dt.Columns)
-                {
-                    dic.Add(dc.ColumnName, dr[dc.ColumnName]);
-                }
-                list.Add(dic);
-            }
-            return list;
-        }
-        #endregion
-
-        #region 数据集转键值对数组字典
-        /// <summary> 
-        /// 数据集转键值对数组字典 
-        /// </summary> 
-        /// <param name="dataSet">数据集</param> 
-        /// <returns>键值对数组字典</returns> 
-        public static Dictionary<string, List<Dictionary<string, object>>> DataSetToDic(DataSet ds)
-        {
-            Dictionary<string, List<Dictionary<string, object>>> result = new Dictionary<string, List<Dictionary<string, object>>>();
-
-            foreach (DataTable dt in ds.Tables)
-                result.Add(dt.TableName, DataTableToList(dt));
-
-            return result;
-        }
-        #endregion
-
-        #region JSON文本转对象,泛型方法 
-        /// <summary> 
-        /// JSON文本转对象,泛型方法 
-        /// </summary> 
-        /// <typeparam name="T">类型</typeparam> 
-        /// <param name="jsonText">JSON文本</param> 
-        /// <returns>指定类型的对象</returns> 
-        public static T JSONToObject<T>(string jsonText)
-        {
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            try
-            {
-                return jss.Deserialize<T>(jsonText);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("JSONHelper.JSONToObject(): " + ex.Message);
-            }
-        }
-        #endregion
-
-        #region 将JSON文本转换为数据表数据
-        /// <summary> 
-        /// 将JSON文本转换为数据表数据 
-        /// </summary> 
-        /// <param name="jsonText">JSON文本</param> 
-        /// <returns>数据表字典</returns> 
-        public static Dictionary<string, List<Dictionary<string, object>>> TablesDataFromJSON(string jsonText)
-        {
-            return JSONToObject<Dictionary<string, List<Dictionary<string, object>>>>(jsonText);
-        }
-        #endregion
-
-        #region 将JSON文本转换成数据行
-        /// <summary> 
-        /// 将JSON文本转换成数据行 
-        /// </summary> 
-        /// <param name="jsonText">JSON文本</param> 
-        /// <returns>数据行的字典</returns>
-        public static Dictionary<string, object> DataRowFromJSON(string jsonText)
-        {
-            return JSONToObject<Dictionary<string, object>>(jsonText);
-        } 
-        #endregion
-
     }
 }

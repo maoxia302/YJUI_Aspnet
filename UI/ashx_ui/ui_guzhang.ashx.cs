@@ -44,6 +44,18 @@ namespace YJUI.UI.ashx_ui
                 context.Response.Write(guzhang);
                 context.Response.End();
             }
+            else if (context.Request.Params["action"] == "ht_dep")
+            {
+                string guzhang = new BLL.ui_guzhang().GetDepToJson();
+                context.Response.Write(guzhang);
+                context.Response.End();
+            }
+            else if (context.Request.Params["action"] == "ht_person")
+            {
+                string guzhang = new BLL.ui_guzhang().GetPersonToJson();
+                context.Response.Write(guzhang);
+                context.Response.End();
+            }
         }
         public bool IsReusable
         {

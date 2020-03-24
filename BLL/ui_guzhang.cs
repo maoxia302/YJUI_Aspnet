@@ -169,6 +169,16 @@ namespace YJUI.BLL
             DataTable dt = dal.GetList("   typeid=4").Tables[0];
             return Common.JsonHelper.ToJson(dt);
         }
+        public string GetDepToJson()
+        {
+            DataTable dt = dal.GetList("   typeid=5").Tables[0];
+            return Common.JsonHelper.ToJson(dt);
+        }
+        public string GetPersonToJson()
+        {
+            DataTable dt = dal.GetList("   typeid=6").Tables[0];
+            return Common.JsonHelper.ToJson(dt);
+        }
         #endregion  ExtensionMethod
     }
 }

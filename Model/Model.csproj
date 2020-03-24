@@ -50,6 +50,7 @@
     <Compile Include="LRPTB.cs" />
     <Compile Include="LRPTE.cs" />
     <Compile Include="neibutaizhang.cs" />
+    <Compile Include="PageableData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="renkuan.cs" />
     <Compile Include="shiwu.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="ui_org.cs" />
     <Compile Include="ui_role.cs" />
     <Compile Include="ui_role_menu.cs" />
+    <Compile Include="ui_tuji.cs" />
     <Compile Include="ui_user.cs" />
     <Compile Include="ui_user_org.cs" />
     <Compile Include="ui_user_role.cs" />

@@ -1,0 +1,107 @@
+﻿<script>
+    $('#ht_dep').combobox({
+        editable: false,
+        url: '../ashx_ui/ui_guzhang.ashx?action=ht_dep',
+        valueField: 'guzhang',
+        textField: 'guzhang'
+    });
+    $('#ht_person').combobox({
+        editable: false,
+        url: '../ashx_ui/ui_guzhang.ashx?action=ht_person',
+        valueField: 'guzhang',
+        textField: 'guzhang'
+    });
+</script>
+<div style="padding: 15px; overflow: hidden">
+    <form id="ui_tuji_add" method="post">
+        <table class="tableForm" width="100%">
+            <tr>
+                <td colspan="4" style="text-align: center;font-size: 18px;"><b>反馈填写</b></td>
+            </tr>
+
+            <tr>
+                <td>
+                    反馈地区：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="fk_area" name="fk_area" />
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td>
+                    反馈客户：
+                </td>
+                <td>
+                    <input class="easyui-textbox" id="fk_customer" name="fk_customer" />
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    问题类型：
+                </td>
+                <td>
+                    <input type="easyui-combobox" id="fk_type" name="fk_type" class="easyui-validatebox" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    反馈描述：
+                </td>
+                <td colspan="3">
+                    <textarea class="easyui-textbox" cols="50" name="fk_dec" rows="5"></textarea>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    后台支持团队：
+                </td>
+                <td>
+                    <input type="easyui-combobox" id="ht_dep" name="ht_dep" class="easyui-validatebox" />
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    对接人员：
+                </td>
+                <td>
+                    <input type="easyui-combobox" id="ht_person" name="ht_person" class="easyui-validatebox" />
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    预计完成时间：
+                </td>
+                <td>
+
+                    <input type="text" name="ht_predate" id="ht_predate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" data-options="required:true" />
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    问题处理状态：
+                </td>
+                <td>
+
+                    <input class="easyui-combobox" id="ht_status" name="ht_status" data-options="editable: false,
+		valueField: 'label',
+		textField: 'value',
+		data: [{
+			label: '未解决',
+			value: '未解决'
+		},{
+			label: '已解决',
+			value: '已解决'
+		}]" />
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</div>

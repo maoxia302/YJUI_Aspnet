@@ -238,4 +238,25 @@ function loginout() {
 ///几位补零操作
 function PrefixInteger(num, length) {
     return (Array(length).join('0') + num).slice(-length);
+}
+
+
+
+(function ($) {
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        console.log(o)
+        return o;
     }
+})(jQuery);

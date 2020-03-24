@@ -68,6 +68,7 @@
     <Compile Include="ui_neibuDep.cs" />
     <Compile Include="ui_org.cs" />
     <Compile Include="ui_role.cs" />
+    <Compile Include="ui_tuji.cs" />
     <Compile Include="ui_user.cs" />
     <Compile Include="ui_zydtaizhang.cs" />
   </ItemGroup>

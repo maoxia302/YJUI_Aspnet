@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net40\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -67,6 +70,7 @@
     <Compile Include="ui_org.cs" />
     <Compile Include="ui_role.cs" />
     <Compile Include="ui_role_menu.cs" />
+    <Compile Include="ui_tuji.cs" />
     <Compile Include="ui_user.cs" />
     <Compile Include="ui_zydtaizhang.cs" />
   </ItemGroup>
@@ -79,6 +83,12 @@
       <Project>{E78A2941-C4D9-4573-B0D3-FA9D1C839AE3}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
