@@ -11,13 +11,15 @@ namespace YJUI.Model
         { }
         #region Model
         private int _id;
-        private DateTime _fkdate;
+        private DateTime? _fkdate;
         private string _fkperson;
         private string _fkDep;
         private string _wtdep;
         private string _fkdesc;
         private string _dydep;
         private string _fkItem;
+        private string _fkArea;
+        private string _fkCustomer;
 
         private string _dyperson;
         private DateTime? _dydate;
@@ -44,7 +46,7 @@ namespace YJUI.Model
         /// <summary>
         /// 
         /// </summary>
-        public DateTime fkDate
+        public DateTime? fkDate
         {
             set { _fkdate = value; }
             get { return _fkdate; }
@@ -219,6 +221,31 @@ namespace YJUI.Model
             set
             {
                 _fkItem = value;
+            }
+        }
+
+        public string fkArea
+        {
+            get
+            {
+                return _fkArea;
+            }
+
+            set
+            {
+                _fkArea = value;
+            }
+        }
+
+        public string fkCustomer
+        {
+            get
+            {
+                return _fkCustomer;
+            }
+            set
+            {
+                _fkCustomer = value;
             }
         }
         #endregion Model

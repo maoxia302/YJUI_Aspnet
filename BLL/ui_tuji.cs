@@ -45,5 +45,23 @@ namespace YJUI.BLL
         public DataSet GetReport(string condition) {
             return dal.GetReport(condition);
         }
+
+        public IEnumerable<Model.ui_tuji> list(string bdate, string edate, string fk_person, string fk_type)
+        {
+            return dal.list(bdate, edate, fk_person, fk_type);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bdate"></param>
+        /// <param name="edate"></param>
+        /// <param name="fk_person"></param>
+        /// <param name="fk_type"></param>
+        /// <returns></returns>
+        public string ToJson(string bdate, string edate, string fk_person, string fk_type)
+        {
+            return JsonHelper.ObjToJson(list(bdate, edate, fk_person, fk_type));
+        }
+
     }
 }

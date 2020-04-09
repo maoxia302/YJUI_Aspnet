@@ -51,6 +51,38 @@ namespace YJUI.DAL
             }
             return result;
         }
+        /// <summary>
+        /// 根据条件查询列表
+        /// </summary>
+        /// <param name="bdate"></param>
+        /// <param name="edate"></param>
+        /// <param name="fk_person"></param>
+        /// <param name="fk_type"></param>
+        /// <returns></returns>
+        public IEnumerable<Model.ui_tuji> list(string bdate,string edate,string fk_person,string fk_type)
+        {
+            string query = "select * from ui_tuji where 1=1 ";
+            if (!string.IsNullOrEmpty(bdate))
+            {
+                query += string.Format(" and  CONVERT(varchar(100), fk_date, 21)>='{0}'", bdate);
+            }
+            if (!string.IsNullOrEmpty(edate))
+            {
+                query += string.Format(" and  CONVERT(varchar(100), fk_date, 21)<='{0}'", edate);
+            }
+            if (!string.IsNullOrEmpty(fk_person))
+            {
+                query += string.Format(" and fk_person like '%{0}%'", fk_person);
+            }
+            if (!string.IsNullOrEmpty(fk_type))
+            {
+                query += string.Format("  and fk_type= '{0}'", fk_type);
+            }
+            using (SqlConnection conn = new SqlConnection(ConnStrManage.NEWV2013DB))
+            {
+                return  conn.Query<Model.ui_tuji>(query, null);
+            }
+        }
 
         public bool Insert(Model.ui_tuji model)
         {
@@ -88,7 +120,6 @@ namespace YJUI.DAL
                            ,[ht_person] = @ht_person
                            ,[ht_lqdate]=@ht_lqdate
                            ,[ht_predate]=@ht_predate
-                           ,[ht_enddate]=@ht_enddate
                            ,[ht_status]=@ht_status
                            where ID=@ID";
             using (SqlConnection conn = new SqlConnection(ConnStrManage.NEWV2013DB))

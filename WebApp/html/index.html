@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <link rel="stylesheet" href="../script/css/reset.css">
+    <link rel="stylesheet" href="../script/css/mobiscroll.css">
+    <link rel="stylesheet" href="../script/css/taizhang.css">
+</head>
+<body>
+    <div class="index_search">
+        <form id="ff">
+            <ul class="taizhang_list">
+                <li>
+                    <label>开始时间</label>
+                    <input type="text" placeholder="请选择" readonly="readonly" id="start" name="start" />
+                </li>
+                <li>
+                    <label>结束时间</label>
+                    <input type="text" placeholder="请选择" readonly="readonly" id="end"  name="end"/>
+                </li>
+                <li>
+                    <label>反馈人</label>
+                    <input type="text" placeholder="请填写" id="fk_person" name="fk_person" />
+                </li>
+                <li>
+                    <label>问题类型</label>
+                    <select id="fk_type" name="fk_type"></select>
+                </li>
+            </ul>
+            <input type="button" value="查询" class="com_btn searchBtn" id="search" style="margin-bottom:5%;" />
+        </form>
+        <input type="button" value="录入信息" class="com_btn searchBtn" id="add_info" />
+    </div>
+    <script src="../script/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/date/mobiscroll.core-2.5.2.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/date/mobiscroll.datetime-2.5.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/index.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>

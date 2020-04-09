@@ -33,7 +33,8 @@ function InitLeftMenu() {
                 var url = $(this).attr("rel");
                 var menuid = $(this).attr("ref");
                 var icon = $(this).children('span').first().attr('class');
-                addTab(tabTitle, url, icon);
+                var id = tabTitle;
+                addTab(tabTitle, url, icon,id);
                 $('.easyui-accordion li div').removeClass("selected");
                 $(this).parent().addClass("selected");
             }).hover(function() {
@@ -108,11 +109,12 @@ function initLogin() {
     });
 }
 
-function addTab(subtitle, url, icon) {
+function addTab(subtitle, url, icon,id) {
     if (!$('#tabs').tabs('exists', subtitle)) {
         $('#tabs').tabs('add', {
             title: subtitle,
-            //  content: createFrame(url),
+            //  : createFrame(url),
+            id:id,
             href: url,
             closable: true,
             icon: icon,
@@ -125,6 +127,39 @@ function addTab(subtitle, url, icon) {
     }
     tabClose();
 }
+
+
+function addTab1(title, url, icon) {
+    //关闭当前的
+    var currTab = $('#tabs').tabs('getSelected');
+    if (currTab) {
+        $('#tabs').tabs('close', currTab.panel('options').title);
+    }
+    if ($('#tabs').tabs('exists', title)) {
+        $('#tabs').tabs('select', title);//选中并刷新
+        var currTab = $('#tabs').tabs('getSelected');
+        var url = $(currTab.panel('options').content).attr('src');
+        if (url != undefined && currTab.panel('options').title != 'Home') {
+            $('#tabs').tabs('update', {
+                tab: currTab,
+                options: {
+                    content: createFrame(url)
+                }
+            })
+        }
+    } else {
+        var content = createFrame(url);
+        $('#tabs').tabs('add', {
+            title: title,
+            content: content//,
+            //closable:true
+        });
+    }
+    tabClose();
+}
+
+
+
 
 function createFrame(url) {
     var s = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
@@ -260,3 +295,24 @@ function PrefixInteger(num, length) {
         return o;
     }
 })(jQuery);
+
+//自动给控件赋值
+function SetWebControls(data) {
+    for (var key in data) {
+        var id = $('#' + key);
+        var value = $.trim(data[key]).replace("&nbsp;", "");
+        var type = id.attr('type');
+        switch (type) {
+            case "checkbox":
+                if (value == 1) {
+                    id.attr("checked", 'checked');
+                } else {
+                    id.removeAttr("checked");
+                }
+                break;
+            default:
+                id.val(value);
+                break;
+        }
+    }
+}

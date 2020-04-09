@@ -324,9 +324,9 @@
                 toolbar: dgToolbar,
                 columns: [[
                     { field: 'ck', checkbox: true },
-                    { field: 'sortId', title: '序号', halign: 'center', align: 'center', width: 20 },
+                    { field: 'sortId', title: '序号', halign: 'center', align: 'center', width: 10 },
                     {
-                        field: '品号', title: '品号', halign: 'center', align: 'center', width: 30,
+                        field: 'TB004', title: '品号', halign: 'center', align: 'center', width: 30,
                         editor: {
                             type: 'combogrid',
                             options: {
@@ -373,7 +373,7 @@
                         }
                     },
                     {
-                        field: '品名', title: '品名', halign: 'center', align: 'center', width: 50,
+                        field: 'TB005', title: '品名', halign: 'center', align: 'center', width: 20,
                         //editor: {
                         //    type: 'text',
                         //    options: {
@@ -412,7 +412,7 @@
                         //},
                     },
                     {
-                        field: '规格', title: '规格', halign: 'center', align: 'center', width: 50,
+                        field: 'TB006', title: '规格', halign: 'center', align: 'center', width: 30,
                         //editor: {
                         //    type: 'text',
                         //    //options: {
@@ -428,9 +428,9 @@
                         //    //}
                        // },
                     },
-                    { field: '数量', title: '数量', halign: 'center', align: 'center', width: 20, editor: { type: 'text' }, },
+                    { field: 'TB007', title: '数量', halign: 'center', align: 'center', width: 20, editor: { type: 'text' }, },
                     {
-                        field: '仓库编码', title: '仓库编码', halign: 'center', align: 'center', width: 50, editor: { type: 'text' },
+                        field: 'TB012', title: '仓库编码', halign: 'center', align: 'center', width: 15, editor: { type: 'text' },
                         editor: {
                             type: 'combogrid',
                             options: {
@@ -476,9 +476,9 @@
                             }
                         }
                     },
-                    { field: '仓库名称', title: '仓库名称', halign: 'center', align: 'center', width: 50, editor: { type: 'text' }, },
+                    { field: '仓库名称', title: '仓库名称', halign: 'center', align: 'center', width: 10, editor: { type: 'text' }, },
                     {
-                        field: 'button', title: '操作', halign: 'center', align: 'center', width: 40,
+                        field: 'button', title: '操作', halign: 'center', align: 'center', width: 10,
                         formatter: function (value, row, index) {
                             if (row.sortId == '总计') {
                                 return '';
@@ -775,39 +775,6 @@
             $("#dg").datagrid('loadData', rows);
             CalcFooter();//刷新footer
         }
-
-        //批量导入弹层
-        /*$("#win").dialog({
-            title: '批量导入',
-            width: 600,
-            height: 400,
-
-            buttons: [
-                {
-                    text: '下载模板',
-                    iconCls: 'icon-save',
-                    handler: function () {
-
-                    }
-                }, {
-                    text: '确认导入',
-                    iconCls: 'icon-ok',
-                    handler: function () {
-                        if (excelData.length > 0) {
-                            for (var i = 0; i < excelData.length; i++) {
-                                var rows = $('#dg').datagrid("getRows");
-                                $("#dg").datagrid("insertRow", { index: rows.length, row: excelData[i] });
-                            }
-                            //$("#dg").datagrid('loadData', excelData);//execle导入插件数据回显datagrid
-                            CalcFooter();//刷新footer
-                            $("#win").dialog('close');//弹层关闭
-                        } else {
-                            alert("数据为空")
-                        }
-                    }
-                }
-            ]
-        });*/
 
         //”批量导入”点击事件
         function batchImp() {

@@ -1,13 +1,17 @@
 ﻿<script type="text/javascript">
     var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
     $(function () {
-  
+
 
         $('#dg_ui_tuji').attr('id', 'dg_ui_tuji' + t);
         $('#toolbar2').attr('id', 'toolbar2' + t);
         $("#barCont").attr('id', 'barCont' + t);
         $("#type").attr('id', 'type' + t);
-
+        $("#bdate").attr('id', 'bdate' + t);
+        $("#edate").attr('id', 'edate' + t);
+        $("#ff").attr('id', 'ff' + t);
+        $("#btn_search").attr('id', 'btn_search' + t);
+        $("#btn_reset").attr('id', 'btn_reset' + t);
         var tabTool01 = '<a href="#" class="easyui-linkbutton 001" iconcls="icon-edit" plain="true" onclick="add();">添加台账</a>';
         var tabTool02 = '<a href="#" class="easyui-linkbutton 002" iconcls="icon-edit" plain="true" onclick="add_zxjc();">专项检查</a>';
         var tabTool03 = '<a href="#" class="easyui-linkbutton 004" iconcls="icon-edit" plain="true" onclick="add_houtai();">后台处理</a>';
@@ -23,7 +27,7 @@
             $('#barCont' + t).prepend(tabTool04);
 
         }
-        $("#dg_ui_tuji"+t).datagrid({
+        $("#dg_ui_tuji" + t).datagrid({
             url: "../ashx_ui/ui_tuji.ashx?action=search",
             idField: 'ID',
             fit: true,
@@ -34,27 +38,25 @@
             pageSize: 30,
             pageList: [30, 40, 50],
             //冻结列
-        columns: [
+            columns: [
                 [
                     { field: "ID", title: "编号", width: 50 },
                     { field: "fk_date", title: "反馈时间", width: 100 },
                     { field: "fk_person", title: "反馈人", width: 50 },
                     { field: "fk_dep", title: "反馈部门", width: 120 },
                     { field: "fk_area", title: "反馈地区", width: 120 },
+                    { field: "fk_customer", title: "反馈客户", width: 120 },
                     { field: "fk_type", title: "问题类型", width: 120 },
                     { field: "fk_dec", title: "反馈描述", width: 200 },
-
-           
                     { field: "zx_look", title: "专项调查", width: 70 },
                     { field: "zx_is", title: "真问题呈现", width: 80 },
                     { field: "ht_dep", title: "后台支持团队", width: 100 },
-                    { field: "ht_person", title: "对接人员", width: 200 },
-                    { field: "ht_lqdate", title: "领取时间", width: 250 },
-                    { field: "ht_enddate", title: "预计完成时间", width: 70 },
+                    { field: "ht_person", title: "对接人员", width: 100 },
+                    { field: "ht_lqdate", title: "领取时间", width: 100 },
+                    { field: "ht_predate", title: "预计完成时间", width: 100 },
                     { field: "ht_status", title: "问题处理状态", width: 80 },
                     { field: "service", title: "反馈客户", width: 60 },
-                    { field: "service_date", title: "客服反馈给客户时间", width: 60 }
-                   
+                    { field: "service_date", title: "客服反馈给客户时间", width: 100 }
                 ]
             ],
             toolbar: "#toolbar2" + t
@@ -73,36 +75,36 @@
             modal: true,
             iconCls: "icon-add",
             buttons: [
-                         {
-                             text: '确定添加',
-                             iconCls: 'icon-add',
-                             handler: function () {
-                                 var d = $(this).closest('.window-body');
-                                 $("#ui_tuji_add").form("submit", {
+                {
+                    text: '确定添加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        var d = $(this).closest('.window-body');
+                        $("#ui_tuji_add").form("submit", {
 
-                                     url: "../ashx_ui/ui_tuji.ashx",
-                                     onSubmit: function (param) {
-                                         param.action = 'add';
-                                         return $(this).form('validate');
-                                     },
-                                     success: function (result) {
-                                         dealAjaxResult(result, function (r) {
+                            url: "../ashx_ui/ui_tuji.ashx",
+                            onSubmit: function (param) {
+                                param.action = 'add';
+                                return $(this).form('validate');
+                            },
+                            success: function (result) {
+                                dealAjaxResult(result, function (r) {
 
-                                             d.dialog('destroy');
-                                             $.show_warning("提示", "操作成功");
-                                             t = parent.$('#tabs').tabs('getSelected').panel('options').title;
-                                             $("#dg_ui_tuji"+t).datagrid("reload");
-                                         });
-                                     }
-                                 });
-                             }
-                         },
-                         {
-                             text: '取消添加',
-                             iconCls: 'icon-cancel',
-                             handler: function () { $(this).closest('.window-body').dialog('destroy'); }
-                         }
-                ],
+                                    d.dialog('destroy');
+                                    $.show_warning("提示", "操作成功");
+                                    t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+                                    $("#dg_ui_tuji" + t).datagrid("reload");
+                                });
+                            }
+                        });
+                    }
+                },
+                {
+                    text: '取消添加',
+                    iconCls: 'icon-cancel',
+                    handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                }
+            ],
             onClose: function () {
                 $(this).dialog('destroy');
             }
@@ -141,10 +143,10 @@
                             return $(this).form('validate');
                         },
                         success: function (result) {
+                            // console.log(result);
                             dealAjaxResult(result, function (r) {
                                 d.dialog('destroy');
                                 $.show_warning("提示", "操作成功");
-                                t = parent.$('#tabs').tabs('getSelected').panel('options').title;
                                 $("#dg_ui_tuji" + t).datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
 
                             });
@@ -194,7 +196,7 @@
                 handler: function () {
                     //alert("");
                     var d = $(this).closest('.window-body');
-                    $("#f_zhuanxiang_add").form("submit", {
+                    $("#f_houtai_add").form("submit", {
                         url: "../ashx_ui/ui_tuji.ashx",
                         onSubmit: function (param) {
                             param.action = 'houtai_add';
@@ -206,14 +208,10 @@
                                 d.dialog('destroy');
                                 $.show_warning("提示", "操作成功");
                                 $("#dg_ui_tuji" + t).datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
-
                             });
-
                         }
                     });
-
                 }
-
             },
             {
                 text: '取消修改',
@@ -225,7 +223,7 @@
                 $(this).dialog('destroy');
             },
             onLoad: function () {
-                $("#f_zhuanxiang_add").form("load", r[0]);
+                $("#f_houtai_add").form("load", r[0]);
             }
         });
     }
@@ -285,27 +283,52 @@
                 $(this).dialog('destroy');
             },
             onLoad: function () {
-                $("#f_zhuanxiang_add").form("load", r[0]);
+                $("#f_kefu_add").form("load", r[0]);
             }
         });
     }
-    
+
     function toexcel() {
-        var params = $("#ff").serializeObject();
-         window.open("../ashx_ui/ui_tuji.ashx?action=export&begindate=" + params.bdate + "&enddate=" + params.edate + "&type=" + params.type);
+        t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var params = $("#ff" + t).serializeObject();
+        console.log(params);
+        window.open("../ashx_ui/ui_tuji.ashx?action=export&bdate=" + params.bdate + "&edate=" + params.edate + "&type=" + params.type);
     }
     function Search() {
-       // t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        // t = parent.$('#tabs').tabs('getSelected').panel('options').title;
         var params = $("#ff").serializeObject();
-        $('#dg_ui_tuji'+t).datagrid('load', params);
-    }  
+        $('#dg_ui_tuji' + t).datagrid('load', params);
+    }
 
-    $('#type'+t).combobox({
+    $('#type' + t).combobox({
         editable: false,
         url: '../ashx_ui/ui_guzhang.ashx?action=getItem',
         valueField: 'guzhang',
         textField: 'guzhang'
     });
+
+    $("#btn_reset" + t).click(function () {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        $('#type' + t).combobox('clear');
+        $('#bdate' + t).val("");
+        $('#edate' + t).val("");
+
+
+
+    });
+
+    $("#btn_search" + t).click(function () {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var params = $("#ff"+t).serializeObject();
+        $('#dg_ui_tuji' + t).datagrid('load', params);
+
+
+    });
+       
+        // var postData = GetWebControls("#f_taizhang_add");
+  
+
+      
 </script>
 <div class="easyui-layout" data-options="fit : true,border : false">
     <div class="toolbar" id="toolbar2">
@@ -316,14 +339,15 @@
                 <label>反馈时间：</label>
                 <input type="text" class="Wdate" id="bdate" name="bdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
                 <input type="text" class="Wdate" id="edate" name="edate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
-                <a href="#" class="easyui-linkbutton" iconcls="icon-search" onclick="Search();">搜索</a>
+                <a href="#" class="easyui-linkbutton" iconcls="icon-search"  id="btn_search">搜索</a>
+                <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
             </div>
-            </form>
-            <div class="ctrl-div">
-                <div id="barCont">
-                    <a href="#" class="easyui-linkbutton" iconcls="icon-edit" plain="true" onclick="toexcel();">导出</a>
-                </div>
+        </form>
+        <div class="ctrl-div">
+            <div id="barCont">
+                <a href="#" class="easyui-linkbutton" iconcls="icon-edit" plain="true" onclick="toexcel();">导出</a>
             </div>
+        </div>
     </div>
     <div data-options="region:'center',border:false">
         <table id="dg_ui_tuji"></table>

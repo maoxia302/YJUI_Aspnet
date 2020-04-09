@@ -3,6 +3,9 @@ using System.Data;
 using System.Text;
 using System.Data.SqlClient;
 using YJUI.DBUtility;//Please add references
+using Dapper;
+using System.Collections.Generic;
+
 namespace YJUI.DAL
 {
     /// <summary>
@@ -2852,10 +2855,24 @@ namespace YJUI.DAL
             return VOCEN2018DbHelperSQL.Query(strSql.ToString());
         }
         #endregion  BasicMethod
+
+
         #region  ExtensionMethod
+        /// <summary>
+        /// 根据多个品号，查询品号信息
+        /// </summary>
+        /// <param name="strWhere">品号多个</param>
+        /// <returns></returns>
+        public IEnumerable<Model.INVMB> GetListByWhere(string strWhere)
+        {
 
+            string sql = string.Format("select MB001,MB002,MB003,MB004,MB064,MB065,MB072 from INVMB where MB001 in({0})", strWhere);
+            using (SqlConnection conn = new SqlConnection(ConnStrManage.WSSYBDB))
+            {
+                return conn.Query<Model.INVMB>(sql, null);
+            }
 
-
+        }
         #endregion  ExtensionMethod
     }
 }

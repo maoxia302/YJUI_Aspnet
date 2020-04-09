@@ -7,7 +7,7 @@
     });
 </script>
 <div style="padding: 15px; overflow: hidden">
-    <form id="ui_tuji_add" method="post">
+    <form id="f_kefu_add" method="post">
         <table class="tableForm" width="100%">
             <tr>
                 <td colspan="4" style="text-align: center;font-size: 18px;"><b>反馈填写</b></td>
@@ -45,7 +45,29 @@
                     反馈描述：
                 </td>
                 <td colspan="3">
-                    <textarea class="easyui-textbox" cols="50" name="fkDesc" rows="5"></textarea>
+                    <textarea class="easyui-textbox" cols="50" id="fk_dec" name="fk_dec" rows="5"></textarea>
+                </td>
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    反馈客户：
+                </td>
+                <td>
+                    <input  id="service" name="service" class="easyui-textbox" />
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    客服反馈给客户时间：
+                </td>
+                <td>
+
+                    <input type="text" name="service_date" id="service_date" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" data-options="required:true" />
+
                 </td>
             </tr>
         </table>

@@ -1,5 +1,18 @@
 ﻿<script type="text/javascript">
+    var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
     $(function () {
+        $("#btn_search").attr('id', 'btn_search' + t);
+        $("#f_wtcl").attr('id', 'f_wtcl' + t);
+        $("#type").attr('id', 'type' + t);
+        $("#bdate").attr('id', 'bdate' + t);
+        $("#edate").attr('id', 'edate' + t);
+        $("#txt_dep").attr('id', 'txt_dep' + t);
+        $("#f_wtcl").attr('id', 'f_wtcl' + t);
+        $("#fkItem").attr('id', 'fkItem' + t);
+        $("#txt_search").attr('id', 'txt_search' + t);
+        $("#btn_reset").attr('id', 'btn_reset' + t);
+      
+
         $("#dg_wentichuli").datagrid({
             url: "../ashx_ui/ui_neibutaizhang.ashx?action=search",
             idField: 'ID',
@@ -12,13 +25,15 @@
             pageSize: 10,
             pageList: [10, 20, 30, 40, 50],
             //冻结列
-            frozenColumns: [[{ "title": "反馈内容", "colspan": 7 }],
+            frozenColumns: [[{ "title": "反馈内容", "colspan": 9 }],
             [
                 { field: "ID", title: "编号", width: 50 },
                 { field: "fkDate", title: "反馈时间", width: 70 },
                 { field: "fkPerson", title: "反馈人", width: 50 },
                 { field: "fkDep", title: "反馈部门", width: 50 },
                 { field: "wtDep", title: "问题归属部门", width: 120 },
+                { field: "fkArea", title: "反馈地区", width: 120 },
+                { field: "fkCustomer", title: "反馈客户", width: 120 },
                 { field: "fkItem", title: "所属项目", width: 120 },
                 { field: "fkDesc", title: "反馈描述", width: 200 }
             ]],
@@ -124,22 +139,40 @@
         });
     }
     function toexcel() {
-        var begindate = $('#begindate').val();
-        var enddate = $('#enddate').val();
-        if (begindate == "" || enddate == "") {
-            alert("请选择开始日期和结束日期");
-        } else {
-            window.open("../ashx_ui/neibu_toexcel.ashx?begindate=" + begindate + "&enddate=" + enddate);
-        }
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var params = $("#f_wtcl" + t).serializeObject();
+        //console.log(params);
+        //return;
+        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&bdate=" + params.bdate + "&edate=" + params.edate + "&txt_dep=" + params.txt_dep + "&txt_search=" + params.txt_search + "&fkItem=" + params.fkItem);
 
     }
-    function Search() {
-        $('#dg_wentichuli').datagrid('load', {
-            begindate: $('#begindate').val(),
-            enddate: $('#enddate').val(),
-            txt_search: $('#txt_search').val()
-        });
-    }
+
+    $("#btn_search"+t).click(function () {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var params = $("#f_wtcl" + t).serializeObject();
+        console.log(params);
+        $('#dg_wentichuli').datagrid('load', params);
+    });
+
+
+    $("#btn_reset" + t).click(function () {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        $('#type'+t).combobox('clear');
+        $('#bdate'+t).val("");
+        $('#edate'+t).val("");
+        $('#txt_dep' + t).val("");
+        $('#txt_search' + t).val("");
+        $('#fkItem'+t).combobox('clear');
+    });
+
+
+    $('#fkItem'+t).combobox({
+        editable: false,
+        url: '../ashx_ui/ui_guzhang.ashx?action=getItem',
+        valueField: 'guzhang',
+        textField: 'guzhang'
+    });
+
 
 </script>
 <div class="easyui-layout" data-options="fit : true,border : false">
@@ -150,15 +183,21 @@
                 <table>
                     <tr>
                         <td>
-                            反馈时间<input type="text" id="begindate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
                             至
-                            <input type="text" id="enddate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
                         </td>
-                        <td><input type="text" id="txt_search" style="height: 18px;" /></td>
                         <td>
-                            <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                               onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                                                             onclick="toexcel();">导出</a>
+                            <!--<input type="checkbox" id="chk" />-->
+                            关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
+                            反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                            问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
+                        </td>
+                        <td>
+                            <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+                            <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                               onclick="toexcel();">导出</a>
+                            <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
                     </tr>
                 </table>
             </form>

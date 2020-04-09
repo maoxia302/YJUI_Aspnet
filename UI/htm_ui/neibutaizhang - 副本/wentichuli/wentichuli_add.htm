@@ -1,0 +1,146 @@
+﻿
+<div style="padding: 15px; overflow: hidden">
+    <form id="f_wentichuli_add" method="post">
+        <table class="tableForm" width="100%">
+            
+        <tr>
+            <td  colspan="7" style="text-align: center;font-size: 18px;">
+                <b>反馈基本情况</b></td>
+        </tr>
+            <tr>
+                <td style="width: 120px;">
+                    编号：
+                </td>
+                <td id="ID" style="width: 120px;"></td>
+                <td style="width: 100px;">
+                    反馈时间：
+                </td>
+                <td id='fkDate' style="width: 120px;"></td>
+                <td style="width: 120px;">
+                    反馈人：</td>
+                <td id='fkPerson' style="width: 120px;"></td>
+            </tr>
+                       <tr>
+                <td>
+                    问题归属部门</td>
+                <td id='wtDep'></td>
+                <td>
+                    &nbsp;</td>
+                <td></td>
+                <td >
+                    &nbsp;</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">
+                    反馈描述：
+                </td>
+                <td colspan="5" id="fkDesc">
+                </td>
+            </tr>
+                                <tr>
+            <td  colspan="6" style="text-align: center;font-size: 18px;">
+                <b>问题处理</b></td>
+        </tr>
+            <tr>
+                <td>
+                    任务领取部门：
+                </td>
+                <td>
+                    <input type="text" name="dyDep" />
+                </td>
+                <td>
+                    第一责任人：
+                </td>
+                <td>
+                    <input type="text" name="dyPerson" />
+                </td>
+                <td>
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    临时改善:
+                </td>
+                <td colspan="3"><textarea  class="easyui-textbox" cols="50" name="dyGaishan" rows="6"></textarea></td>
+                <td>日期：</td>
+                <td>
+                    <input type="text" name="dyDate" class="Wdate"  onfocus="WdatePicker({minDate:'%y-%M-%d'})"/></td>
+            </tr>
+        
+            <tr>
+                <td>
+                    长期改善:
+                </td>
+                <td colspan="3"><textarea  class="easyui-textbox" cols="50" name="cqFangan" rows="6"></textarea></td>
+                <td>日期：</td>
+                <td>
+                    <input type="text" name="cqDate" class="Wdate"  onfocus="WdatePicker({minDate:'%y-%M-%d'})"/></td>
+            </tr>
+                                <tr>
+            <td  colspan="7" style="text-align: center;font-size: 18px;">
+                <b>落实部门</b></td>
+        </tr>
+            <tr>
+                <td>
+                    落时检核：
+                </td>
+                <td id="lsJianhe">
+                    &nbsp;</td>
+                <td>
+                    落实部门：
+                </td>
+                <td id="lsDep">
+                    &nbsp;</td>
+                <td>
+                    日期：
+                </td>
+                <td id="lsDate"></td>
+            </tr>
+                                <tr>
+            <td  colspan="6" style="text-align: center;font-size: 18px;">
+                <b>满意调查</b></td>
+        </tr>
+            <tr>
+                <td>
+                    满意评价：
+                </td>
+                <td id="myPingjia">
+                    &nbsp;</td>
+                <td>
+                    满意人：
+                </td>
+                <td   id="myPerson">
+                    &nbsp;</td>
+                <td>
+                    满意日期：
+                </td>
+                <td id="myDate">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td  colspan="6" style="text-align: center;font-size: 18px;">
+                <b>第三方检核</b></td>
+           </tr>
+                        <tr>
+                <td>
+                    第三方检核：
+                </td>
+                <td id="dsJianhe">
+                    &nbsp;</td>
+                <td>
+                    第三方检核人：
+                </td>
+                <td id="dsPerson">
+                    &nbsp;</td>
+                <td >
+                    第三方简核时间：
+                </td>
+                <td id="dsDate">
+</td>
+            </tr>
+        </table>
+    </form>
+</div>

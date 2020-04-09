@@ -282,5 +282,21 @@ $.extend($.fn.datagrid.defaults.editors, {
     }
 }); 
 
+/* 请求Ajax 带返回值
+--------------------------------------------------*/
+function getAjax(url, parm, callBack) {
+    $.ajax({
+        type: 'post',
+        dataType: "text",
+        url: url,
+        data: parm,
+        cache: false,
+        async: false,
+        success: function (msg) {
+            callBack(msg);
+        }
+    });
+}
+
 
 

@@ -38,9 +38,9 @@ namespace YJUI.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into neibutaizhang(");
-            strSql.Append("fkDate,fkPerson,fkDep,wtDep,fkDesc,fkItem)");
+            strSql.Append("fkDate,fkPerson,fkDep,wtDep,fkDesc,fkItem,fkArea,fkCustomer)");
             strSql.Append(" values (");
-            strSql.Append("@fkDate,@fkPerson,@fkDep,@wtDep,@fkDesc,@fkItem)");
+            strSql.Append("@fkDate,@fkPerson,@fkDep,@wtDep,@fkDesc,@fkItem,@fkArea,@fkCustomer)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@fkDate", SqlDbType.DateTime),
@@ -48,13 +48,18 @@ namespace YJUI.DAL
                     new SqlParameter("@fkDep", SqlDbType.VarChar,50),
                     new SqlParameter("@wtDep", SqlDbType.VarChar,50),
 					new SqlParameter("@fkDesc", SqlDbType.Text),
-                    new SqlParameter("@fkItem", SqlDbType.VarChar,50)};
+                    new SqlParameter("@fkItem", SqlDbType.VarChar,50),
+                     new SqlParameter("@fkArea", SqlDbType.VarChar,200),
+                      new SqlParameter("@fkCustomer", SqlDbType.VarChar,200),
+            };
             parameters[0].Value = model.fkDate;
             parameters[1].Value = model.fkPerson;
             parameters[2].Value = model.FkDep;
             parameters[3].Value = model.wtDep;
             parameters[4].Value = model.fkDesc;
             parameters[5].Value = model.fkItem;
+            parameters[6].Value = model.fkArea;
+            parameters[7].Value = model.fkCustomer;
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
             {
@@ -387,15 +392,14 @@ namespace YJUI.DAL
         public IDataReader neiBuTaiZhangGetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,fkDate,fkPerson,fkDep,fkItem,wtDep,fkDesc,dyDep,dyPerson,dyDate,dyGaishan,cqFangan,cqDate,lsJianhe,lsDep,lsDate,myPingjia,myPerson,myDate,dsJianhe,dsPerson,dsDate ");
-            strSql.Append(" FROM neibutaizhang ");
+            strSql.Append("select ID,fkDate,fkPerson,fkDep,fkItem,fkArea,fkCustomer,wtDep,fkDesc,dyDep,dyPerson,dyDate,dyGaishan,cqFangan,cqDate,lsJianhe,lsDep,lsDate,myPingjia,myPerson,myDate,dsJianhe,dsPerson,dsDate ");
+            strSql.Append("  FROM neibutaizhang ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
             }
             return DbHelperSQL.ExecuteReader(strSql.ToString());
         }
-
         /// <summary>
         /// 获得前几行数据
         /// </summary>

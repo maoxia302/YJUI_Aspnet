@@ -29,11 +29,13 @@ namespace YJUI.UI.ashx_ui
                 else if (context.Request.QueryString["action"] == "search")
                 {
                     string strWhere = "1=1  ";
-                    string bdate = context.Request.Params["begindate"];
-                    string edate = context.Request.Params["enddate"];
+                    string bdate = context.Request.Params["bdate"];
+                    string edate = context.Request.Params["edate"];
                     string word = context.Request.Params["txt_search"];
+
                     string dep = context.Request.Params["txt_dep"];//反馈部门
-                    strWhere = NewMethod(strWhere, bdate, edate, word, dep);
+                    var fkItem= context.Request.Params["fkItem"];//反馈部门
+                    strWhere = NewMethod(strWhere, bdate, edate, word, dep,fkItem);
                     int pageindex = int.Parse(context.Request["page"]);
                     int pagesize = int.Parse(context.Request.Params["rows"]);
                     string strjson = new BLL.neibutaizhang().GetJsonneibuTaizhang(pagesize, pageindex, strWhere);
@@ -51,7 +53,8 @@ namespace YJUI.UI.ashx_ui
                     model.wtDep = context.Request.Params["wtDep"];
                     model.fkItem= context.Request.Params["fkItem"];
                     model.fkDesc = context.Request.Params["fkDesc"];
-
+                    model.fkArea = context.Request.Params["fkArea"];
+                    model.fkCustomer = context.Request.Params["fkCustomer"];
                     if (new BLL.neibutaizhang().Add(model))
                     {
                         context.Response.Write("ok");
@@ -142,17 +145,19 @@ namespace YJUI.UI.ashx_ui
                 else if (context.Request.Params["action"] == "daochu")
                 {
                     string sqlWhere = " 1=1";
-                    string bdate = context.Request.Params["begindate"];
-                    string edate = context.Request.Params["enddate"];
+                    string bdate = context.Request.Params["bdate"];
+                    string edate = context.Request.Params["edate"];
                     string word = context.Request.Params["txt_search"];
                     string dep = context.Request.Params["txt_dep"];//反馈部门
-                    sqlWhere = NewMethod(sqlWhere, bdate, edate, word, dep);//查询条件
+                    var fkItem = context.Request.Params["fkItem"];//反馈部门
+                    sqlWhere = NewMethod(sqlWhere, bdate, edate, word, dep,fkItem);//查询条件
                     HSSFWorkbook workbook = new HSSFWorkbook();
                     ISheet sheet1 = workbook.CreateSheet("sheet1");
                     IDataReader reader = new BLL.neibutaizhang().neiBuTaiZhangGetList(sqlWhere);
                     IRow rowhead = sheet1.CreateRow(0);
                     //循环表头
-                    string cs = "序号,反馈时间,反馈人,反馈部门,所属项目,问题部门,反馈描述," +
+                    //fkArea,fkCustomer,
+                    string cs = "序号,反馈时间,反馈人,反馈部门,所属项目,反馈地区,反馈客户,问题部门,反馈描述," +
                           "领取部门,领取人,领取时间,临时改善,长期方案,长期时间," +
                           "落实检核,落实部门,落实时间," +
                           "满意评价,满意人,满意时间," +
@@ -198,7 +203,7 @@ namespace YJUI.UI.ashx_ui
             }
         }
 
-        public static string NewMethod(string strWhere, string bdate, string edate, string word, string dep)
+        public static string NewMethod(string strWhere, string bdate, string edate, string word, string dep,string fkItem)
         {
             if (!string.IsNullOrEmpty(bdate))
             {
@@ -215,6 +220,10 @@ namespace YJUI.UI.ashx_ui
             if (!string.IsNullOrEmpty(dep))
             {
                 strWhere += string.Format(" and fkDep like '%{0}%'", dep);
+            }
+            if (!string.IsNullOrEmpty(fkItem))
+            {
+                strWhere += string.Format(" and fkItem='{0}'", fkItem);
             }
 
             return strWhere;

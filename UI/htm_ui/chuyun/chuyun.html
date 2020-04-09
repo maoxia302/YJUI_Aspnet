@@ -141,6 +141,7 @@
         $("#ExpandRow").attr("id", "ExpandRow" + t);
         $("#dg_chuyun").attr("id", "dg_chuyun" + t);
         $("#ff").attr("id", "ff" + t);
+        $("#tb1").attr("id", "tb1" + t);
         $("#dg_chuyun" + t).datagrid({
             url: "../ashx_ui/chuyun.ashx?action=search",
             queryParams: {
@@ -187,7 +188,7 @@
                 if (editRow != undefined && editId != undefined) {
                     $("#" + editId).datagrid("endEdit", editRow);
                 }
-            }, toolbar: '#tb1',
+            }, toolbar: '#tb1'+t,
             //////////======================================================================================================================================================
             view: detailview,
             detailFormatter: function (index, row) {

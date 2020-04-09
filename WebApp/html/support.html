@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>后台支持</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <link rel="stylesheet" href="../script/css/reset.css">
+    <link rel="stylesheet" href="../script/css/mobiscroll.css">
+    <link rel="stylesheet" href="../script/css/taizhang.css">
+</head>
+<body>
+    <div class="support_main">
+        <h2 class="com_title"><label>后台支持</label></h2>
+        <ul class="taizhang_list">
+            <li>
+                <label>部门</label>
+                <select id="dep">
+                    <!--<option value="">请选择类型</option>
+                    <option value="0">采购部</option>
+                    <option value="1">发动机售后</option>
+                    <option value="2">发动机禹州厂</option>
+                    <option value="3">信息部</option>
+                    <option value="4">设计部</option>
+                    <option value="5">储运部</option>-->
+                </select>
+            </li>
+            <li>
+                <label>对接人员</label>
+                <select id="person">
+                    <!--<option value="">请选择类型</option>
+                    <option value="0">张明霞</option>
+                    <option value="1">张文来</option>
+                    <option value="2">高峰</option>
+                    <option value="3">任勤勤</option>
+                    <option value="4">徐霄鸽</option>
+                    <option value="5">程利伟</option>-->
+                </select>
+            </li>
+            <li>
+                <label>领取时间</label>
+                <input type="text" placeholder="请选择" readonly="readonly" id="receive" />
+            </li>
+            <li>
+                <label>预计完成时间</label>
+                <input type="text" placeholder="请选择" readonly="readonly" id="finish" />
+            </li>
+            <li>
+                <label>问题处理状态</label>
+                <select>
+                    <option value="">请选择类型</option>
+                    <option value="0">未解決</option>
+                    <option value="1">已解決</option>
+                </select>
+            </li>
+        </ul>
+        <input type="button" value="确定" class="com_btn" />
+    </div>
+    <script src="../script/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/date/mobiscroll.core-2.5.2.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/date/mobiscroll.datetime-2.5.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/support.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(function () {
+            $("#dep").empty();
+            $("#dep").append('<option value="">请选择部门</option>');
+            $.ajax({
+                url: '/ashx/ui_guzhang.ashx?action=ht_dep',
+                type: 'get',
+                dataType: "text",
+                success: function (data) {
+                    // console.log(data);
+                    data = JSON.parse(data);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#dep").append('<option value="' + data[i].guzhang + '">' + data[i].guzhang + '</option>');
+                    }
+                }
+            });
+
+            $("#person").empty();
+            $("#person").append('<option value="">请选择人员</option>');
+            $.ajax({
+                url: '/ashx/ui_guzhang.ashx?action=ht_person',
+                type: 'get',
+                dataType: "text",
+                success: function (data) {
+                    // console.log(data);
+                    data = JSON.parse(data);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#person").append('<option value="' + data[i].guzhang + '">' + data[i].guzhang + '</option>');
+                    }
+                }
+            });
+
+
+
+
+        });
+    </script>
+</body>
+</html>

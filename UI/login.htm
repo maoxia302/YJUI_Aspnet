@@ -28,7 +28,6 @@
             -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
         }
-
         .form-signin .form-signin-heading,
         .form-signin .checkbox {
             margin-bottom: 10px;
@@ -41,9 +40,7 @@
             margin-bottom: 15px;
             padding: 7px 9px;
         }
-
     </style>  
-
     <script type="text/javascript">
         $(function() {
             $('#pwd').keydown(function (e) {
@@ -67,9 +64,6 @@
                 success: function (result) {
                     if (result == "ok") {
                         window.location.href = "index.htm";
-                    }
-                    else {
-                        alert("账户和用户名错误");
                     }
                 }
             });

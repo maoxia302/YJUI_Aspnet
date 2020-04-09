@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>问题反馈</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <link rel="stylesheet" href="../script/css/reset.css">
+    <link rel="stylesheet" href="../script/css/taizhang.css">
+</head>
+<body>
+    <div class="issueType_main">
+        <h2 class="com_title"><label>问题反馈</label></h2>
+        <form id="f_taizhang_add">
+            <ul class="taizhang_list">
+                <li>
+                    <label>反馈地区</label>
+                    <input type="text" placeholder="请填写"  name="fk_area"/>
+                </li>
+                <li>
+                    <label>反馈客户</label>
+                    <input type="text" placeholder="请填写" name="fk_customer"/>
+                </li>
+                <li>
+                    <label>问题类型</label>
+                    <select id="type" name="fk_type"></select>
+                </li>
+                <li>
+                    <label>问题描述</label>
+                    <textarea name="fk_desc" rows="5" cols="5" placeholder="请填写"></textarea>
+                </li>
+            </ul>
+            <input type="button" value="确定" class="com_btn"  id="submit"/>
+        </form>
+    </div>
+
+
+    <script src="../script/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(function () {
+            //alertWrong('ok');
+            $("#type").empty();
+            $("#type").append('<option value="">请选择类型</option>');
+            $.ajax({
+                url: '/ashx/ui_guzhang.ashx?action=getItem',
+                type: 'get',
+                dataType: "text",
+                success: function (data) {
+                    // console.log(data);
+                    var dataJson = "";
+                    datajson = eval("(" + data + ")");
+                   // data = JSON.parse(data);
+                    //for (var i = 0; i < data.length; i++) {
+                    //    $("#type").append('<option value="' + data[i].guzhang + '">' + data[i].guzhang + '</option>');
+                    //}
+                    $.each(datajson, function (i) {
+                        $("#type").append($("<option></option>").val(datajson[i].guzhang).html(datajson[i].guzhang));
+                    });
+
+                }
+            });
+        });
+
+        
+        $("#submit").click(function () {
+            //alert();
+           // var postData = GetWebControls("#f_taizhang_add");
+            $.ajax({
+                url: '/ashx/ui_tuji.ashx?action=add',
+                type: 'post',
+                dataType: "text",
+                data: $('#f_taizhang_add').serialize(),
+                success: function (data) {
+                    if (data == "ok") {
+                        alertRight("添加成功");
+                        window.location.href = "index.html";
+                    }
+       
+
+                }
+            });
+
+
+        });
+
+
+    </script>
+</body>
+</html>

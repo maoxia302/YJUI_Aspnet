@@ -1,5 +1,21 @@
 ﻿<script type="text/javascript">
+    var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
     $(function () {
+
+
+        $("#btn_search").attr('id', 'btn_search' + t);
+        $("#ff").attr('id', 'ff' + t);
+        $("#type").attr('id', 'type' + t);
+        $("#bdate").attr('id', 'bdate' + t);
+        $("#edate").attr('id', 'edate' + t);
+        $("#txt_dep").attr('id', 'txt_dep' + t);
+        $("#f_wtcl").attr('id', 'f_wtcl' + t);
+        $("#fkItem").attr('id', 'fkItem' + t);
+        $("#txt_search").attr('id', 'txt_search' + t);
+        $("#txt_export").attr('id', 'txt_export' + t);
+        $("#btn_reset").attr('id', 'btn_reset' + t);
+
+
         $("#dg_neibutaizhang").datagrid({
             url: "../ashx_ui/ui_neibutaizhang.ashx?action=search",
             idField: 'ID',
@@ -11,126 +27,133 @@
             pageSize: 10,
             pageList: [10, 20, 30, 40, 50],
             //冻结列
-            frozenColumns: [[{ "title": "反馈内容", "colspan": 7}],
-                [
+            frozenColumns: [[{ "title": "反馈内容", "colspan": 9 }],
+            [
                 { field: "ID", title: "编号", width: 50 },
                 { field: "fkDate", title: "反馈时间", width: 70 },
-                    { field: "fkPerson", title: "反馈人", width: 50 },
-                    { field: "fkDep", title: "反馈部门", width: 50 },
-                    { field: "wtDep", title: "问题归属部门", width: 120 },
-                    { field: "fkItem", title: "所属项目", width: 120 },
+                { field: "fkPerson", title: "反馈人", width: 50 },
+                { field: "fkDep", title: "反馈部门", width: 50 },
+                { field: "wtDep", title: "问题归属部门", width: 120 },
+                { field: "fkArea", title: "反馈地区", width: 120 },
+                { field: "fkCustomer", title: "反馈客户", width: 120 },
+                { field: "fkItem", title: "所属项目", width: 120 },
                 { field: "fkDesc", title: "反馈描述", width: 200 }
             ]],
-            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 6 }, 
-                { title: "问题检核（问题登记后的30天内）", colspan: 3 },
-                { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 },
-                { title: "第三方检核", colspan: 3 }],
-                    [{ field: "dyDep", title: "领取部门", width: 70 },
-                   { field: "dyPerson", title: "第一责任人", width: 80 },
-                   { field: "dyDate", title: "接收问题时间", width: 100 },
-                   { field: "dyGaishan", title: "临时改善", width: 200 },
-                   { field: "cqFangan", title: "长期方案", width: 250 },
-                   { field: "cqDate", title: "改善完成时间", width: 70 },
+            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 6 },
+            { title: "问题检核（问题登记后的30天内）", colspan: 3 },
+            { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 },
+            { title: "第三方检核", colspan: 3 }],
+            [{ field: "dyDep", title: "领取部门", width: 70 },
+            { field: "dyPerson", title: "第一责任人", width: 80 },
+            { field: "dyDate", title: "接收问题时间", width: 100 },
+            { field: "dyGaishan", title: "临时改善", width: 200 },
+            { field: "cqFangan", title: "长期方案", width: 250 },
+            { field: "cqDate", title: "改善完成时间", width: 70 },
 
 
-                  { field: "lsJianhe", title: "落时检核", width: 80 },
-                  { field: "lsDep", title: "问题领取部门经理", width: 60 },
-                  { field: "lsDate", title: "落时时间", width: 60 },
+            { field: "lsJianhe", title: "落时检核", width: 80 },
+            { field: "lsDep", title: "问题领取部门经理", width: 60 },
+            { field: "lsDate", title: "落时时间", width: 60 },
 
-                  { field: "myPingjia", title: "满意评价", width: 100 },
-                  { field: "myPerson", title: "满意人", width: 80 },
-                  { field: "myDate", title: "满意日期", width: 80 },
-                  { field: "dsJianhe", title: "第三方检核", width: 250 },
-                  { field: "dsPerson", title: "第三方检核人", width: 80 },
-                  { field: "dsDate", title: "第三方简核时间", width: 100 }
+            { field: "myPingjia", title: "满意评价", width: 100 },
+            { field: "myPerson", title: "满意人", width: 80 },
+            { field: "myDate", title: "满意日期", width: 80 },
+            { field: "dsJianhe", title: "第三方检核", width: 250 },
+            { field: "dsPerson", title: "第三方检核人", width: 80 },
+            { field: "dsDate", title: "第三方简核时间", width: 100 }
             ]],
             toolbar: [{
                 text: '查询',
                 iconCls: 'icon-search'
             }, '-',
-                {
-                    text: '添加内部台账',
-                    iconCls: 'icon-edit',
-                    handler: add_neibutaizhang
-                }]
+            {
+                text: '添加内部台账',
+                iconCls: 'icon-edit',
+                handler: add_neibutaizhang
+            }]
         });
     })
 
     //////////////////////添加内部台账
 
-        function add_neibutaizhang() {
-            //判断权限
-            $("<div/>").dialog({
-                href: "htm_ui/neibutaizhang/neibutaizhang_add.htm",
-                title: "添加配件台账信息",
-                height: 300,
-                width: 600,
-                modal: true,
-                iconCls: "icon-add",
-                buttons: [
-                         {
-                             text: '确定添加',
-                             iconCls: 'icon-add',
-                             handler: function () {
-                                 var d = $(this).closest('.window-body');
-                                 $("#f_neibutaizhang_add").form("submit", {
-                     
-                                     url: "../ashx_ui/ui_neibutaizhang.ashx",
-                                     onSubmit: function (param) {
-                                         param.action = 'add';
-                                         return $(this).form('validate');
-                                     },
-                                     success: function (result) {
-                                         dealAjaxResult(result, function (r) {
-                                            
-                                             d.dialog('destroy');
-                                             $.show_warning("提示", "操作成功");
-                                             $("#dg_neibutaizhang").datagrid("reload");
-                                         })
-                                     }
-                                 });
-                             }
-                         },
-                         {
-                             text: '取消添加',
-                             iconCls: 'icon-cancel',
-                             handler: function () { $(this).closest('.window-body').dialog('destroy'); }
-                         }
-                ],
-                onClose: function () {
-                    $(this).dialog('destroy');
+    function add_neibutaizhang() {
+        //判断权限
+        $("<div/>").dialog({
+            href: "htm_ui/neibutaizhang/neibutaizhang_add.htm",
+            title: "添加配件台账信息",
+            height: 400,
+            width: 600,
+            modal: true,
+            iconCls: "icon-add",
+            buttons: [
+                {
+                    text: '确定添加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        var d = $(this).closest('.window-body');
+                        $("#f_neibutaizhang_add").form("submit", {
+
+                            url: "../ashx_ui/ui_neibutaizhang.ashx",
+                            onSubmit: function (param) {
+                                param.action = 'add';
+                                return $(this).form('validate');
+                            },
+                            success: function (result) {
+                                dealAjaxResult(result, function (r) {
+
+                                    d.dialog('destroy');
+                                    $.show_warning("提示", "操作成功");
+                                    $("#dg_neibutaizhang").datagrid("reload");
+                                })
+                            }
+                        });
+                    }
+                },
+                {
+                    text: '取消添加',
+                    iconCls: 'icon-cancel',
+                    handler: function () { $(this).closest('.window-body').dialog('destroy'); }
                 }
-            });
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            }
+        });
     }
 
 
 
 
     function toexcel() {
-        var begindate = $('#begindate').val();
-        var enddate = $('#enddate').val();
-        var txt_dep = $('#txt_dep').val();
-        var txt_search = $('#txt_search').val();
-        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&begindate=" + begindate + "&enddate=" + enddate + "&txt_dep=" + txt_dep + "&txt_search=" + txt_search);
-    
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var params = $("#ff"+t).serializeObject();
+        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&bdate=" + params.bdate + "&edate=" + params.edate + "&txt_dep=" + params.txt_dep + "&txt_search=" + params.txt_search + "&fkItem=" + params.fkItem);
+
 
     }
-    function submitForm() {
-        alert("s");
-        $('#ff').form('submit');
-    }
-    function Search() {
+    $("#btn_search" + t).click(function () {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var params = $("#ff" + t).serializeObject();
+        console.log(params);
+        $('#dg_neibutaizhang').datagrid('load', params);
+    });
 
-        $('#dg_neibutaizhang').datagrid('load', {
-            begindate: $('#begindate').val(),
-            enddate: $('#enddate').val(),
-            txt_dep: $('#txt_dep').val(),
-           // chk: document.getElementById("chk").checked,
-            txt_search: $('#txt_search').val()
 
-        });
-    }  
-
+    $("#btn_reset").click(function () {
+        $('#type' ).combobox('clear');
+        $('#bdate' ).val("");
+        $('#edate' ).val("");
+        $('#txt_dep' ).val("");
+        $('#txt_search').val("");
+        $('#fkItem').combobox('clear');
+    });
+    ///
+    $('#fkItem'+t).combobox({
+        editable: false,
+        url: '../ashx_ui/ui_guzhang.ashx?action=getItem',
+        valueField: 'guzhang',
+        textField: 'guzhang'
+    });
 </script>
 <div class="easyui-layout" data-options="fit : true,border : false">
     <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
@@ -140,19 +163,21 @@
                 <table>
                     <tr>
                         <td>
-                            反馈时间<input type="text" id="begindate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
                             至
-                            <input type="text" id="enddate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                            <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
                         </td>
                         <td>
                             <!--<input type="checkbox" id="chk" />-->
-                            关键字<input type="text" id="txt_search" style="height: 18px;" />
-                            反馈部门<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                            关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
+                            反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                            问题类型:<input type="text"  class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
                         </td>
                         <td>
-                            <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                               onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                                                             onclick="toexcel();">导出</a>
+                            <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+                            <a id="txt_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                               onclick="toexcel();">导出</a>
+                            <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
                     </tr>
                 </table>
             </form>

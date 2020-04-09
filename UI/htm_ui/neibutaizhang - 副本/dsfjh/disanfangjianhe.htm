@@ -1,0 +1,223 @@
+﻿<script type="text/javascript">
+    var t = $('#tabs').tabs('getSelected').panel('options').title;
+    var parent = $('#' + t);
+    $(function () {
+
+        $("#btn_search").attr('id', 'btn_search' + t);
+        $("#ff").attr('id', 'ff' + t);
+        $("#type").attr('id', 'type' + t);
+        $("#bdate").attr('id', 'bdate' + t);
+        $("#edate").attr('id', 'edate' + t);
+        $("#txt_dep").attr('id', 'txt_dep' + t);
+        $("#fkItem").attr('id', 'fkItem' + t);
+        $("#btn_reset").attr('id', 'btn_reset' + t);
+        $("#txt_search").attr('id', 'txt_search' + t);
+        $("#btn_export").attr('id', 'btn_export' + t);
+
+        $('#fkItem' + t).combobox({
+            editable: false,
+            url: '../ashx_ui/ui_guzhang.ashx?action=getItem',
+            valueField: 'guzhang',
+            textField: 'guzhang'
+        });
+
+        $("#dg_disanfangjianhe").datagrid({
+            url: "../ashx_ui/ui_neibutaizhang.ashx?action=search",
+            idField: 'ID',
+            fit: true,
+            fitColumns: false,
+            singleSelect: true,
+            rownumbers: true,
+            nowrap: false,
+            pagination: true,
+            pageSize: 10,
+            pageList: [10, 20, 30, 40, 50],
+            //冻结列
+            frozenColumns: [[{ "title": "反馈内容", "colspan": 9 }],
+            [
+                { field: "ID", title: "编号", width: 50 },
+                { field: "fkDate", title: "反馈时间", width: 70 },
+                { field: "fkPerson", title: "反馈人", width: 50 },
+                { field: "fkDep", title: "反馈部门", width: 50 },
+                { field: "wtDep", title: "问题归属部门", width: 120 },
+                { field: "fkArea", title: "反馈地区", width: 120 },
+                { field: "fkCustomer", title: "反馈客户", width: 120 },
+                { field: "fkItem", title: "所属项目", width: 120 },
+                { field: "fkDesc", title: "反馈描述", width: 200 }
+            ]],
+            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 6 }, { title: "问题检核（问题登记后的30天内）", colspan: 3 }, { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 }, { title: "第三方检核", colspan: 3 }],
+            [{ field: "dyDep", title: "领取部门", width: 70 },
+            { field: "dyPerson", title: "第一责任人", width: 80 },
+            { field: "dyDate", title: "日期", width: 100 },
+            { field: "dyGaishan", title: "临时改善", width: 200 },
+            { field: "cqFangan", title: "长期方案", width: 250 },
+            { field: "cqDate", title: "改善时间", width: 70 },
+            { field: "lsJianhe", title: "落时检核", width: 80 },
+            { field: "lsDep", title: "问题领取部门经理", width: 60 },
+            { field: "lsDate", title: "落时时间", width: 60 },
+            { field: "myPingjia", title: "满意评价", width: 100 },
+            { field: "myPerson", title: "满意人", width: 80 },
+            { field: "myDate", title: "满意日期", width: 80 },
+            { field: "dsJianhe", title: "第三方检核", width: 250 },
+            { field: "dsPerson", title: "第三方检核人", width: 80 },
+            { field: "dsDate", title: "第三方简核时间", width: 100 }
+            ]],
+            toolbar: [{
+                text: '查询',
+                iconCls: 'icon-search'
+            }, '-',
+            {
+                text: '第三方检核',
+                iconCls: 'icon-edit',
+                handler: add_wentichuli
+            }
+            ]
+        });
+    });
+
+    //////////////////////添加内部台账
+
+    function add_wentichuli() {
+        var r = $("#dg_disanfangjianhe").datagrid("getChecked");
+        if (r.length < 1) {
+            $.show_warning("错误", "请选择一个要修改一个信息");
+            return;
+        }
+        if (r.length > 1) {
+            $.show_warning("错误", "一次只能修改一个信息");
+            $("#dg_zrbm").datagrid('clearSelections').datagrid('clearChecked');
+            return;
+        }
+
+        $("<div />").dialog({
+            href: "htm_ui/neibutaizhang/dsfjh/disanfangjianhe_add.htm",
+            width: 800,
+            height: 600,
+            title: "第三方检核",
+            buttons: [{
+                text: '问题处理',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    //alert("");
+                    var d = $(this).closest('.window-body');
+                    $("#f_disanfangjianhe_add").form("submit", {
+                        url: "../ashx_ui/ui_neibutaizhang.ashx",
+                        onSubmit: function (param) {
+                            param.action = 'disanfangjianhe_add';
+                            param.ID = r[0].ID;
+                            //alert(r[0].ID);
+                            return $(this).form('validate');
+                        },
+                        success: function (result) {
+                            dealAjaxResult(result, function (r) {
+                                d.dialog('destroy');
+                                $.show_warning("提示", "操作成功");
+                                $("#dg_disanfangjianhe").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+
+                            });
+
+                        }
+                    });
+
+                }
+
+            },
+            {
+                text: '取消修改',
+                iconCls: 'icon-cancel',
+                handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+
+            }
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            },
+            onLoad: function () {
+                $("#ID").html(r[0].ID);
+                $("#fkDate").html(r[0].fkDate);
+                $("#fkPerson").html(r[0].fkPerson);
+                $("#wtDep").html(r[0].wtDep);
+                $("#fkDesc").html(r[0].fkDesc);
+                $("#dyDep").html(r[0].dyDep);
+                $("#dyPerson").html(r[0].dyPerson);
+                $("#dyDate").html(r[0].dyDate);
+                $("#dyGaishan").html(r[0].dyGaishan);
+                $("#cqFangan").html(r[0].cqFangan);
+                $("#cqDate").html(r[0].cqDate);
+                $("#lsJianhe").html(r[0].lsJianhe);
+                $("#lsDep").html(r[0].lsDep);
+                $("#lsDate").html(r[0].lsDate);
+                $("#myPingjia").html(r[0].myPingjia);
+                $("#myPerson").html(r[0].myPerson);
+                $("#myDate").html(r[0].myDate);
+                $("#f_disanfangjianhe_add").form("load", r[0]);
+            }
+        });
+    }
+
+    function toexcel() {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var params = $("#ff"+t).serializeObject();
+        console.log(params);
+        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&bdate=" + params.bdate + "&edate=" + params.edate + "&txt_dep=" + params.txt_dep + "&txt_search=" + params.txt_search + "&fkItem=" + params.fkItem);
+
+
+    }
+    function submitForm() {
+        alert("s");
+        $('#ff').form('submit');
+    }
+    function Search() {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var params = $("#ff"+t).serializeObject();
+        console.log(params);
+        $('#dg_disanfangjianhe').datagrid('load', params);
+    }
+
+
+    $("#btn_reset"+t).click(function () {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        $('#type'+t).combobox('clear');
+        $('#bdate' + t).val("");
+        $('#edate' + t).val("");
+        $('#txt_dep' + t).val("");
+        $('#txt_search'+t).val("");
+        $('#fkItem' + t).combobox('clear');
+    });
+
+
+
+</script>
+<div class="easyui-layout" data-options="fit : true,border : false">
+    <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
+         style="height: 130px; background: #f4f4f4;">
+        <div>
+            <form id="ff" method="POST">
+                <table>
+                    <tr>
+                        <td>
+                            反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            至
+                            <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                        </td>
+                        <td>
+                            <!--<input type="checkbox" id="chk" />-->
+                            关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
+                            反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                            问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
+                        </td>
+                        <td>
+                            <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                               onclick="Search();">搜索</a>
+                            <a id="btn_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                               onclick="toexcel();">导出</a>
+                            <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div data-options="region:'center',border:false">
+        <table id="dg_disanfangjianhe"></table>
+    </div>
+</div>

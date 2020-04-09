@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>问题处理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <link rel="stylesheet" href="../script/css/reset.css">
+    <link rel="stylesheet" href="../script/css/mobiscroll.css">
+    <link rel="stylesheet" href="../script/css/taizhang.css">
+</head>
+<body>
+    <div class="investigate_main">
+        <h2 class="com_title"><label>问题处理</label></h2>
+        <ul class="taizhang_list">
+            <li>
+                <label>任务领取部门</label>
+                <input type="text" placeholder="请填写" />
+            </li>
+            <li>
+                <label>第一责任人</label>
+                <input type="text" placeholder="请填写" />
+                <!--<select>
+                    <option value="">请选择类型</option>
+                    <option value="0">是</option>
+                    <option value="1">否</option>
+                </select>-->
+            </li>
+            <li>
+                <label>临时改善</label>
+                <textarea name="fk_desc" rows="5" cols="5" placeholder="请填写"></textarea>
+            </li>
+            <li>
+                <label>日期</label>
+                <input type="text" placeholder="请填写" id="dyDate" name="dyDate" />
+            </li>
+            <li>
+                <label>长期改善</label>
+                <textarea name="fk_desc" rows="5" cols="5" placeholder="请填写"></textarea>
+            </li>
+            <li>
+                <label>日期</label>
+                <input type="text" placeholder="请填写" id="cqDate" name="cqDate" />
+            </li>
+        </ul>
+        <input type="button" value="确定" class="com_btn" />
+    </div>
+    <script src="../script/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/date/mobiscroll.core-2.5.2.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/date/mobiscroll.datetime-2.5.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/js/investigate.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(function () {
+            var id = $.getUrlParam("id");
+            // console.log($.getUrlParam("date") + $.getUrlParam("id"));
+
+        });
+    </script>
+</body>
+</html>

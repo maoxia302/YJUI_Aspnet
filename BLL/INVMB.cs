@@ -141,6 +141,9 @@ namespace YJUI.BLL
             return "{\"total\": " + total.ToString() + ",\"rows\":" + strjson + "}";
         }
 
+        public IEnumerable<Model.INVMB> GetListByWhere(string strWhere) {
+            return dal.GetListByWhere(strWhere);
+        }
         #endregion  ExtensionMethod
     }
 }

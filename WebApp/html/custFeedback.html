@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>反馈客户</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />   
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../script/css/reset.css">
+<link rel="stylesheet" href="../script/css/mobiscroll.css">
+<link rel="stylesheet" href="../script/css/taizhang.css">
+</head>
+<body>
+	<div class="custFeedback_main">
+		<h2 class="com_title"><label>反馈客户</label></h2>
+		<ul class="taizhang_list">
+			<li>
+				<label>反馈客户</label>
+				<input type="text" placeholder="请填写" id="" name=""/>
+			</li>
+			<li>
+				<label>客服反馈给客户时间</label>
+				<input type="text" placeholder="请选择" id="fkDate" name="" />
+			</li>
+		</ul>
+		<input type="button" value="确定" class="com_btn"  />
+	</div>
+
+    <script>
+
+        function login() {
+            var uname = $('#uname').val();
+            var pwd = $('#pwd').val();
+            $.ajax({
+                //url: "ashx_ui/login.ashx",
+                url: "ashx_ui/login.ashx?action=login",
+                type: "POST",
+                //data: {action:'login',uname:uname,pwd:pwd},
+                data: $("#f_login").serialize(),
+                success: function (result) {
+                    if (result == "ok") {
+                        window.location.href = "index.htm";
+                    }
+                    else {
+                        alert("账户和用户名错误");
+                    }
+                }
+            });
+    </script>
+	<script src="../script/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/js/date/mobiscroll.core-2.5.2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/js/date/mobiscroll.datetime-2.5.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/js/custFeedback.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
