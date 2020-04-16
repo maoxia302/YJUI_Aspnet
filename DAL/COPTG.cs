@@ -7,5 +7,7 @@ namespace YJUI.DAL
 {
    public class COPTG
     {
+        public COPTG() { }
+
     }
 }
