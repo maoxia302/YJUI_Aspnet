@@ -5,7 +5,16 @@ using System.Text;
 
 namespace YJUI.BLL
 {
-    class LRPTB
+  public   class LRPTB
     {
+        private readonly DAL.LRPTB _dal;
+        /// <summary>
+        /// 构造注入
+        /// </summary>
+        /// <param name="dal"></param>
+        private LRPTB(DAL.LRPTB dal)
+        {
+            this._dal = dal;
+        }
     }
 }

@@ -10,9 +10,11 @@ namespace YJUI.BLL
     /// </summary>
     public partial class INVTB
     {
-        private readonly YJUI.DAL.INVTB dal = new YJUI.DAL.INVTB();
-        public INVTB()
-        { }
+        private readonly YJUI.DAL.INVTB dal;
+        public INVTB(YJUI.DAL.INVTB dal)
+        {
+            this.dal = dal;
+        }
         #region  BasicMethod
         /// <summary>
         /// 是否存在该记录
