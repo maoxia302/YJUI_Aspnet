@@ -15,11 +15,12 @@ $("#start,#end").mobiscroll(optDate);
 $(function () {
     $('#search').click(function () {
         var data = $("#ff").serializeObject();
+        console.log(data);
+        //debugger;
         if (data != null) {
-            window.location.href = "searchList.html?start=" + data.start + "&end=" + data.end;
+            window.location.href = "searchList.html?start=" + data.start + "&end=" + data.end + "&fkPerson=" + data.fk_person + "&fk_type=" + data.fk_type;
             //window.location.href = "searchList.html?data=" + JSON.stringify(data);
         }
-        console.log(data);
        
 
     });
@@ -39,6 +40,12 @@ $(function () {
         error: function () { }
     });
 
+
+    $('#add_info').click(function () {
+        window.location.href = "issueType.html";
+
+
+    });
 
 
 

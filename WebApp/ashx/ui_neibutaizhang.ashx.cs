@@ -27,7 +27,7 @@ namespace YJUI.UI.ashx_ui
                     string strWhere = "1=1  ";
                     string bdate = context.Request.Params["bdate"];
                     string edate = context.Request.Params["edate"];
-                    string word = context.Request.Params["txt_search"];
+                    string word = context.Request.Params["fkPerson"];
                     string dep = context.Request.Params["txt_dep"];//反馈部门
                     var fkItem= context.Request.Params["fkItem"];//反馈部门
                     strWhere = NewMethod(strWhere, bdate, edate, word, dep,fkItem);

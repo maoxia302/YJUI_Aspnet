@@ -14,38 +14,41 @@
 <body>
     <div class="investigate_main">
         <h2 class="com_title"><label>问题处理</label></h2>
-        <ul class="taizhang_list">
-            <li>
-                <label>任务领取部门</label>
-                <input type="text" placeholder="请填写" />
-            </li>
-            <li>
-                <label>第一责任人</label>
-                <input type="text" placeholder="请填写" />
-                <!--<select>
-                    <option value="">请选择类型</option>
-                    <option value="0">是</option>
-                    <option value="1">否</option>
-                </select>-->
-            </li>
-            <li>
-                <label>临时改善</label>
-                <textarea name="fk_desc" rows="5" cols="5" placeholder="请填写"></textarea>
-            </li>
-            <li>
-                <label>日期</label>
-                <input type="text" placeholder="请填写" id="dyDate" name="dyDate" />
-            </li>
-            <li>
-                <label>长期改善</label>
-                <textarea name="fk_desc" rows="5" cols="5" placeholder="请填写"></textarea>
-            </li>
-            <li>
-                <label>日期</label>
-                <input type="text" placeholder="请填写" id="cqDate" name="cqDate" />
-            </li>
-        </ul>
-        <input type="button" value="确定" class="com_btn" />
+        <form id="wentichuli_add">
+            <input type="hidden" name="ID" value="" id="parId" />
+            <ul class="taizhang_list">
+                <li>
+                    <label>任务领取部门</label>
+                    <input type="text" placeholder="请填写"  name="dyDep"/>
+                </li>
+                <li>
+                    <label>第一责任人</label>
+                    <input type="text" placeholder="请填写" name="dyPerson" />
+                    <!--<select>
+                <option value="">请选择类型</option>
+                <option value="0">是</option>
+                <option value="1">否</option>
+            </select>-->
+                </li>
+                <li>
+                    <label>临时改善</label>
+                    <textarea name="dyGaishan" rows="5" cols="5" placeholder="请填写"></textarea>
+                </li>
+                <li>
+                    <label>日期</label>
+                    <input type="text" placeholder="请填写" id="dyDate" name="dyDate" />
+                </li>
+                <li>
+                    <label>长期改善</label>
+                    <textarea name="cqFangan" rows="5" cols="5" placeholder="请填写"></textarea>
+                </li>
+                <li>
+                    <label>日期</label>
+                    <input type="text" placeholder="请填写" id="cqDate" name="cqDate" />
+                </li>
+            </ul>
+            <input type="button" value="确定" class="com_btn"  id="btn_wentichuli"/>
+        </form>
     </div>
     <script src="../script/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../script/js/common.js" type="text/javascript" charset="utf-8"></script>
@@ -54,10 +57,33 @@
     <script src="../script/js/investigate.js" type="text/javascript" charset="utf-8"></script>
     <script>
         $(function () {
-            var id = $.getUrlParam("id");
-            // console.log($.getUrlParam("date") + $.getUrlParam("id"));
+            var id = $.getUrlParam("id"); //获取传入的参数
+            $("#parId").val($.getUrlParam("id"));
+        });
+
+
+        $('#btn_wentichuli').click(function () {
+            var data = $('#wentichuli_add').serialize();
+            $.ajax({
+                url: '/ashx/ui_neibutaizhang.ashx?action=wentichuli_add',
+                type: 'post',
+                dataType: "text",
+                data:data,
+                success: function (data) {
+                    if (data == "ok") {
+                        window.location.href = "searchList.html";
+                    }
+
+                }
+            });
 
         });
+           
+
+
+            //console.log(data);
+
+
     </script>
 </body>
 </html>

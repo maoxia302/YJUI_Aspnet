@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>问题检核（问题登记后的30天内）</title>
+    <title>满意度评价（检核完毕后7个工作日内）</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no" />
@@ -13,27 +13,31 @@
 </head>
 <body>
     <div class="support_main">
-        <h2 class="com_title"><label>问题检核（问题登记后的30天内）</label></h2>
-        <form id="f_wtcl_add">
+        <h2 class="com_title"><label>满意度评价（检核完毕后7个工作日内）</label></h2>
+        <form id="f_mypj_add">
             <input type="hidden" name="ID" value="" id="parId" />
             <ul class="taizhang_list">
                 <li>
-                    <label>落时检核 </label>
-                    <select name="lsJianhe">
+                    <label>满意评价  </label>
+                    <select name="myPingjia">
                         <option value="">请选择类型</option>
-                        <option value="未解決">未解決</option>
-                        <option value="未解決">已解決</option>
+                        <option value="未解決">非常满意5分</option>
+                        <option value="未解決">满意4分</option>
+                        <option value="未解決">一般3分</option>
+                        <option value="未解決">不满意2分</option>
+                        <option value="未解決">非常不满意1分</option>
+                        <option value="未解決">弃权--改善结果接触不到</option>
                     </select>
                 </li>
                 <li>
-                    <label>领取部门经理 </label>
-                    <select id="person" name="lsDep"></select>
+                    <label>满意人 </label>
+                    <select id="person" name="myPerson"></select>
                 </li>
                 <li>
                     <label>
-                        落时时间
+                        时间
                     </label>
-                    <input type="text" placeholder="请选择" readonly="readonly" id="receive" name="lsDate" />
+                    <input type="text" placeholder="请选择" readonly="readonly" id="receive" name="myDate" />
                 </li>
                 <!--<li>
                     <label>问题处理状态</label>
@@ -44,7 +48,7 @@
                     </select>
                 </li>-->
             </ul>
-            <input type="button" value="确定" class="com_btn" id="submit_wtcl" />
+            <input type="button" value="确定" class="com_btn" id="submit_mypj" />
         </form>
     </div>
     <script src="../script/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
@@ -88,12 +92,16 @@
             });
         });
 
-        $("#submit_wtcl").click(function () {
+        $("#submit_mypj").click(function () {
+            if ($("#person").val() == '') {
+                alertWrong('请填写满意人');
+                return false;
+            }
             $.ajax({
-                url: '/ashx/ui_neibutaizhang.ashx?action=luoshijianhe_add',
+                url: '/ashx/ui_neibutaizhang.ashx?action=manyidupingjia_add',
                 type: 'post',
                 dataType: "text",
-                data: $('#f_wtcl_add').serialize(),
+                data: $('#f_mypj_add').serialize(),
                 success: function (data) {
                     if (data == "ok") {
                         alertRight("添加成功");

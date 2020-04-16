@@ -33,7 +33,7 @@ namespace YJUI.UI.ashx_ui
                     Model.ui_user Loginer = new BLL.ui_user().Login(uname, pwd);
                     if (Loginer == null)
                     {
-                        context.Response.Write("用户名或密码错误");
+                        context.Response.Write("3");
                     }
                     else
                     {

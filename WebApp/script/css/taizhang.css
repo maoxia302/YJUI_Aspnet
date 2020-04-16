@@ -92,9 +92,9 @@ body{
   margin-bottom: 5%;
   background-color:#fff;
 }
-.searchList_list>li>label{
-    font-weight:bold;
-	color:#343434;
+.searchList_list > li > label, .searchList_more >label{
+    font-weight: bold;
+    color: #343434;
 }
 .searchList_list>li>h2{
 	padding:1rem 0;
@@ -188,6 +188,7 @@ body{
 	position: absolute;
 	top:1.7rem;
 	left:0;
+    width:2rem;
 	font-size:1.8rem;
 	color:#ADADAD;
 }
@@ -231,6 +232,7 @@ body{
 	background-color:#fff;
 	box-shadow: 0 0 16px #999;
 	display: none;
+    z-index:1;
 }
 .search_opt>li{
 	border-bottom:1px solid #e7e7e7;
@@ -244,4 +246,16 @@ body{
 	font-size:1.2rem;
 	color:#343434;
 	text-align: left;
+}
+.searchList_more {
+    display:none;
+}
+.searchList_list > li {
+    position: relative;
+}
+.searchList_detail {
+    position: absolute;
+    right: 5%;
+    top: 5rem;
+    color:#ff7f50;
 }
