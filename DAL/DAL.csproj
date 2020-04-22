@@ -42,11 +42,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BOMCA.cs" />
+    <Compile Include="BOMCB.cs" />
     <Compile Include="chuyun.cs" />
     <Compile Include="CMSMC.cs" />
     <Compile Include="CMSME.cs" />
     <Compile Include="CMSMQ.cs" />
     <Compile Include="CMSMV.cs" />
+    <Compile Include="COPMA.cs" />
     <Compile Include="COPTC.cs" />
     <Compile Include="COPTD.cs" />
     <Compile Include="COPTG.cs" />

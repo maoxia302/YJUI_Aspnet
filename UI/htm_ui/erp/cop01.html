@@ -1,0 +1,305 @@
+﻿<style type="text/css">
+
+    .menu_header {
+        background-color: #F8FAFC;
+    }
+
+    .menu_add {
+        font-size: 0;
+    }
+
+    .menu_addList > p {
+        display: inline-block;
+        font-size: 13px;
+        margin-right: 10px;
+    }
+
+    .menu_header .l-btn-plain:hover {
+        background: #eaf2ff;
+        color: #000000;
+        border: 1px solid #F8FAFC;
+        -moz-border-radius: 0 0 0 0;
+        -webkit-border-radius: 0 0 0 0;
+        border-radius: 0 0 0 0;
+    }
+
+    .menuList {
+        display: none;
+        position: absolute;
+        width: 100%;
+        z-index: 2;
+        top: 20px;
+        left: 20px;
+    }
+
+        .menuList .menu_header {
+            border: 1px solid #95B8E7;
+        }
+</style>
+<div id="bar_list" class="a">
+    <a href="#" class="easyui-linkbutton" onclick="add()" data-options="plain:true,iconCls:'icon-myAdd'">添加</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myEdit'">修改</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myRemov'">删除</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myOk'">审核</a>
+    <a href="#" class="easyui-menubutton" data-options="menu:'#mm2',iconCls:'icon-myMap'">生单</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myDelet'">作废</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-mySearch'">查询</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-mySwitch'">切换</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myRefresh'">刷新</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myBatch'">批量处理</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myQty'">联查</a>
+    <a href="#" class="easyui-menubutton" data-options="menu:'#mm3',iconCls:'icon-myMap'">更多</a>
+    <input class="easyui-searchbox" />搜索
+    <!--生成订单内容开始-->
+    <div id="mm2" style="width:100px;">
+        <div data-options="iconCls:'icon-remove'">生成采购单</div>
+        <div data-options="iconCls:'icon-remove'">生成进货单</div>
+        <div  onclick="add_order()" data-options="iconCls:'icon-remove'">生成销货单</div>
+    </div>
+    <div id="mm3" style="width:100px;">
+        <div data-options="iconCls:'icon-remove'">生成采购单</div>
+        <div data-options="iconCls:'icon-remove'">生成进货单</div>
+        <div data-options="iconCls:'icon-remove'">生成销货单</div>
+    </div>
+</div>
+
+<div class="easyui-layout a" data-options="fit : true,border : false">
+    <div data-options="region:'center',border:false">
+        <table id="dg_cop01_list" class="a"></table>
+    </div>
+</div>
+
+
+
+<!--添加内容开始-->
+<div id="add_bar" class="b">
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-save'">保存</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myEdit'">导入明细</a>
+    <a href="#" class="easyui-linkbutton" onclick="back()" data-options="plain:true,iconCls:'icon-undo'">取消</a>
+    <table class="tiaozhang_form">
+        <tr>
+            <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid" id="orderType"/><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">选择</a></td>
+            <td>部门编号:<input type="text" class="easyui-combogrid" id="dep" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'" id="depname" onclick="depmentQty()">选择</a></td>
+            <td>人员编号:<input type="text" class="easyui-combogrid" id="emp" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'" id="empname" onclick="empQty()">选择</a></td>
+            <td><input type="checkbox" id="creatEntry" />生成分录</td>
+        </tr>
+        <tr>
+            <td>&ensp;&ensp;&emsp;单号:<input type="text" id="danhao" /></td>
+            <td>&ensp;&ensp;&emsp;工厂:<input type="text" class="easyui-combogrid" id="gongchang" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'">选择</a></td>
+            <td>交易日期:<input type="text" class="Wdate" id="jyDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" /></td>
+            <!--<td class="isPass">
+                <i class="pass"><img src="../../images/icon_pass.png" alt="" /></i>
+                <i class="noPass"><img src="../../images/icon_noPass.png" alt="" /></i>     
+            </td>-->
+        </tr>
+        <tr>
+            <td>单据日期:<input type="text" class="Wdate" id="djDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',onpicking: function (dp) {if (dp.cal.getDateStr() != dp.cal.getNewDateStr()) { Func(dp.cal.getNewDateStr())}}})" autocomplete="off" /></td>
+            <td>&ensp;&ensp;&emsp;件数:<input type="text" id="jianshu" /></td>
+        </tr>
+        <tr>
+            <td>&ensp;&ensp;&emsp;备注:<textarea id="beizhu" style="height:50px;"></textarea></td>
+            <td>项目编号:<input type="text" id="proId" /></td>
+        </tr>
+    </table>
+</div>
+<div class="easyui-layout b" data-options="fit : true,border : false">
+    <div data-options="region:'center',border:false">
+        <table id="dg" class="b"></table>
+    </div>
+</div>
+<!--添加内容结束-->
+
+
+<script type="text/javascript">
+    $(function () {
+        back();
+    });
+
+    //添加
+    function add() {
+        $(".a").hide();
+        $(".b").show();
+        $('#dg').datagrid({
+            striped: false, nowrap: false, fitColumns: false, autoRowHeight: false, rownumbers: true,
+            showFooter: false, remoteSort: false, sortable: "true",fit:"true",
+            columns: [[
+                { checkbox: true },
+                { field: 'TD001', title: '单别', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD002', title: '单号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD003', title: '规格', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD004', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD005', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD006', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD007', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD008', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD009', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD010', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD011', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD012', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD013', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD014', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD015', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD016', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD017', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD018', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD019', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD020', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD021', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD022', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD023', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD024', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD025', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD026', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD027', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD028', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD029', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD030', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD031', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD032', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD033', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD034', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD035', title: '品号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD036', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD037', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD038', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD039', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD040', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD041', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD042', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD043', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD044', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD045', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD046', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD047', title: '品名', halign: 'center', align: 'left', width: 50 },
+                { field: 'TD048', title: '品名', halign: 'center', align: 'left', width: 50 },
+            ]],
+            toolbar: '#add_bar'
+        });
+    }
+    ////取消关闭
+    function back() {
+        $(".a").show();
+        $(".b").hide();
+        $('#dg_cop01_list').datagrid({
+            striped: false, nowrap: false, autoRowHeight: false, rownumbers: true,
+            showFooter: false, remoteSort: false, sortable: "true", fit: true,
+            pagination: true,
+            pageSize: 20,
+            pageList: [20, 30, 40, 50],
+            url: "../ashx_ui/COPTC.ashx?action=search",
+            columns: [[
+                { checkbox: true },
+                { field: 'TC001', title: '单别', halign: 'center', align: 'left', width: 50 },
+                { field: 'TC002', title: '单号', halign: 'center', align: 'left', width: 100 },
+                { field: 'TC003', title: '订单日期', halign: 'center', align: 'left', width: 80 },
+                { field: 'TC004', title: '客户编号', halign: 'center', align: 'left', width: 80 },
+                { field: 'TC005', title: '部门编号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TC006', title: '业务人员', halign: 'center', align: 'left', width: 50 },
+                { field: 'TC007', title: '出货工厂', halign: 'center', align: 'left', width: 50 },
+                { field: 'TC008', title: '交易币种', halign: 'center', align: 'left', width: 50 },
+                { field: 'TC009', title: '汇率', halign: 'center', align: 'left', width: 30 },
+                { field: 'TC010', title: '送货地址', halign: 'center', align: 'left', width: 150 },
+                { field: 'TC011', title: '送货地址(二)', halign: 'center', align: 'left', width: 150 },
+                { field: 'TC012', title: '客户单号', halign: 'center', align: 'left', width: 50 },
+                { field: 'TC013', title: '价格说明', halign: 'center', align: 'left', width: 50 },
+                { field: 'TC014', title: '付款条件', halign: 'center', align: 'left', width: 50 },
+                { field: 'TC015', title: '备注', halign: 'center', align: 'left', width: 100 },
+                { field: 'TC029', title: '订单金额', halign: 'center', align: 'left', width: 60 },
+                { field: 'TC031', title: '总数量', halign: 'center', align: 'left', width: 40 },
+                { field: 'TC039', title: '单据日期', halign: 'center', align: 'left', width: 80 },
+                { field: 'TC040', title: '审核者', halign: 'center', align: 'left', width: 50 },
+                { field: 'TCI01', title: '交货日期', halign: 'center', align: 'left', width: 80 },
+                { field: 'TC027', title: '审核码', halign: 'center', align: 'left', width: 50 }
+            ]],
+            toolbar: '#bar_list',
+            onDblClickRow: function (index, row) {
+                var tc001 = row.TC001;
+                var tc002 = row.TC002;
+                addTab_new('订单详单' + tc001 + '-' + tc002, '/htm_ui/erp/cop_detail.html?tc001=' + tc001 + '&tc002=' + tc002);
+                //$("#xiaoshoutuihuo").tabs('select', '详细字段');
+                //$("#orderType").combogrid('setValue', row.TI001);
+                //$("#danhao").val(row.TI002);
+                //$("#dep").combogrid('setValue', row.TI005);
+                //$("#emp").combogrid('setValue', row.TI006);
+                //var data = {
+                //    "ti001": row.TI001,
+                //    "ti002": row.TI002
+                //};
+
+                //$.ajax({
+                //    url: "ashx_ui/COPTJ.ashx?action=search",
+                //    type: "POST",
+                //    data: data,
+                //    success: function (result) {
+                //        var data = JSON.parse(result);
+                //        $("#dg").datagrid('loadData', data);
+
+                //    }
+                //});
+            }
+        });
+    }
+
+
+    function add_order() {
+       // t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        var r = $("#dg_cop01_list").datagrid("getChecked");
+        if (r.length < 1) {
+            $.show_warning("错误", "请选择一个要修改一个信息");
+            return;
+        }
+        if (r.length > 1) {
+            $.show_warning("错误", "一次只能修改一个信息");
+            $("#dg_cop01_list" ).datagrid('clearSelections').datagrid('clearChecked');
+            return;
+        }
+        $("<div />").dialog({
+            href: "htm_ui/common/add_type.html",
+            width: 300,
+            height: 100,
+            title: "选择单别",
+            buttons: [{
+                text: '确定',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    var d = $(this).closest('.window-body');
+                    $("#f_danbie_add").form("submit", {
+                        url: "../ashx_ui/COPTC.ashx",
+                        onSubmit: function (param) {
+                            param.action = 'add_order';
+                            param.TC001 = r[0].TC001;
+                            param.TC002 = r[0].TC002;
+                            param.TD001 = $("#TG001").val();
+                            return $(this).form('validate');
+                        },
+                        success: function (result) {
+                            dealAjaxResult(result, function (r) {
+                                //d.dialog('destory');
+                                d.dialog('destroy');
+                                $.show_warning("提示", "操作成功");
+                                $("#dg_cop01_list").datagrid("reload").datagrid('clearSelections').datagrid('clearChecked');
+
+                            });
+
+                        }
+                    });
+
+                }
+
+            },
+            {
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+
+            }
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            },
+            onLoad: function () {
+               
+            }
+        });
+    }
+</script>

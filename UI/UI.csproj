@@ -85,6 +85,7 @@
     <Content Include="css\tablefrom.css" />
     <Content Include="htm_ui\chuyun\add.html" />
     <Content Include="htm_ui\chuyun\chuyun.html" />
+    <Content Include="htm_ui\common\add_type.html" />
     <Content Include="htm_ui\common\dep.html" />
     <Content Include="htm_ui\common\emp.html" />
     <Content Include="htm_ui\common\upFile.html" />
@@ -94,6 +95,8 @@
     <Content Include="htm_ui\diaobo\diaobo_add.htm" />
     <Content Include="htm_ui\diaobo\sfrz\sfrz.htm" />
     <Content Include="htm_ui\diaobo\sfrz\sfrz_add.htm" />
+    <Content Include="htm_ui\erp\cop01.html" />
+    <Content Include="htm_ui\erp\cop_detail.html" />
     <Content Include="htm_ui\erp\lrp.html" />
     <Content Include="htm_ui\erp\tiaozhang.html" />
     <Content Include="htm_ui\fhqk\sfdc\sfdc.htm" />
@@ -2084,6 +2087,18 @@
     <Compile Include="ashx_ui\CMSMV.ashx.cs">
       <DependentUpon>CMSMV.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx_ui\COPTC.ashx.cs">
+      <DependentUpon>COPTC.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\COPTD.ashx.cs">
+      <DependentUpon>COPTD.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\COPTG.ashx.cs">
+      <DependentUpon>COPTG.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\COPTH.ashx.cs">
+      <DependentUpon>COPTH.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx_ui\datalist.ashx.cs">
       <DependentUpon>datalist.ashx</DependentUpon>
     </Compile>
@@ -2238,6 +2253,10 @@
     <Content Include="ashx_ui\CMSMV.ashx" />
     <Content Include="ashx_ui\LRPLA.ashx" />
     <Content Include="ashx_ui\ui_tuji.ashx" />
+    <Content Include="ashx_ui\COPTG.ashx" />
+    <Content Include="ashx_ui\COPTH.ashx" />
+    <Content Include="ashx_ui\COPTC.ashx" />
+    <Content Include="ashx_ui\COPTD.ashx" />
     <None Include="packages.config" />
     <None Include="themes\black\images\Thumbs.db" />
     <None Include="themes\default\bootstrap\images\Thumbs.db" />

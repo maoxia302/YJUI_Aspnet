@@ -298,5 +298,67 @@ function getAjax(url, parm, callBack) {
     });
 }
 
+//判断是否为空
+function isEmpty(target) {
+    if (target == null || target == "null" || target == "" || target == "undefined" || target == undefined) {
+        return true;
+    }
+    return false;
+}
+
+(function ($) {
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        console.log(o)
+        return o;
+    }
+
+
+})(jQuery);
+
+(function ($) {
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            return decodeURI(r[2]); // decodeURI(r[2]); 解决参数是中文时的乱码问题
+
+        return null;
+    }
+})(jQuery);
+
+//'20200101'变成'2020-01-01'公共方法
+(function ($) {
+    $.strDate = function (riqi) {
+        return riqi.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+    }
+})(jQuery);
+
+
+
+function addTab_new(title, url) {
+    if ($('#tabs').tabs('exists', title)) {
+        $('#tabs').tabs('select', title);
+    } else {
+        var content = '<iframe scrolling="no" frameborder="0"  src="' + url + '" style="width:100%;height:99%;margin:0;padding:0"></iframe>';
+        $('#tabs').tabs('add', {
+            title: title,
+            content: content,
+            closable: true
+        });
+    }
+}
+
 
 

@@ -128,6 +128,20 @@ function addTab(subtitle, url, icon,id) {
     tabClose();
 }
 
+function addTab_new(title, url) {
+    if ($('#tabs').tabs('exists', title)) {
+        $('#tabs').tabs('select', title);
+    } else {
+        var content = '<iframe scrolling="no" frameborder="0"  src="' + url + '" style="width:100%;height:99%;margin:0;padding:0"></iframe>';
+        $('#tabs').tabs('add', {
+            title: title,
+            content: content,
+            closable: true
+        });
+    }
+}
+
+
 
 function addTab1(title, url, icon) {
     //关闭当前的

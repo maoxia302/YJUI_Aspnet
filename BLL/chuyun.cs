@@ -137,13 +137,6 @@ namespace YJUI.BLL
         public bool Add_ZhiJian(YJUI.Model.chuyun model) {
             return dal.Add_ZhiJian(model);
         }
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        //public DataSet GetList(int PageSize,int PageIndex,string strWhere)
-        //{
-        //return dal.GetList(PageSize,PageIndex,strWhere);
-        //}
 
         #endregion  BasicMethod
         #region  ExtensionMethod

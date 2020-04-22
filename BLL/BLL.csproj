@@ -46,6 +46,7 @@
     <Compile Include="CMSME.cs" />
     <Compile Include="CMSMQ.cs" />
     <Compile Include="CMSMV.cs" />
+    <Compile Include="COPMA.cs" />
     <Compile Include="COPTC.cs" />
     <Compile Include="COPTD.cs" />
     <Compile Include="COPTG.cs" />

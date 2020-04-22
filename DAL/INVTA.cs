@@ -830,7 +830,7 @@ namespace YJUI.DAL
             if (danbie != null && date != null&&danbie!=""&&date!="")
             {
                 // orderNoField, table, columnName, SingleName, datecolumnName, date
-                num = ErpUtil.GetErpNum("INVTA",  "TA001", danbie,"TA002", "TA014", date);
+                num = ErpUtil.GetErpNum("INVTA",  "TA001", danbie,"TA002","TA014");
             }
             return num;
         }

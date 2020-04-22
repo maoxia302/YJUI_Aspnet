@@ -3,7 +3,6 @@ using System.Data;
 using System.Text;
 using System.Data.SqlClient;
 using YJUI.DBUtility; //Please add references
-using YJUI.DBUtility;
 
 namespace YJUI.DAL
 {
