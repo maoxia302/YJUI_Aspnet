@@ -9,12 +9,21 @@ namespace YJUI.BLL
 {
    public   class COPTC
     {
-        private readonly DAL.COPTC dal=new DAL.COPTC();
+        private static COPTC bll = null;
+        public static COPTC Current
+        {
+            get
+            {
+                if (bll == null)
+                    bll = new COPTC();
+                return bll;
+            }
+        }
         public COPTC() { }
 
         public PageableData<Model.COPTC> GetPageList(string strWhere, string orderby, int startIndex, int endIndex)
         {
-            return dal.GetPageList(strWhere, orderby, startIndex, endIndex);
+            return DAL.COPTC.Current.GetPageList(strWhere, orderby, startIndex, endIndex);
         }
         /// <summary>
         /// 前台json
@@ -39,7 +48,7 @@ namespace YJUI.BLL
         public Model.COPTC CoptcModel(string tc001, string tc002)
 
         {
-            return dal.CoptcModel(tc001,tc002);
+            return DAL.COPTC.Current.CoptcModel(tc001,tc002);
 
         }
         public string GetCoptcToJson(Model.COPTC model)

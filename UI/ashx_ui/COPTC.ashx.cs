@@ -199,13 +199,15 @@ namespace YJUI.UI.ashx_ui
 
                 var tc001 = context.Request.Params["tc001"];
                 var tc002 = context.Request.Params["tc002"];
-                Model.COPTC coptc = new BLL.COPTC().CoptcModel(tc001,tc002);
-                string strjson = new BLL.COPTC().GetCoptcToJson(coptc);
+                Model.COPTC coptc = BLL.COPTC.Current.CoptcModel(tc001,tc002);
+                IEnumerable<Model.COPTD> coptd = BLL.COPTD.Current.GetCOPTDs(tc001, tc002);
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("coptc",coptc);
+                dic.Add("coptd", coptd);
+                string strjson = Common.JsonHelper.ObjToJson(dic);
                 context.Response.Write(strjson);
+                context.Response.End();
             }
-
-
-
 
         }
 

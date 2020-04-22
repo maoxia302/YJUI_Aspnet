@@ -8,7 +8,16 @@ namespace YJUI.BLL
 {
    public  class COPTD
     {
-        private readonly DAL.COPTD dal = new DAL.COPTD();
+        private static COPTD bll = null;
+        public static COPTD Current
+        {
+            get
+            {
+                if (bll == null)
+                    bll = new COPTD();
+                return bll;
+            }
+        }
         public COPTD() { }
         /// <summary>
         /// 获取一条订单的所有单身
@@ -18,7 +27,7 @@ namespace YJUI.BLL
         /// <returns></returns>
         public PageableData<Model.COPTD> CoptdList(string db, string dh)
         {
-            return dal.CoptdList(db,dh);
+            return DAL.COPTD.Current.CoptdList(db,dh);
         }
         public string coptdToJson(string db, string dh)
         {
@@ -27,7 +36,7 @@ namespace YJUI.BLL
         }
 
         public IEnumerable<Model.COPTD> GetCOPTDs(string db, string dh) {
-            return dal.GetCOPTDs(db, dh);
+            return DAL.COPTD.Current.GetCOPTDs(db, dh);
 
         }
     }

@@ -11,6 +11,17 @@ namespace YJUI.DAL
 {
     public class COPTD
     {
+
+        private static COPTD bll = null;
+        public static COPTD Current
+        {
+            get
+            {
+                if (bll == null)
+                    bll = new COPTD();
+                return bll;
+            }
+        }
         /// <summary>
         /// 获取单个model
         /// </summary>
@@ -20,7 +31,7 @@ namespace YJUI.DAL
         /// <returns></returns>
         public Model.COPTD CoptcModel(string td001, string td002,string td003)
         {
-            string sql = string.Format("select * from COPTD where 1=1 and TD001='{0}' and TD002='{1}' and TD003='{3}'", td001, td002,td003);
+            string sql = string.Format("select * from COPTD where 1=1 and TD001='{0}' and TD002='{1}' and TD003='{2}'", td001, td002,td003);
             using (SqlConnection conn = new SqlConnection(ConnStrManage.WSGCDB))
             {
                 return conn.Query<Model.COPTD>(sql).FirstOrDefault();

@@ -55,6 +55,22 @@ namespace YJUI.BLL
             return DAL.COPTG.Current.GetCoptgErpNo(danbie);
         }
 
+        /// <summary>
+        /// 根据单别单号，获取一个实体类数据
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="dh"></param>
+        /// <returns></returns>
+        public Model.COPTG GetSingleCoptg(string db, string dh)
+        {
+            return DAL.COPTG.Current.GetSingleCoptg(db,dh);
+        }
+
+        public string GetCoptgToJson(string db, string dh)
+        {
+            Model.COPTG  model= GetSingleCoptg(db, dh);
+            return JsonHelper.ObjToJson(model);
+        }
 
     }
 }

@@ -12,13 +12,23 @@ namespace YJUI.DAL
     public class COPTC
     {
         public COPTC() { }
+        private static COPTC dal = null;
+        public static COPTC Current
+        {
+            get
+            {
+                if (dal == null)
+                    dal = new COPTC();
+                return dal;
+            }
+        }
 
         public Model.COPTC CoptcModel(string tc001, string tc002)
         {
             string sql = string.Format("select * from COPTC where 1=1 and TC001='{0}' and TC002='{1}'", tc001, tc002);
             using (SqlConnection conn = new SqlConnection(ConnStrManage.WSGCDB))
             {
-                return conn.Query<Model.COPTC>(sql).FirstOrDefault();
+               return  conn.Query<Model.COPTC>(sql).FirstOrDefault();
             }
 
 

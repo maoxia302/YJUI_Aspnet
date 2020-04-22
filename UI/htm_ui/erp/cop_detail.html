@@ -70,30 +70,31 @@
                 type: "POST",
                 data: data,
                 success: function (result) {
+                    debugger;
                     result = JSON.parse(result);
-                    var str = $.strDate(result.TC039);
-                    var ddstr = $.strDate(result.TC003);
+                    var str = $.strDate(result.coptc.TC039);
+                    var ddstr = $.strDate(result.coptc.TC003);
                     $("#djDate").val(str);
                     $("#ddDate").val(ddstr);
-                 
-                    $("#orderType").combogrid('setValue', tc001);
+                    $("#orderType").combogrid('setValue', result.coptc.TC001);
                     $("#danhao").val(tc002);
-                    $("#ma001").combogrid('setValue', result.TC004);
-                    $("#dep").combogrid('setValue', result.TC005);
-                    $("#gongchang").combogrid('setValue', result.TC007);
+                    $("#ma001").combogrid('setValue', result.coptc.TC004);
+                    $("#dep").combogrid('setValue', result.coptc.TC005);
+                    $("#gongchang").combogrid('setValue', result.coptc.TC007);
+                    $("#dg").datagrid('loadData', result.coptd);
                 }
             });
 
-            $.ajax({
-                url: "/ashx_ui/COPTD.ashx?action=getCoptd",
-                type: "POST",
-                data: data,
-                success: function (result) {
-                    var data = JSON.parse(result);
-                    $("#dg").datagrid('loadData', data);
+            //$.ajax({
+            //    url: "/ashx_ui/COPTD.ashx?action=getCoptd",
+            //    type: "POST",
+            //    data: data,
+            //    success: function (result) {
+            //        var data = JSON.parse(result);
+            //        $("#dg").datagrid('loadData', data);
 
-                }
-            });
+            //    }
+            //});
            var data= $('#dg').datagrid({
                striped: false, nowrap: false, autoRowHeight: false, rownumbers: true,
                showFooter: false, remoteSort: false, sortable: "true", fit: true,

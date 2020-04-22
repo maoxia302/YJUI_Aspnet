@@ -28,8 +28,18 @@ namespace YJUI.UI.ashx_ui
                 //strWhere = NewMethod1(strWhere, type, bdate, edate);
                 var pageindex = int.Parse(context.Request["page"]);
                 var pagesize = int.Parse(context.Request.Params["rows"]);
-                var strjson = new BLL.COPTG().GetListToJson(strWhere, "", (pageindex - 1) * pagesize, pageindex * pagesize);
+                var strjson = BLL.COPTG.Current.GetListToJson(strWhere, "", (pageindex - 1) * pagesize, pageindex * pagesize);
                 context.Response.Write(strjson);
+                context.Response.End();
+            }
+            //获取一条数据传到前台
+            else if (context.Request.Params["action"] == "GetSingleCoptg")
+            {
+                var db = context.Request.Params["tg001"];
+                var dh = context.Request.Params["tg002"];
+                string strjson = BLL.COPTG.Current.GetCoptgToJson(db,dh);
+                context.Response.Write(strjson);
+                context.Response.End();
             }
         }
         /// <summary>

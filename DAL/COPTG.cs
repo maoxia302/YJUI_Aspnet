@@ -19,7 +19,6 @@ namespace YJUI.DAL
                 if (dal == null)
                     dal = new COPTG();
                 return dal;
-
             }
         }
         /// <summary>
@@ -72,6 +71,21 @@ namespace YJUI.DAL
         public string GetCoptgErpNo(string danbie)
         {
             return ErpUtil.GetErpNum("COPTG", "TG001", danbie, "TG002","TG042");
+        }
+        /// <summary>
+        /// 获取一个实体coptg
+        /// </summary>
+        /// <param name="tg001"></param>
+        /// <param name="tg002"></param>
+        /// <returns></returns>
+        public Model.COPTG GetSingleCoptg(string tg001,  string tg002)
+        {
+            string sql = string.Format("select * from COPTG where 1=1 and TG001='{0}' and TG002='{1}'", tg001, tg002);
+            using (SqlConnection conn = new SqlConnection(ConnStrManage.WSGCDB))
+            {
+                return conn.Query<Model.COPTG>(sql).FirstOrDefault();
+            }
+
         }
 
 
