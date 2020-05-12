@@ -2073,6 +2073,15 @@
     <Content Include="themes\metro\tree.css" />
     <Content Include="themes\metro\validatebox.css" />
     <Content Include="themes\metro\window.css" />
+    <Content Include="uploadimg\css\fileAndPicture\webuploader.css" />
+    <Content Include="uploadimg\css\webuploader.css" />
+    <Content Include="uploadimg\css\webuploader.min.css" />
+    <Content Include="uploadimg\images\bg.png" />
+    <Content Include="uploadimg\images\img_add.jpg" />
+    <Content Include="uploadimg\images\success.png" />
+    <Content Include="uploadimg\images\webuploader-icons.png" />
+    <Content Include="uploadimg\uploadImgPreview.min.js" />
+    <Content Include="uploadimg\webuploader.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

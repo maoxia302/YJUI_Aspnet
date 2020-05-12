@@ -1,4 +1,21 @@
-﻿<script>
+﻿<link href="../../uploadimg/css/webuploader.min.css" rel="stylesheet" />
+<style>
+    ._filelist li { /*这个选择器一定要有宽高，否则图片显示不出来，因为它里面的内容是绝对定位的*/
+        width: 205px;
+        height: 140px;
+    }
+
+    .webuploader-pick {
+        width: 40px;
+        height: 40px;
+        background: url(../../uploadimg/images/img_add.jpg)no-repeat center center;
+        background-size: 100%;
+        overflow: hidden;
+    }
+</style>
+<script src="../../uploadimg/webuploader.min.js"></script>
+<script src="../../uploadimg/uploadImgPreview.min.js"></script>
+<script>
     $('#cb_wtDep').combobox({
         editable: false,
         url: '../ashx_ui/ui_neibuDep.ashx?action=getall',
@@ -28,6 +45,26 @@
             $("#fkDesc").after('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
         }
     });
+    $(function () {
+        var uploader2 = uploadImage({
+            wrap: "#uploader2", //包裹整个上传控件的元素，必须。可以传递dom元素、选择器、jQuery对象
+            /*预览图片的宽度，可以不传，如果宽高都不传则为包裹预览图的元素宽度，高度自动计算*/
+            //width: "160px", 
+            height: 120,//预览图片的高度
+            fileVal: "file", // [默认值：'file'] 设置文件上传域的name。
+            btns: {//必须
+                uploadBtn: $("#upload_now2"), //开始上传按钮，必须。可以传递dom元素、选择器、jQuery对象
+                //retryBtn: "#retry_upload", //用户自定义"重新上传"按钮
+                chooseBtn: '#choose_file2',//"选折图片"按钮，必须。可以传递dom元素、选择器、jQuery对象
+                chooseBtnText: "+" //选择文件按钮显示的文字
+            },
+            pictureOnly: true,//只能上传图片
+            resize: false,
+            //是否可以重复上传，即上传一张图片后还可以再次上传。默认是不可以的，false为不可以，true为可以
+            duplicate: true
+        });
+    });
+    
 </script>
 <div style="padding: 15px; overflow: hidden">
     <form id="f_neibutaizhang_add" method="post">
@@ -38,7 +75,7 @@
             <tr>
 
 
-                <td>
+                <td style="width:80px;">
                     问题归属部门：
                 </td>
                 <td>
@@ -83,6 +120,16 @@
                 </td>
                 <td colspan="3">
                     <textarea cols="50" id="fkDesc" name="fkDesc" rows="6"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    上传图片：
+                </td>
+                <td colspan="3">
+                    <div id="uploader2"></div>
+                    <div class="choose-file-btn" id="choose_file2">+</div>
+                    <button type="button" id="upload_now2" hidden>上传图片</button>
                 </td>
             </tr>
         </table>
