@@ -14,6 +14,7 @@ namespace YJUI.DBUtility
         private string _NEWV2013DB;//12帐套vocen2013帐套
         private string _WsgcDB;//沃森工厂
         private string _WssybDB;//沃森事业部数据
+        private string _DscSysDB;
 
         public static string NEWV2013DB
         {
@@ -72,6 +73,17 @@ namespace YJUI.DBUtility
                 return _instance._WssybDB;
             }
         }
+        public static string DscSysDB
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new ConnStrManage();
+                }
+                return _instance._DscSysDB;
+            }
+        }
 
         private ConnStrManage()
         {
@@ -81,7 +93,7 @@ namespace YJUI.DBUtility
             _NEWV2013DB = ConfigurationManager.ConnectionStrings["SQLConnString_New"].ConnectionString;
             _WsgcDB = ConfigurationManager.ConnectionStrings["WsgcSQLConnString"].ConnectionString;
             _WssybDB = ConfigurationManager.ConnectionStrings["WssybSQLConnString"].ConnectionString;
-
+            _DscSysDB= ConfigurationManager.ConnectionStrings["DscSysSQLConnString"].ConnectionString;
         }
     }
 }

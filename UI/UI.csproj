@@ -85,9 +85,11 @@
     <Content Include="css\tablefrom.css" />
     <Content Include="htm_ui\chuyun\add.html" />
     <Content Include="htm_ui\chuyun\chuyun.html" />
+    <Content Include="htm_ui\common\add_pur_type.html" />
     <Content Include="htm_ui\common\add_type.html" />
     <Content Include="htm_ui\common\dep.html" />
     <Content Include="htm_ui\common\emp.html" />
+    <Content Include="htm_ui\common\upFile_sheji.html" />
     <Content Include="htm_ui\common\upFile.html" />
     <Content Include="htm_ui\diaobo\clzk\clzk.htm" />
     <Content Include="htm_ui\diaobo\clzk\clzk_add.htm" />
@@ -95,9 +97,15 @@
     <Content Include="htm_ui\diaobo\diaobo_add.htm" />
     <Content Include="htm_ui\diaobo\sfrz\sfrz.htm" />
     <Content Include="htm_ui\diaobo\sfrz\sfrz_add.htm" />
+    <Content Include="htm_ui\erp\pur02_detail.html" />
+    <Content Include="htm_ui\erp\pur02.html" />
+    <Content Include="htm_ui\erp\cop02.html" />
     <Content Include="htm_ui\erp\cop01.html" />
+    <Content Include="htm_ui\erp\cop02_detail.html" />
     <Content Include="htm_ui\erp\cop_detail.html" />
     <Content Include="htm_ui\erp\lrp.html" />
+    <Content Include="htm_ui\erp\pur\pur01.html" />
+    <Content Include="htm_ui\erp\pur\pur01_detail.html" />
     <Content Include="htm_ui\erp\tiaozhang.html" />
     <Content Include="htm_ui\fhqk\sfdc\sfdc.htm" />
     <Content Include="htm_ui\fhqk\sfdc\ui_sfdc.htm" />
@@ -149,6 +157,7 @@
     <Content Include="htm_ui\renkuan\renkuan.htm" />
     <Content Include="htm_ui\renkuan\renkuan_add.htm" />
     <Content Include="htm_ui\renkuan\renkuan_edit.htm" />
+    <Content Include="htm_ui\sheji\sheji_list.html" />
     <Content Include="htm_ui\sys\menu.htm" />
     <Content Include="htm_ui\sys\menu_add.htm" />
     <Content Include="htm_ui\sys\menu_edit.html" />
@@ -2075,6 +2084,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ashx_ui\ADMMD.ashx.cs">
+      <DependentUpon>ADMMD.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx_ui\chuyun.ashx.cs">
       <DependentUpon>chuyun.ashx</DependentUpon>
     </Compile>
@@ -2126,6 +2138,12 @@
     <Compile Include="ashx_ui\neibu_toexcel.ashx.cs">
       <DependentUpon>neibu_toexcel.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx_ui\PURTC.ashx.cs">
+      <DependentUpon>PURTC.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\PURTG.ashx.cs">
+      <DependentUpon>PURTG.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx_ui\quanxian.ashx.cs">
       <DependentUpon>quanxian.ashx</DependentUpon>
     </Compile>
@@ -2134,6 +2152,9 @@
     </Compile>
     <Compile Include="ashx_ui\search.ashx.cs">
       <DependentUpon>search.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx_ui\shejitaizhang.ashx.cs">
+      <DependentUpon>shejitaizhang.ashx</DependentUpon>
     </Compile>
     <Compile Include="ashx_ui\ui_tuji.ashx.cs">
       <DependentUpon>ui_tuji.ashx</DependentUpon>
@@ -2212,6 +2233,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="htm_ui\NewFolder1\" />
     <Folder Include="UploadFile\" />
   </ItemGroup>
   <ItemGroup>
@@ -2257,6 +2279,10 @@
     <Content Include="ashx_ui\COPTH.ashx" />
     <Content Include="ashx_ui\COPTC.ashx" />
     <Content Include="ashx_ui\COPTD.ashx" />
+    <Content Include="ashx_ui\ADMMD.ashx" />
+    <Content Include="ashx_ui\PURTG.ashx" />
+    <Content Include="ashx_ui\PURTC.ashx" />
+    <Content Include="ashx_ui\shejitaizhang.ashx" />
     <None Include="packages.config" />
     <None Include="themes\black\images\Thumbs.db" />
     <None Include="themes\default\bootstrap\images\Thumbs.db" />

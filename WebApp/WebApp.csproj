@@ -40,6 +40,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -67,6 +70,8 @@
     <Content Include="ashx\ui_guzhang.ashx" />
     <Content Include="ashx\ui_neibutaizhang.ashx" />
     <Content Include="ashx\ui_leftmenu.ashx" />
+    <Content Include="ashx\getsession.ashx" />
+    <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -102,6 +107,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ashx\getsession.ashx.cs">
+      <DependentUpon>getsession.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx\login.ashx.cs">
       <DependentUpon>login.ashx</DependentUpon>
     </Compile>

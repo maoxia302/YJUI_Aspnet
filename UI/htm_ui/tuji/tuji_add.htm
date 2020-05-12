@@ -1,7 +1,16 @@
 ﻿<script>
     $('#cb_tjxh').combobox({
         editable: false,
+        required: true,
         url: '../ashx_ui/ui_guzhang.ashx?action=tjxh',
+        valueField: 'guzhang',
+        textField: 'guzhang'
+    });
+    $('#brand').combobox({
+        editable: false,
+        required: true,
+        panelHeight: 'auto',
+        url: '../ashx_ui/ui_guzhang.ashx?action=brand',
         valueField: 'guzhang',
         textField: 'guzhang'
     });
@@ -13,7 +22,7 @@
             <td>
                 凸机型号</td>
             <td>
-                <input type="easyui-combobox" id="cb_tjxh" name="tjxh" class="easyui-validatebox"  />
+                <input class="easyui-combobox" id="cb_tjxh" name="tjxh"/>
             </td>
             <td>
                 发动机号：
@@ -34,7 +43,7 @@
                 激活保修
             </td>
             <td>
-                <input class="easyui-combobox" name="jhbx" data-options="editable: false,required:true,
+                <input class="easyui-combobox" name="jhbx" data-options="editable: false,required:true,panelHeight: 'auto',
 		valueField: 'label',
 		textField: 'value',
 		data: [{
@@ -83,12 +92,19 @@
                 <input class="easyui-validatebox" id="fkr" name="fkr" />
             </td>
         </tr>
-                        <tr>
+        <tr>
+            <td>
+                品牌
+            </td>
+            <td>
+                <input class="easyui-combobox" id="brand" name="brand" />
+            </td>
             <td>
                 故障现象描述：
             </td>
-            <td colspan="3">
-                <textarea   cols="40" name="gzxx" rows="5"   data-options="required:true" class="easyui-validatebox" data-options="required:true" ></textarea></td>
+            <td>
+                <textarea cols="40" name="gzxx" rows="5" data-options="required:true" class="easyui-validatebox" data-options="required:true"></textarea>
+            </td>
         </tr>
     </table>
     </form>

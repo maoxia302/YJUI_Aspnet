@@ -38,9 +38,9 @@ namespace YJUI.UI.ashx_ui
                 context.Response.End();
             }
             //反馈所属项目
-            else if (context.Request.Params["action"] == "getItem")
+            else if (context.Request.Params["action"] == "getItem1")
             {
-                string guzhang = new BLL.ui_guzhang().GetItemToJson();
+                string guzhang = new BLL.ui_guzhang().GetItemToJson1();
                 context.Response.Write(guzhang);
                 context.Response.End();
             }
@@ -53,6 +53,12 @@ namespace YJUI.UI.ashx_ui
             else if (context.Request.Params["action"] == "ht_person")
             {
                 string guzhang = new BLL.ui_guzhang().GetPersonToJson();
+                context.Response.Write(guzhang);
+                context.Response.End();
+            }
+            else if (context.Request.Params["action"] == "brand")
+            {
+                string guzhang = new BLL.ui_guzhang().GetBrandToJson();
                 context.Response.Write(guzhang);
                 context.Response.End();
             }

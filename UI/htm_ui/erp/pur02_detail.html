@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../../themes/icon.css" />
+
+    <!--<script src="javascript/jquery.min.js"></script>-->
+    <script src="../../javascript/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../javascript/jquery.easyui.min.js"></script>
+    <script src="../../locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <script src="../../javascript/common_fn.js" type="text/javascript"></script>
+    <!--<script type="text/javascript" src="../../javascript/init.js"></script>-->
+    <script src="../../javascript/WdatePicker.js" type="text/javascript"></script>
+    <script src="../../javascript/datagrid-detailview.js" type="text/javascript"></script>
+</head>
+<body>
+    <!--添加内容开始-->
+    <div id="add_bar">
+        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-save'">保存</a>
+        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'" id="editCop">编辑</a>
+        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myEdit'">导入明细</a>
+        <a href="#" class="easyui-linkbutton" onclick="back()" data-options="plain:true,iconCls:'icon-undo'">取消</a>
+        <table class="tiaozhang_form">
+            <tr>
+                <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid abc" id="orderType" data-options="disabled:true" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">选择</a></td>
+                <td>部门编号:<input type="text" class="easyui-combogrid" id="dep" data-options="disabled:true" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'" id="depname" onclick="depmentQty()">选择</a></td>
+                <td>客户编号:<input type="text" class="easyui-combogrid" id="ma001" data-options="disabled:true" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'" id="empname" onclick="empQty()">选择</a></td>
+                <td><input type="checkbox" id="creatEntry" />生成分录</td>
+            </tr>
+            <tr>
+                <td>&ensp;&ensp;&emsp;单号:<input type="text" id="danhao" class="easyui-textbox" disabled="disabled" /></td>
+                <td>&ensp;&ensp;&emsp;工厂:<input type="text" class="easyui-combogrid" id="gongchang" data-options="disabled:true" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'">选择</a></td>
+                <td>订单日期:<input type="text" class="easyui-textbox" id="ddDate" disabled="disabled" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" /></td>
+                <!--<td class="isPass">
+                <i class="pass"><img src="../../images/icon_pass.png" alt="" /></i>
+                <i class="noPass"><img src="../../images/icon_noPass.png" alt="" /></i>
+            </td>-->
+            </tr>
+            <tr>
+                <td>单据日期:<input type="text" class="easyui-textbox" id="djDate" disabled="disabled" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',onpicking: function (dp) {if (dp.cal.getDateStr() != dp.cal.getNewDateStr()) { Func(dp.cal.getNewDateStr())}}})" autocomplete="off" /></td>
+                <td>&ensp;&ensp;&emsp;件数:<input type="text" id="jianshu" /></td>
+            </tr>
+            <tr>
+                <td>&ensp;&ensp;&emsp;备注:<textarea id="beizhu" style="height:50px;"></textarea></td>
+                <td>项目编号:<input type="text" id="proId" /></td>
+            </tr>
+        </table>
+    </div>
+    <div class="easyui-layout" data-options="fit : true,border : false">
+        <div data-options="region:'center',border:false">
+            <table id="dg"></table>
+        </div>
+        <div data-options="region:'south',border:false" style="height:150px;">
+        </div>
+    </div>
+    <script>
+        var db = $.getUrlParam("db");
+        var dh = $.getUrlParam("dh");
+        $(function () {
+            $("#djDate").attr("disabled", "disabled");
+            $("#beizhu").attr("disabled", "disabled");
+            $("#editCop").click(function () {
+                $("#djDate").removeAttr("disabled").addClass("Wdate");
+                $("#gongchang").combobox('enable');
+            });
+
+            var data = { db: db, dh: dh };
+            $.ajax({
+                url: "/ashx_ui/PURTG.ashx?action=GetSingle",
+                type: "POST",
+                data: data,
+                success: function (result) {
+                   
+                    result = JSON.parse(result);
+                    console.log(result);
+                    //var str = $.strDate(result.coptc.TC039);
+                    //var ddstr = $.strDate(result.coptc.TC003);
+                    //$("#djDate").val(str);
+                    //$("#ddDate").val(ddstr);
+                    //$("#orderType").combogrid('setValue', result.coptc.TC001);
+                    //$("#danhao").val(tc002);
+                    //$("#ma001").combogrid('setValue', result.coptc.TC004);
+                    //$("#dep").combogrid('setValue', result.coptc.TC005);
+                    //$("#gongchang").combogrid('setValue', result.coptc.TC007);
+                    $("#dg").datagrid('loadData', result.purth);
+                }
+            });
+
+            //$.ajax({
+            //    url: "/ashx_ui/COPTD.ashx?action=getCoptd",
+            //    type: "POST",
+            //    data: data,
+            //    success: function (result) {
+            //        var data = JSON.parse(result);
+            //        $("#dg").datagrid('loadData', data);
+
+            //    }
+            //});
+           var data= $('#dg').datagrid({
+               striped: false, nowrap: false, autoRowHeight: false, rownumbers: true,
+               showFooter: false, remoteSort: false, sortable: "true", fit: true,
+                columns: [[
+                    { checkbox: true },
+                    { field: 'TH001', title: '单别', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH002', title: '单号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH003', title: '序号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH004', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH005', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH006', title: '规格', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH007', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH008', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH009', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH010', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH011', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH012', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH013', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH014', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH015', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH016', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH017', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH018', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH019', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH020', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH021', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH022', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH023', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH024', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH025', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH026', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH027', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH028', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH029', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH030', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH031', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH032', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH033', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH034', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH035', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH036', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH037', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH038', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH039', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH040', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH041', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH042', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH043', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH044', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH045', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH046', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH047', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TH048', title: '品名', halign: 'center', align: 'left', width: 50 },
+                ]],
+                toolbar: '#add_bar'
+            });
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,9 +1,8 @@
 var pages = 1;
 var total = 0;
-var menu='';
+var menu = '';
+var param = localStorage.getItem("params");
 $(function () {
-
-    
 	//查询弹层显示
 	$(".toSearch").click(function(){
 		$(".topMask").fadeIn();
@@ -60,8 +59,6 @@ $(function () {
           
       }  
     });
-
-
     $('#search').click(function () {
         var start = $.getUrlParam("start");
         console.log(start);
@@ -88,14 +85,9 @@ $(function () {
 
     //获取菜单权限
     $.ajax({
-        url: "/ashx/ui_leftmenu.ashx",
+        url: "/ashx/ui_leftmenu.ashx?param=" + param,
         async: false,
         success: function (data) {
-            if (data == 'nosession') {
-                setCookie('uname', '', 365);
-                setCookie('pwd', '', 365);
-                window.location.href = '../login.html';
-            }
             menu = JSON.parse(data).menus;
             toSearch(pages);
         }
@@ -110,15 +102,17 @@ function toSearch(page) {
   
     var fkPerson = $.getUrlParam("fkPerson");
     var fk_type = $.getUrlParam("fk_type");
+
+    //console.log(fk_type);
     //debugger;
     //$("#searchList").empty();
-
     var data = {
         bdate: start,
         edate: end,
         fkPerson: fkPerson,
         fkItem: fk_type,
-        page: page
+        page: page,
+        params: param
     };
     $.ajax({
         url: "/ashx/ui_neibutaizhang.ashx?action=search",
@@ -127,7 +121,7 @@ function toSearch(page) {
         success: function (data) {
             var liHtml = '';
             data = JSON.parse(data);
-            if (data.rows == '[]') {
+            if (isEmpty(data.rows)) {
                 liHtml  = '<p style="font-size:1.2rem;color:#999;text-align:center;">暂无记录</p>'
             } else {
                 for (var i = 0; i < data.rows.length; i++) {

@@ -52,6 +52,8 @@
         <div data-options="region:'center',border:false">
             <table id="dg"></table>
         </div>
+        <div data-options="region:'south',border:false" style="height:180px;">
+        </div>
     </div>
     <script>
         var tc001 = $.getUrlParam("tc001");
@@ -70,7 +72,7 @@
                 type: "POST",
                 data: data,
                 success: function (result) {
-                    debugger;
+                    console.log(result);
                     result = JSON.parse(result);
                     var str = $.strDate(result.coptc.TC039);
                     var ddstr = $.strDate(result.coptc.TC003);
@@ -97,13 +99,13 @@
             //});
            var data= $('#dg').datagrid({
                striped: false, nowrap: false, autoRowHeight: false, rownumbers: true,
-               showFooter: false, remoteSort: false, sortable: "true", fit: true,
+               showFooter: true, remoteSort: false, sortable: true, fit: true,
                 //url: "/ashx_ui/COPTD.ashx?action=getCoptd",
                 //data: data,
                 columns: [[
                     { checkbox: true },
-                    { field: 'TD001', title: '单别', halign: 'center', align: 'left', width: 50 },
-                    { field: 'TD002', title: '单号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD001', title: '单别', halign: 'center', align: 'left', width: 50, hidden: true },
+                    { field: 'TD002', title: '单号', halign: 'center', align: 'left', width: 50, hidden: true },
                     { field: 'TD003', title: '序号', halign: 'center', align: 'left', width: 50 },
                     { field: 'TD004', title: '品号', halign: 'center', align: 'left', width: 50 },
                     { field: 'TD005', title: '品名', halign: 'center', align: 'left', width: 50 },

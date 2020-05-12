@@ -166,12 +166,18 @@ namespace YJUI.BLL
             int counts;
             // GetList(string tblName, string fldName, int pageSize, int page, string fldSort, string strCondition, string ID, out int pageCount, out int Counts)
             DataTable dt = dal.GetList("neibutaizhang", "*", PageSize, PageIndex, "ID", "1", strWhere, "ID", "0", out counts, out total);
-            string strjson = Common.JsonHelper.ToJson(dt);
-            if (total == 0)
-            {
-                return "{\"total\": \"0\",\"rows\":\"[]\"}";
-            }
-            return "{\"total\": " + total.ToString() + ",\"rows\":" + strjson + "}";
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("msg", "success");
+            dic.Add("total", total.ToString());
+            dic.Add("rows", dt);
+
+            //string strjson = Common.JsonHelper.ToJson(dt);
+            //if (total == 0)
+            //{
+            //    return "{\"total\": \"0\",\"rows\":\"[]\"}";
+            //}
+            //return "{\"total\": " + total.ToString() + ",\"rows\":" + strjson + "}";
+            return Common.JsonHelper.ObjToJson(dic);
         }
         /// <summary>
         /// 

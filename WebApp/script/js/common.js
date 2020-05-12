@@ -106,6 +106,20 @@ function getCookie(c_name) {
     return ""
 }
 
+function getSession(deal) {
+    $.ajax({
+        url: "../ashx/getsession.ashx",
+        type: "POST",
+        success: function (r) { deal(r); }
+    });
+}
+
+
+/*(function ($) {
+    $.relogin = function () {
+         window.location.href = "../login.html";
+    }
+})(jQuery);*/
 
 
 

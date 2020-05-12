@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.SessionState;
 
 namespace YJUI.UI.ashx_ui
 {
     /// <summary>
     /// COPTG 的摘要说明
     /// </summary>
-    public class COPTG : IHttpHandler
+    public class COPTG : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)
@@ -33,13 +34,40 @@ namespace YJUI.UI.ashx_ui
                 context.Response.End();
             }
             //获取一条数据传到前台
-            else if (context.Request.Params["action"] == "GetSingleCoptg")
+            else if (context.Request.Params["action"] == "GetCoptgh")
             {
-                var db = context.Request.Params["tg001"];
-                var dh = context.Request.Params["tg002"];
-                string strjson = BLL.COPTG.Current.GetCoptgToJson(db,dh);
+                var db = context.Request.Params["db"];
+                var dh = context.Request.Params["dh"];
+
+                Model.COPTG coptg = BLL.COPTG.Current.GetSingleCoptg(db,dh);
+                IEnumerable<Model.COPTH> copths = BLL.COPTH.Current.GetCOPTH(db, dh);
+                var qty = copths.Sum(t => t.TH008);
+                var amount = copths.Sum(t=>t.TH013);
+
+                List<Dictionary<string, object>> l = new List<Dictionary<string, object>>();
+                Dictionary<string, object> d = new Dictionary<string, object>();
+                d.Add("TH003", "合计");
+                d.Add("TH008", qty);
+                d.Add("TH013", amount);
+                l.Add(d);
+                //foot结束
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("rows", copths);
+                dic.Add("footer", l);
+                Dictionary<string, object> d2 = new Dictionary<string, object>();
+                d2.Add("coptg", coptg);
+                d2.Add("copth", dic);
+
+                string strjson = Common.JsonHelper.ObjToJson(d2);
                 context.Response.Write(strjson);
                 context.Response.End();
+
+
+
+
+
+
+
             }
         }
         /// <summary>

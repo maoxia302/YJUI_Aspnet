@@ -167,7 +167,18 @@ namespace YJUI.BLL
         public string GetItemToJson()
         {
             DataTable dt = dal.GetList("   typeid=4").Tables[0];
-            return Common.JsonHelper.ToJson(dt);
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("msg", "success");
+            dic.Add("data", dt);
+            return Common.JsonHelper.ObjToJson(dic);
+        }
+        public string GetItemToJson1()
+        {
+            DataTable dt = dal.GetList("   typeid=4").Tables[0];
+            //Dictionary<string, object> dic = new Dictionary<string, object>();
+            //dic.Add("msg", "success");
+            //dic.Add("data", dt);
+            return Common.JsonHelper.ObjToJson(dt);
         }
         public string GetDepToJson()
         {
@@ -177,6 +188,11 @@ namespace YJUI.BLL
         public string GetPersonToJson()
         {
             DataTable dt = dal.GetList("   typeid=6").Tables[0];
+            return Common.JsonHelper.ToJson(dt);
+        }
+        public string GetBrandToJson()
+        {
+            DataTable dt = dal.GetList("   typeid=7").Tables[0];
             return Common.JsonHelper.ToJson(dt);
         }
         #endregion  ExtensionMethod

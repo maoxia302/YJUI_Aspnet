@@ -24,20 +24,47 @@
             <input type="button" value="登陆" class="com_btn" id="submit" />
         </form>
     </div>
-    <script>
-        var userName = getCookie("uname");
-        var pasWord = getCookie("pwd");
-        $("#uname").val(userName);
-        $("#pwd").val(pasWord);
-        if (!isEmpty(userName) && !isEmpty(pasWord)) {
+    <!--<div id="ceshi"> </div>-->
 
+
+    <script>
+        //var isSession = '';
+        //getSession(function f(r) {
+        //    try {
+        //        if (!isEmpty(JSON.parse(r).msg)) {
+        //            isSession = JSON.parse(r).msg;
+        //        }
+
+
+        //    } catch (e) {
+        //    }
+
+        //});
+        //var userName = getCookie("uname01");
+        //var pasWord = getCookie("pwd01");
+
+        //if (!isEmpty(userName) && !isEmpty(pasWord) && isSession != 'nosession') {
+
+        //   window.location.href = "html/index.html";
+        //}
+
+
+        if (!isEmpty(localStorage.getItem("params"))) {
+
+            var userName = JSON.parse(localStorage.getItem('params')).userName;
+            var pasWord = JSON.parse(localStorage.getItem('params')).pwd;
+            $("#uname").val(userName);
+            $("#pwd").val(pasWord);
             window.location.href = "html/index.html";
+        } else {
+            $("#uname").val('');
+            $("#pwd").val('');
         }
 
-             //设置cookie，有效期为365天
-            //setCookie('username', '123', 365);
-            //取回，若cookie失效，将返回空
-            //getCookie('username');
+        //设置cookie，有效期为365天
+        //setCookie('username', '123', 365);
+        //取回，若cookie失效，将返回空
+        //getCookie('username');
         $('#submit').click(function () {
             var uname = $('#uname').val();
             var pwd = $('#pwd').val();
@@ -58,8 +85,15 @@
                 async: false,
                 success: function (msg) {
                     if (msg == "ok") {
-                        setCookie('uname', uname, 365);
-                        setCookie('pwd', pwd, 365);
+                        //setCookie('uname01', uname, 365);
+                        //setCookie('pwd01', pwd, 365);
+                        var params = {
+                            "userName": uname,
+                            "pwd": pwd
+                        };
+                        localStorage.setItem('params', JSON.stringify(params));
+                        //$("#ceshi").html(localStorage.getItem("params"));
+                        // return;
                         alertRight('登录成功');
                         setTimeout(function () {
                             window.location.href = "html/index.html";

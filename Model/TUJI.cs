@@ -14,6 +14,7 @@ namespace YJUI.Model
         private string _tjxh;
         private string _fdjh;
         private string _zjsj;
+        private string _brand;
         private string _jhbx;
         private string _gzfsdq;
         private string _dls;
@@ -101,6 +102,14 @@ namespace YJUI.Model
         {
             set { _zjsj = value; }
             get { return _zjsj; }
+        }
+        /// <summary>
+        /// 发动机品牌
+        /// </summary>
+        public string brand
+        {
+            set { _brand = value; }
+            get { return _brand; }
         }
         /// <summary>
         /// 激活保修

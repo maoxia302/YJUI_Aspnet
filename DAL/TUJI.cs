@@ -24,15 +24,16 @@ namespace YJUI.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into TUJI(");
-            strSql.Append("tjxh,fdjh,zjsj,jhbx,gzfsdq,dls,xlc,lxr,xlctel,xxfksj,xxfkr,gzxx,gznr)");
+            strSql.Append("tjxh,fdjh,zjsj,brand,jhbx,gzfsdq,dls,xlc,lxr,xlctel,xxfksj,xxfkr,gzxx,gznr)");
             strSql.Append(" values (");
-            strSql.Append("@tjxh,@fdjh,@zjsj,@jhbx,@gzfsdq,@dls,@xlc,@lxr,@xlctel,@xxfksj,@xxfkr,@gzxx,@gznr)");
+            strSql.Append("@tjxh,@fdjh,@zjsj,@brand,@jhbx,@gzfsdq,@dls,@xlc,@lxr,@xlctel,@xxfksj,@xxfkr,@gzxx,@gznr)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@tjxh", SqlDbType.VarChar,50),
 					new SqlParameter("@fdjh", SqlDbType.VarChar,50),
 					new SqlParameter("@zjsj", SqlDbType.VarChar,50),
-					new SqlParameter("@jhbx", SqlDbType.Char,10),
+                    new SqlParameter("@brand", SqlDbType.VarChar,50),
+                    new SqlParameter("@jhbx", SqlDbType.Char,10),
 					new SqlParameter("@gzfsdq", SqlDbType.VarChar,50),
 					new SqlParameter("@dls", SqlDbType.VarChar,50),
 					new SqlParameter("@xlc", SqlDbType.VarChar,50),
@@ -45,16 +46,17 @@ namespace YJUI.DAL
             parameters[0].Value = model.tjxh;
             parameters[1].Value = model.fdjh;
             parameters[2].Value = model.zjrq;
-            parameters[3].Value = model.jhbx;
-            parameters[4].Value = model.gzfsdq;
-            parameters[5].Value = model.dls;
-            parameters[6].Value = model.xlc;
-            parameters[7].Value = model.lxr;
-            parameters[8].Value = model.xlctel;
-            parameters[9].Value = model.xxfksj;
-            parameters[10].Value = model.xxfkr;
-            parameters[11].Value = model.gzxx;
-            parameters[12].Value = model.gznr;
+            parameters[3].Value = model.brand;
+            parameters[4].Value = model.jhbx;
+            parameters[5].Value = model.gzfsdq;
+            parameters[6].Value = model.dls;
+            parameters[7].Value = model.xlc;
+            parameters[8].Value = model.lxr;
+            parameters[9].Value = model.xlctel;
+            parameters[10].Value = model.xxfksj;
+            parameters[11].Value = model.xxfkr;
+            parameters[12].Value = model.gzxx;
+            parameters[13].Value = model.gznr;
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
             {
@@ -268,6 +270,7 @@ namespace YJUI.DAL
 
 
         #endregion
+
         #region 总库收货日期
         public bool ZkDaoHuo(YJUI.Model.TUJI model)
         {

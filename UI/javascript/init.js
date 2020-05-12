@@ -11,8 +11,8 @@ function InitLeftMenu() {
         url: "../ashx_ui/ui_leftmenu.ashx",
         type: "POST",
         dataType: "json",
-        success: function(_menus) {
-
+        success: function (_menus) {
+            console.log(_menus);
             $("#westreg").empty();
             var menulist = "";
             menulist += '<div class="easyui-accordion" fit="true" border="false">';
@@ -34,7 +34,12 @@ function InitLeftMenu() {
                 var menuid = $(this).attr("ref");
                 var icon = $(this).children('span').first().attr('class');
                 var id = tabTitle;
-                addTab(tabTitle, url, icon,id);
+                if (parseInt(menuid) < 73) {
+                    addTab(tabTitle, url, icon, id);
+                } else {
+                    addTab_new(tabTitle, url, icon, id);
+                }
+                
                 $('.easyui-accordion li div').removeClass("selected");
                 $(this).parent().addClass("selected");
             }).hover(function() {

@@ -14,6 +14,7 @@
     <div class="issueType_main">
         <h2 class="com_title"><label>问题反馈</label></h2>
         <form id="f_taizhang_add">
+            <input name="params" id="params" type="hidden" />
             <ul class="taizhang_list">
                 <li>
                     <label>反馈地区</label>
@@ -44,27 +45,31 @@
     <script src="../script/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../script/js/common.js" type="text/javascript" charset="utf-8"></script>
     <script>
+        var params = localStorage.getItem("params");
+        $("#params").val(params);
         $(function () {
-            //alertWrong('ok');
-            $("#fkItem").empty();
-            $("#fkItem").append('<option value="">请选择类型</option>');
             $.ajax({
-                url: '/ashx/ui_guzhang.ashx?action=getItem',
-                type: 'get',
-                dataType: "text",
+                url: "/ashx/ui_guzhang.ashx?action=getItem",
+                type: "get",
                 success: function (data) {
-                    // console.log(data);
-                    var dataJson = "";
-                    datajson = eval("(" + data + ")");
-                   // data = JSON.parse(data);
-                    //for (var i = 0; i < data.length; i++) {
-                    //    $("#type").append('<option value="' + data[i].guzhang + '">' + data[i].guzhang + '</option>');
+                    //console.log(data)
+                    var msg = JSON.parse(data).msg;
+                    var selectData = JSON.parse(data).data;
+                    //if (msg != 'success') {
+                    //   window.location.href = "../login.html";
                     //}
-                    $.each(datajson, function (i) {
-                        $("#fkItem").append($("<option></option>").val(datajson[i].guzhang).html(datajson[i].guzhang));
-                    });
+                    $("#fkItem").empty();
+                    $("#fkItem").append('<option value="">请选择类型</option>');
+                    if (!isEmpty(selectData)) {
+                        $.each(selectData, function (i) {
+                            //$("#fk_type").append($("<option></option>").val(selectData[i].guzhang).html(selectData[i].guzhang));
+                            var option = $('<option value=' + selectData[i].guzhang + '>' + selectData[i].guzhang + '</option>');
+                            $("#fkItem").append(option);
+                        });
+                    }
 
-                }
+                },
+                error: function () { }
             });
         });
 
@@ -82,6 +87,7 @@
                 $("#custName").focus();
                 return false;
             }
+
             $.ajax({
                 url: '/ashx/ui_neibutaizhang.ashx?action=add',
                 type: 'post',

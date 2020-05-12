@@ -201,10 +201,29 @@ namespace YJUI.UI.ashx_ui
                 var tc002 = context.Request.Params["tc002"];
                 Model.COPTC coptc = BLL.COPTC.Current.CoptcModel(tc001,tc002);
                 IEnumerable<Model.COPTD> coptd = BLL.COPTD.Current.GetCOPTDs(tc001, tc002);
+
+                var qty = coptd.Sum(t=>t.TD008);
+                var amount = coptd.Sum(t => t.TD012);
+
+
+
+                List<Dictionary<string, object>> l = new List<Dictionary<string, object>>();
+                Dictionary<string, object> d = new Dictionary<string, object>();
+                d.Add("TD003", "合计");
+                d.Add("TD008", qty);
+                d.Add("TD012", amount);
+                l.Add(d);
+                //foot结束
                 Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("coptc",coptc);
-                dic.Add("coptd", coptd);
-                string strjson = Common.JsonHelper.ObjToJson(dic);
+                dic.Add("rows", coptd);
+                dic.Add("footer", l);
+
+
+                Dictionary<string, object> d2 = new Dictionary<string, object>();
+                d2.Add("coptc", coptc);
+                d2.Add("coptd", dic);
+
+                string strjson = Common.JsonHelper.ObjToJson(d2);
                 context.Response.Write(strjson);
                 context.Response.End();
             }

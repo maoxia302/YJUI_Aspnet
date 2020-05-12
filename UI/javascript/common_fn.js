@@ -212,7 +212,7 @@ $.extend({ relogin: function () {
                     text: "退出系统",
                     iconCls: "icon-cancel",
                     handler: function() {
-                        window.location.href = "/login.htm";
+                        window.parent.location.href = "/login.htm";
                     }
                 }
             ]
@@ -353,6 +353,19 @@ function addTab_new(title, url) {
     } else {
         var content = '<iframe scrolling="no" frameborder="0"  src="' + url + '" style="width:100%;height:99%;margin:0;padding:0"></iframe>';
         $('#tabs').tabs('add', {
+            title: title,
+            content: content,
+            closable: true
+        });
+    }
+}
+
+function addTab_new02(title, url) {
+    if (window.parent.$('#tabs').tabs('exists', title)) {
+        window.parent.$('#tabs').tabs('select', title);
+    } else {
+        var content = '<iframe scrolling="no" frameborder="0"  src="' + url + '" style="width:100%;height:99%;margin:0;padding:0"></iframe>';
+        window.parent.$('#tabs').tabs('add', {
             title: title,
             content: content,
             closable: true

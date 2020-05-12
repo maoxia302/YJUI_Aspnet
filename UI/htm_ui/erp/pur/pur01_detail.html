@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../../../themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../../../themes/icon.css" />
+    <!--<script src="javascript/jquery.min.js"></script>-->
+    <script src="../../../javascript/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../../javascript/jquery.easyui.min.js"></script>
+    <script src="../../../locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <script src="../../../javascript/common_fn.js" type="text/javascript"></script>
+    <!--<script type="text/javascript" src="../../javascript/init.js"></script>-->
+    <script src="../../../javascript/WdatePicker.js" type="text/javascript"></script>
+    <script src="../../../javascript/datagrid-detailview.js" type="text/javascript"></script>
+</head>
+<body>
+    <!--添加内容开始-->
+    <div id="add_bar">
+        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-save'">保存</a>
+        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'" id="editCop">编辑</a>
+        <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-myEdit'">导入明细</a>
+        <a href="#" class="easyui-linkbutton" onclick="back()" data-options="plain:true,iconCls:'icon-undo'">取消</a>
+        <table class="tiaozhang_form">
+            <tr>
+                <td>&ensp;&ensp;&emsp;单别:<input type="text" class="easyui-combogrid abc" id="orderType" data-options="disabled:true" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-dbtype'" id="panchun" onclick="orderTypeQty()">选择</a></td>
+                <td>部门编号:<input type="text" class="easyui-combogrid" id="dep" data-options="disabled:true" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-org'" id="depname" onclick="depmentQty()">选择</a></td>
+                <td>供应商:<input type="text" class="easyui-combogrid" id="ma001" data-options="disabled:true" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user'" id="empname" onclick="empQty()">选择</a></td>
+                <td><input type="checkbox" id="creatEntry" />生成分录</td>
+            </tr>
+            <tr>
+                <td>&ensp;&ensp;&emsp;单号:<input type="text" id="danhao" class="easyui-textbox" disabled="disabled" /></td>
+                <td>&ensp;&ensp;&emsp;工厂:<input type="text" class="easyui-combogrid" id="gongchang" data-options="disabled:true" /><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cangku'">选择</a></td>
+                <td>采购日期:<input type="text" class="easyui-textbox" id="cgDate" disabled="disabled" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" /></td>
+
+            </tr>
+            <tr>
+                <td>单据日期:<input type="text" class="easyui-textbox" id="djDate" disabled="disabled" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',onpicking: function (dp) {if (dp.cal.getDateStr() != dp.cal.getNewDateStr()) { Func(dp.cal.getNewDateStr())}}})" autocomplete="off" /></td>
+                <td>&ensp;&ensp;&emsp;结束:<input type="text" id="Isend" /></td>
+                <td>&ensp;&ensp;&emsp;采购人员:<input type="text" id="Buyer" /></td>
+            </tr>
+            <tr>
+                <td>&ensp;&ensp;&emsp;备注:<textarea id="beizhu" style="height:50px;"></textarea></td>
+                <td>项目编号:<input type="text" id="proId" /></td>
+            </tr>
+        </table>
+    </div>
+    <div class="easyui-layout" data-options="fit : true,border : false">
+        <div data-options="region:'center',border:false">
+            <table id="dg"></table>
+        </div>
+        <div data-options="region:'south',border:false" style="height:150px;">
+        </div>
+    </div>
+    <script>
+        var db = $.getUrlParam("db");
+        var dh = $.getUrlParam("dh");
+        $(function () {
+            $("#djDate").attr("disabled", "disabled");
+            $("#beizhu").attr("disabled", "disabled");
+            $("#editCop").click(function () {
+                $("#djDate").removeAttr("disabled").addClass("Wdate");
+                $("#gongchang").combobox('enable');
+            });
+
+            var data = { db: db, dh: dh };
+            $.ajax({
+                url: "/ashx_ui/PURTC.ashx?action=GetSinglePurtcd",
+                type: "POST",
+                data: data,
+                success: function (result) {
+                    result = JSON.parse(result);
+                    console.log(result);
+                    var str = $.strDate(result.Purtc.TC003);
+                    var ddstr = $.strDate(result.Purtc.TC024);
+                    $("#djDate").val(str);
+                    $("#cgDate").val(ddstr);
+                    $("#orderType").combogrid('setValue', result.Purtc.TC001);
+                    $("#danhao").val(result.Purtc.TC002);
+                    $("#Buyer").val(result.Purtc.TC011);
+                    $("#ma001").combogrid('setValue', result.Purtc.TC004);
+                    //$("#dep").combogrid('setValue', result.coptc.TC005);
+                    $("#gongchang").combogrid('setValue', result.Purtc.TC010);
+                    $("#dg").datagrid('loadData', result.Purtds);
+                }
+            });
+           var data= $('#dg').datagrid({
+               striped: false, nowrap: false, autoRowHeight: false, rownumbers: true,
+               showFooter: true, remoteSort: false, sortable: "true", fit: true,
+                columns: [[
+                    { checkbox: true },
+                    { field: 'TD001', title: '单别', halign: 'center', align: 'left', width: 50, hidden: 'true' },
+                    { field: 'TD002', title: '单号', halign: 'center', align: 'left', width: 100, hidden: 'true' },
+                    { field: 'TD003', title: '序号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD004', title: '品号', halign: 'center', align: 'left', width: 80 },
+                    { field: 'TD005', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD006', title: '规格', halign: 'center', align: 'left', width: 150 },
+                    { field: 'TD007', title: '交货仓库', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD008', title: '采购数量', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD009', title: '单位', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD010', title: '采购单价', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD011', title: '采购金额', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD012', title: '预交货日', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD013', title: '参考单别', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD014', title: '备注', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD015', title: '已交数量', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD016', title: '结束', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD017', title: '制造商', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD018', title: '审核码', halign: 'center', align: 'left', width: 80 },
+                    { field: 'TD019', title: '采购库存数量', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD020', title: '小单位', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD021', title: '参考单号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD022', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD023', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD024', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD025', title: '急料', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD026', title: '请购单别', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD027', title: '请购单号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD028', title: '请购序号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD029', title: '品号', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD030', title: '采购包装数量', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD031', title: '已交包装数量', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD032', title: '包装单位', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD033', title: '税率', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD034', title: '税前金额', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD035', title: '税额', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD036', title: '件装', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD037', title: '件数', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD038', title: '计价单位', halign: 'center', align: 'left', width: 50 },
+                    { field: 'TD039', title: '计价数量', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD040', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD041', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD042', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD043', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD044', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD045', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD046', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD047', title: '品名', halign: 'center', align: 'left', width: 50 },
+                    //{ field: 'TD048', title: '品名', halign: 'center', align: 'left', width: 50 },
+                ]],
+                toolbar: '#add_bar'
+            });
+        });
+    </script>
+
+
+</body>
+</html>

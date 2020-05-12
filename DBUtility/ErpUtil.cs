@@ -6,19 +6,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Dapper;
-
+using YJUI.Model;
 namespace YJUI.DBUtility
 {
    public static class ErpUtil
     {
 
 
-        #region 根据单别，日期 获取ERP单号
+        #region 根据单别，日期 获取工厂ERP单号
         /// <summary>
         /// 
         /// </summary>
         /// <param name="tbName">指定表</param>
-        /// <param name="columnName">单号列名</param>
+        /// <param name="columnName">单别列名</param>
         /// <param name="db">单别</param>
         /// <param name="orderNoField">单号列</param>
         /// <param name="dateField">单据日期列</param>
@@ -38,15 +38,32 @@ namespace YJUI.DBUtility
             {
                 return (_date + "00001");
             }
-            int num = int.Parse(str6.ToString().Substring(8, 5)) + 1;
-            return (str6.ToString().Substring(0, 8) + num.ToString().PadLeft(5, '0'));
+            //20050400001
+            int num = int.Parse(str6.ToString().Substring(6, 5)) + 1;
+            return (str6.ToString().Substring(0, 6) + num.ToString().PadLeft(5, '0'));
+        }
+
+        /// <summary>
+        /// 通过表名查询改表字段
+        /// </summary>
+        /// <param name="tbName"></param>
+        /// <returns></returns>
+        public static string getTbField(string tbName)
+        {
+            IEnumerable<Model.ADMMD> admmd;
+            string sql = string.Format("select * from ADMMD where MD001='{0}'",tbName);
+            using (SqlConnection conn = new SqlConnection(ConnStrManage.DscSysDB))
+            {
+                admmd = conn.Query<Model.ADMMD>(sql);
+            }
+            return YJUI.Common.JsonHelper.ObjToJson(admmd);
         }
 
 
 
 
-
         #endregion
+
 
 
 

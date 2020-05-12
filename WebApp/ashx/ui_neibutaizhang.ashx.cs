@@ -2,34 +2,41 @@
 using System.Collections.Generic;
 using System.Web;
 using YJUI.BLL;
-using System.Web.SessionState;
 using YJUI.Model;
+using Newtonsoft;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace YJUI.UI.ashx_ui
 {
     /// <summary>
     /// ui_neibutaizhang 的摘要说明
     /// </summary>
-    public class ui_neibutaizhang : IHttpHandler,IReadOnlySessionState
+    public class ui_neibutaizhang : IHttpHandler
     {
         public void ProcessRequest(HttpContext context)
         {
             try
             {
-                if (context.Session["user"]==null)
-                {
-                    context.Response.Write("nosession");
-                    return;
-                }
+                //if (context.Session["user"]==null)
+                //{
+                //    // context.Response.Write("nosession");
+                //    context.Response.Write("{\"msg\": \"nosession\"}");
+                //    context.Response.End();
+                //}
                 #region 查询
-                else if (context.Request.QueryString["action"] == "search")
+                 if (context.Request.QueryString["action"] == "search")
                 {
                     string strWhere = "1=1  ";
                     string bdate = context.Request.Params["bdate"];
                     string edate = context.Request.Params["edate"];
                     string word = context.Request.Params["fkPerson"];
                     string dep = context.Request.Params["txt_dep"];//反馈部门
-                    var fkItem= context.Request.Params["fkItem"];//反馈部门
+                    string par= context.Request.Params["params"];//local
+                    JObject obj = JObject.Parse(par);//解析成其他；
+                    var username = obj.Value<string>("userName");
+                    var pwd = obj.Value<string>("pwd");
+                    var fkItem= context.Request.Params["fkItem"];  //反馈部门
                     strWhere = NewMethod(strWhere, bdate, edate, word, dep,fkItem);
                     int pageindex = int.Parse(context.Request["page"]);
                     int pagesize = 5;
@@ -43,8 +50,13 @@ namespace YJUI.UI.ashx_ui
                 {
                     Model.neibutaizhang model = new Model.neibutaizhang();
                     model.fkDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                    model.fkPerson = (context.Session["user"] as YJUI.Model.ui_user).xingming;
-                    model.FkDep = (context.Session["user"] as YJUI.Model.ui_user).depname;
+                    string par = context.Request.Params["params"];//local
+                    JObject obj = JObject.Parse(par);//解析成其他；
+                    var username = obj.Value<string>("userName");
+                    var pwd = obj.Value<string>("pwd");
+                    Model.ui_user Loginer = new BLL.ui_user().Login(username, pwd);//登录验证
+                    model.fkPerson = Loginer.xingming;
+                    model.FkDep = Loginer.depname;
                     model.wtDep = context.Request.Params["wtDep"];
                     model.fkItem= context.Request.Params["fkItem"];
                     model.fkDesc = context.Request.Params["fkDesc"];

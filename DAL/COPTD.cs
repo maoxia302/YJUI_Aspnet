@@ -61,11 +61,12 @@ namespace YJUI.DAL
             return result;
         }
 
-        public IEnumerable<Model.COPTD> GetCOPTDs(string db, string dh)
+        public   IEnumerable<Model.COPTD> GetCOPTDs(string db, string dh)
         {
             string sql = string.Format("select* from COPTD where 1 = 1 and TD001 = '{0}' and TD002 = '{1}'", db, dh);
             using (SqlConnection conn = new SqlConnection(ConnStrManage.WSGCDB))
             {
+               
               return  conn.Query<Model.COPTD>(sql.ToString(), null);
             }
 

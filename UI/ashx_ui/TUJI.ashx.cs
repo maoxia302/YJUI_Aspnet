@@ -68,6 +68,7 @@ namespace YJUI.UI.ashx_ui
                     model.tjxh = context.Request.Params["tjxh"];//凸机型号
                     model.fdjh = context.Request.Params["fdjh"];//发动机号
                     model.zjrq = context.Request.Params["zjrq"];//装机日期
+                    model.brand= context.Request.Params["brand"];//品牌
                     model.jhbx = context.Request.Params["jhbx"];//激活保修
                     model.jhbx = context.Request.Params["jhbx"];//代理地址
                     model.dls = context.Request.Params["dls"];//代理商

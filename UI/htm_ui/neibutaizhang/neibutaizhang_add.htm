@@ -8,10 +8,25 @@
     });
     $('#cb_fkItem').combobox({
         editable: false,
-        url: '../ashx_ui/ui_guzhang.ashx?action=getItem',
+        url: '../ashx_ui/ui_guzhang.ashx?action=getItem1',
         valueField: 'guzhang',
         textField: 'guzhang'
 
+    });
+    $("#fkArea,#fkCustomer,#fkDesc").blur(function () {
+        $("#f_neibutaizhang_add").find(".val-erro").remove();
+        if ($("#fkArea").val() == '') {
+            $("#fkArea").focus();
+            $("#fkArea").after('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
+        } else if ($("#fkCustomer").val() == '') {
+            $("#fkCustomer").focus();
+            $("#fkCustomer").after('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
+        } else if ($("#cb_fkItem").combobox('getValue') == '') {
+            $("#cb_fkItem").parents("td").append('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
+        } else if ($("#fkDesc").val() == '') {
+            $("#fkDesc").focus();
+            $("#fkDesc").after('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
+        }
     });
 </script>
 <div style="padding: 15px; overflow: hidden">
@@ -27,7 +42,7 @@
                     问题归属部门：
                 </td>
                 <td>
-                    <input type="easyui-combobox" id="cb_wtDep" name="wtDep" class="easyui-validatebox" />
+                    <input type="easyui-combobox" id="cb_wtDep" name="wtDep"   />
                 </td>
             </tr>
             <tr>
@@ -38,7 +53,7 @@
                     反馈地区：
                 </td>
                 <td>
-                    <input type="easyui-textbox" id="fkArea" name="fkArea" class="easyui-validatebox" />
+                    <input type="easyui-textbox" id="fkArea" name="fkArea" />
                 </td>
             </tr>
             <tr>
@@ -49,7 +64,7 @@
                     反馈客户：
                 </td>
                 <td>
-                    <input type="easyui-textbox" id="fkCustomer" name="fkCustomer" class="easyui-validatebox" />
+                    <input type="easyui-textbox" id="fkCustomer" name="fkCustomer" />
                 </td>
             </tr>
             <tr>
@@ -59,7 +74,7 @@
                     所属项目：
                 </td>
                 <td>
-                    <input type="easyui-combobox" id="cb_fkItem" name="fkItem" class="easyui-validatebox" />
+                    <input type="easyui-combobox" id="cb_fkItem" name="fkItem" />
                 </td>
             </tr>
             <tr>
@@ -67,7 +82,7 @@
                     反馈内容：
                 </td>
                 <td colspan="3">
-                    <textarea class="easyui-textbox" cols="50" name="fkDesc" rows="6"></textarea>
+                    <textarea cols="50" id="fkDesc" name="fkDesc" rows="6"></textarea>
                 </td>
             </tr>
         </table>

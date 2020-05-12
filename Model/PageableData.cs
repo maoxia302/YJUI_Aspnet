@@ -9,10 +9,5 @@ namespace YJUI.Model
     {
         public int total { get; set; }
         public IEnumerable<T> rows { get; set; }
-
-        public static implicit operator PageableData<T>(PageableData<LRPTA> v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
