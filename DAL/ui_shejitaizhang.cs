@@ -70,6 +70,21 @@ namespace YJUI.DAL
         {
 
 
+            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(DbHelperSQL.connectionString))
+            {
+                bulkCopy.DestinationTableName = "ui_shejitaizhang"; //插入目标表
+                bulkCopy.ColumnMappings.Add("品名", "pinMing");
+                bulkCopy.ColumnMappings.Add("规格", "guiGe");
+                bulkCopy.ColumnMappings.Add("品牌", "pinPai");
+                bulkCopy.ColumnMappings.Add("包装需求数", "baoZhuangShu");
+                bulkCopy.ColumnMappings.Add("包装单位", "danWei");
+                bulkCopy.ColumnMappings.Add("备注", "remark");
+                bulkCopy.WriteToServer(dt); //数据源表
+            }
+
+
+
+
         }
     }
 }
