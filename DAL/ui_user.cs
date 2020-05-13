@@ -269,6 +269,10 @@ namespace YJUI.DAL
                 {
                     model.depname = row["depname"].ToString();
                 }
+                if (row["pTeam"] != null)
+                {
+                    model.pTeam = row["pTeam"].ToString();
+                }
                 if (row["birth"] != null)
                 {
                     model.birth = row["birth"].ToString();
@@ -560,7 +564,7 @@ namespace YJUI.DAL
         public Model.ui_user Login(string acc, string pwd)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ID,account,password,depid,depname,xingming,sex,birth,sfz,tel,dizhi,email,qq,crdate from ui_user ");
+            strSql.Append("select  top 1 ID,account,password,depid,depname,pTeam,xingming,sex,birth,sfz,tel,dizhi,email,qq,crdate from ui_user ");
             strSql.Append(" where account=@account and password=@password ");
             SqlParameter[] parameters = {
 					new SqlParameter("@account", SqlDbType.NVarChar,30)	,

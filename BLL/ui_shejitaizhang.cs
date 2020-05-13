@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using YJUI.Common;
@@ -45,6 +46,10 @@ namespace YJUI.BLL
         {
             var pageableData = GetPageList(strWhere, orderby, startIndex, endIndex);
             return JsonHelper.ObjToJson(pageableData);
+        }
+        public static void BulkCopypPaichan(DataTable dt) {
+
+             DAL.ui_shejitaizhang.Current.BulkCopypPaichan(dt);
         }
     }
 }

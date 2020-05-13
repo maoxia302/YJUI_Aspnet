@@ -17,6 +17,7 @@ namespace YJUI.Model
         private string _sex;
         private string _depid;
         private string _depname;
+        private string _pTeam;
         private string _birth;
         private string _sfz;
         private string _tel;
@@ -147,6 +148,19 @@ namespace YJUI.Model
             set
             {
                 _depname = value;
+            }
+        }
+
+        public string pTeam
+        {
+            get
+            {
+                return _pTeam;
+            }
+
+            set
+            {
+                _pTeam = value;
             }
         }
         #endregion Model
