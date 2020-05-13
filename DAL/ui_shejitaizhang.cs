@@ -67,13 +67,12 @@ namespace YJUI.DAL
             }
             return result;
         }
-        public void BulkCopypSheJi(DataTable dt)
+        public void BulkCopySheJi(DataTable dt)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SQLConnString_New"].ToString();
             using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connectionString))
             {
                 bulkCopy.DestinationTableName = "ui_shejitaizhang"; //插入目标表
-
                 bulkCopy.ColumnMappings.Add("产品小组", "Pteam");
                 bulkCopy.ColumnMappings.Add("提报日期", "SubmitDate");
                 bulkCopy.ColumnMappings.Add("预计完成时间", "PreTime");
@@ -84,10 +83,10 @@ namespace YJUI.DAL
                 bulkCopy.ColumnMappings.Add("新品类", "NewCategory");
                 bulkCopy.ColumnMappings.Add("新品号", "NewItem");
                 bulkCopy.ColumnMappings.Add("品牌", "Brand");
-                bulkCopy.ColumnMappings.Add("单位", "Unit");
                 bulkCopy.ColumnMappings.Add("打标", "Marking");
                 bulkCopy.ColumnMappings.Add("打标信息厂家代码", "Markfactory");
-                bulkCopy.ColumnMappings.Add("产品标签", "Packing");
+                bulkCopy.ColumnMappings.Add("产品标签", "ItemLable");
+                bulkCopy.ColumnMappings.Add("包装", "Packing");
                 bulkCopy.ColumnMappings.Add("包装类型", "PackingType");
                 bulkCopy.ColumnMappings.Add("包装尺寸", "PackageSize");
                 bulkCopy.ColumnMappings.Add("包装标签", "PackageLabel");

@@ -38,8 +38,7 @@ namespace YJUI.UI.ashx_ui
                 string filePath = "../UploadFile";
                 if (hpFile.ContentLength > 0)
                 {
-                    try
-                    {
+            
                         string fileName = System.IO.Path.GetFileName(hpFile.FileName);
                         filePath = context.Server.MapPath(filePath + "/" + fileName);
                         hpFile.SaveAs(filePath);
@@ -62,18 +61,12 @@ namespace YJUI.UI.ashx_ui
                                 dt1.Rows[i]["预计完成时间"] = DateTime.Now.AddDays(5);
                             }
                         }
-                        BLL.ui_shejitaizhang.Current.BulkCopypSheJi(dt1);
-                        context.Response.Write("ok");
-                        //保存到数据库
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
+                        BLL.ui_shejitaizhang.Current.BulkCopySheJi(dt1);
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("msg", "ok");
+                    string strjson = Common.JsonHelper.ObjToJson(dic);
+                    context.Response.Write(strjson);
                 }
-
-
-
 
             }
 

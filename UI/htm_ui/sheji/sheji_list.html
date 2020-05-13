@@ -207,12 +207,21 @@
                         var d = $(this).closest('.window-body');
                         $("#formToUpdate").ajaxSubmit({
                             type: 'post',
+                            cache: false,
+                            async: false,
+                            dataType:"json",
                             enctype: 'multipart/form-data',
                             fileElementId: 'upFile',
                             url: '/ashx_ui/shejitaizhang.ashx?action=import',
                             success: function (data) {
-                                console.log(data);
-                               d.dialog('destroy');
+                                if (data.msg == "ok") {
+                                    d.dialog('destroy');
+                                    $.show_warning("提示", "导入成功");
+                                    $("#dg_sheji").datagrid('reload').datagrid('clearSelections').datagrid('clearChecked');
+                                }
+                               
+                            }, error: function (data) {
+                              
                             }
                         });
                     }

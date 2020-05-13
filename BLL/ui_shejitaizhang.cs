@@ -48,9 +48,9 @@ namespace YJUI.BLL
             return JsonHelper.ObjToJson(pageableData);
         }
 
-        public void BulkCopypSheJi(DataTable dt)
+        public void BulkCopySheJi(DataTable dt)
         {
-            DAL.ui_shejitaizhang.Current.BulkCopypSheJi(dt);
+            DAL.ui_shejitaizhang.Current.BulkCopySheJi(dt);
 
         }
     }
