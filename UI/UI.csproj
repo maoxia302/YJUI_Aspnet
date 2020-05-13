@@ -142,6 +142,7 @@
     <Content Include="htm_ui\neibutaizhang\mydpj\manyidupingjia_add.htm" />
     <Content Include="htm_ui\neibutaizhang\neibutaizhang.htm" />
     <Content Include="htm_ui\neibutaizhang\neibutaizhang_add.htm" />
+    <Content Include="htm_ui\neibutaizhang\neibutaizhang_file.html" />
     <Content Include="htm_ui\neibutaizhang\wentichuli\wentichuli_add.htm" />
     <Content Include="htm_ui\neibutaizhang\wentichuli\wentichuli.htm" />
     <Content Include="htm_ui\peijian\ceshi.htm" />

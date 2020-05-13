@@ -11,7 +11,7 @@
 <script type="text/javascript">
     var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
     $(function () {
-        var tabTool01 = '<a href="#" class="easyui-linkbutton 001" iconcls="icon-add" plain="true" onclick="batchImp();">导入</a>';
+        /*var tabTool01 = '<a href="#" class="easyui-linkbutton"  data-options="iconCls:\''+ 'icon-search'+'\'" plain="true" onclick="batchImp();">导入</a>';
         var tabTool02 = '<a href="#" class="easyui-linkbutton 001" iconcls="icon-add" plain="true" onclick="add();">新增</a><a href="#" class="easyui-linkbutton 002" iconcls="icon-edit" plain="true" onclick="add_luoshijianhe();">上级检核</a>';
         var tabTool03 = '<a href="#" class="easyui-linkbutton 001" iconcls="icon-add" plain="true" onclick="add();">新增</a><a href="#" class="easyui-linkbutton 004" iconcls="icon-edit" plain="true" onclick="add_manyidupingjia();">满意评价</a>';
         var tabTool04 = '<a href="#" class="easyui-linkbutton 001" iconcls="icon-add" plain="true" onclick="add();">新增</a><a href="#" class="easyui-linkbutton 005" iconcls="icon-edit" plain="true" onclick="add_disanfang();">第三方检核</a>';
@@ -24,7 +24,49 @@
 
         } else if (t == '第三方检核') {
             $('#barCont').append(tabTool04);
+        }*/
+
+        var toobarArr = [
+            /*{
+                text: '导入',
+                iconCls: 'icon-edit',
+                handler: batchImp
+            }, '-',
+            {
+                text: '添加内部台账',
+                iconCls: 'icon-edit',
+                handler: add_neibutaizhang
+            }*/
+        ];
+        if (t == '录入内容') {
+            toobarArr.push(
+                {
+                    text: '导入',
+                    iconCls: 'icon-edit',
+                    handler: batchImp
+                }
+            );
+        } else if (t == '落实检查') {
+            toobarArr.push(
+                {
+                    text: '新增',
+                    iconCls: 'icon-add',
+                    handler: add
+                },
+                {
+                    text: '上级检核',
+                    iconCls: 'icon-add',
+                    handler: add_luoshijianhe
+                }
+            );
+        } else if (t == '满意评价') {
+            
+
+        } else if (t == '第三方检核') {
+            
         }
+
+
         $("#dg_sheji").datagrid({
             url: "/ashx_ui/shejitaizhang.ashx?action=search",
             idField: 'ID',
@@ -66,7 +108,8 @@
                     { field: "TimeOutDays", title: "超时天数", width: 80 },
                 ]
             ],
-            toolbar: '#toolbar2'
+            //toolbar: '#toolbar2'
+            toolbar:toobarArr
         });
         quanxian();
     });
@@ -477,11 +520,7 @@
                             fileElementId: 'upFile',
                             url: '/ashx_ui/shejitaizhang.ashx?action=import',
                             success: function (data) {
-                                if (data == "ok")
-                                {
-                                    d.dialog('destroy');
-                                }
-                               
+                               d.dialog('destroy');
                             }
                         });
                     }
