@@ -145,7 +145,6 @@ namespace YJUI.BLL
         //}
 
         #endregion  BasicMethod
-
         #region  ExtensionMethod
         /// <summary>
         /// 

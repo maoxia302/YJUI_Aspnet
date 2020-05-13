@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
-using YJUI.Common;
 
 namespace YJUI.UI.ashx_ui
 {
@@ -33,50 +31,7 @@ namespace YJUI.UI.ashx_ui
             }
             else if (context.Request.Params["action"] == "import")
             {
-                HttpFileCollection files = context.Request.Files;
-                HttpPostedFile hpFile = context.Request.Files[0];
-                string filePath = "../UploadFile";
-                if (hpFile.ContentLength > 0)
-                {
-                    try
-                    {
-                        string fileName = System.IO.Path.GetFileName(hpFile.FileName);
-                        filePath = context.Server.MapPath(filePath + "/" + fileName);
-                        hpFile.SaveAs(filePath);
-                        DataTable dt1 = ExcelHelper.ExcelToTable(filePath, 2);
-                        dt1.Columns.Add("产品小组");
-                        dt1.Columns.Add("提报日期");
-                        dt1.Columns.Add("预计完成时间");
 
-                        // 赋值
-                        for (var i = 0; i < dt1.Rows.Count; i++)
-                        {
-                            dt1.Rows[i]["产品小组"] = "a";
-                            dt1.Rows[i]["提报日期"] = DateTime.Now;
-                            if (dt1.Rows[i]["新品类"].ToString() == "Y")
-                            {
-                                dt1.Rows[i]["预计完成时间"] = DateTime.Now.AddDays(10);
-                            }
-                            if (dt1.Rows[i]["新品号"].ToString() == "Y")
-                            {
-                                dt1.Rows[i]["预计完成时间"] = DateTime.Now.AddDays(5);
-                            }
-
-
-                        }
-
-
-
-                        BLL.ui_shejitaizhang.BulkCopypPaichan(dt1);
-
-                        context.Response.Write("ok");
-                        //保存到数据库
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                }
 
 
             }

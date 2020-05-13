@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -66,42 +64,6 @@ namespace YJUI.DAL
                 };
             }
             return result;
-        }
-
-        /// <summary>
-        /// 批量导入
-        /// </summary> <param name="dt"></param>
-        /// <returns></returns>
-        public  void BulkCopypPaichan(DataTable dt)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["SQLConnString_New"].ToString();
-            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connectionString))
-            {
-                bulkCopy.DestinationTableName = "ui_shejitaizhang"; //插入目标表
-                bulkCopy.ColumnMappings.Add("产品小组", "Pteam");
-                bulkCopy.ColumnMappings.Add("提报日期", "SubmitDate");
-                bulkCopy.ColumnMappings.Add("预计完成时间", "PreTime");
-                bulkCopy.ColumnMappings.Add("产品名称", "Item");
-                bulkCopy.ColumnMappings.Add("OEM", "oem");
-                bulkCopy.ColumnMappings.Add("规格/适用车型", "Specification");
-                bulkCopy.ColumnMappings.Add("单位", "Unit");
-                bulkCopy.ColumnMappings.Add("新品类", "NewCategory");
-                bulkCopy.ColumnMappings.Add("新品号", "NewItem");
-                bulkCopy.ColumnMappings.Add("品牌", "Brand");
-                bulkCopy.ColumnMappings.Add("打标", "Marking");
-                bulkCopy.ColumnMappings.Add("打标信息厂家代码", "Markfactory");
-                bulkCopy.ColumnMappings.Add("产品标签", "ItemLable");
-                bulkCopy.ColumnMappings.Add("包装", "Packing");
-                bulkCopy.ColumnMappings.Add("包装类型", "PackingType");
-                bulkCopy.ColumnMappings.Add("包装尺寸", "PackageSize");
-                bulkCopy.ColumnMappings.Add("包装标签", "PackageLabel");
-                bulkCopy.ColumnMappings.Add("物流箱", "Box");
-                bulkCopy.ColumnMappings.Add("物流箱尺寸", "BoxSize");
-                bulkCopy.ColumnMappings.Add("外箱标签", "OuterLabel");
-                bulkCopy.ColumnMappings.Add("备注", "Remark");
-                bulkCopy.WriteToServer(dt); //数据源表
-            }
-
         }
     }
 }
