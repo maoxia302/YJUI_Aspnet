@@ -65,5 +65,9 @@ namespace YJUI.DAL
             }
             return result;
         }
+        public void BulkCopypSheJi()
+        {
+
+        }
     }
 }

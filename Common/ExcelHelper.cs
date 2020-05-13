@@ -168,6 +168,62 @@ namespace YJUI.Common
             }
             return dt;
         }
+
+        /// <summary>
+        /// Excel导入成Datable
+        /// </summary>
+        /// <param name="file">导入路径(包含文件名与扩展名)</param>
+        /// <returns></returns>
+        public static DataTable ExcelToTable(string file,int headrow)
+        {
+            DataTable dt = new DataTable();
+            IWorkbook workbook;
+            var extension = Path.GetExtension(file);
+            if (extension != null)
+            {
+                string fileExt = extension.ToLower();
+                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
+                {
+                    if (fileExt == ".xlsx") { workbook = new XSSFWorkbook(fs); } else if (fileExt == ".xls") { workbook = new HSSFWorkbook(fs); } else { workbook = null; }
+                    if (workbook == null) { return null; }
+                    ISheet sheet = workbook.GetSheetAt(0);
+                    sheet.ForceFormulaRecalculation = true;//即可实现自动将 Excel 的公式计算出来。
+                    //表头
+                    IRow header = sheet.GetRow(headrow);
+                    List<int> columns = new List<int>();
+                    for (int i = 0; i < header.LastCellNum; i++)
+                    {
+                        object obj = GetValueType(header.GetCell(i));
+                        if (obj == null || obj.ToString() == string.Empty)
+                        {
+                            dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
+                        }
+                        else
+                            dt.Columns.Add(new DataColumn(obj.ToString()));
+                        columns.Add(i);
+                    }
+                    for (int i = headrow+ 1; i <= sheet.LastRowNum; i++)
+                    {
+                        DataRow dr = dt.NewRow();
+                        bool hasValue = false;
+                        foreach (int j in columns)
+                        {
+                            dr[j] = GetValueType(workbook, sheet.GetRow(i).GetCell(j));
+                            if (dr[j] != null && dr[j].ToString() != string.Empty)
+                            {
+                                hasValue = true;
+                            }
+                        }
+                        if (hasValue)
+                        {
+                            dt.Rows.Add(dr);
+                        }
+                    }
+
+                }
+            }
+            return dt;
+        }
         /// <summary>
         /// 获取单元格类型
         /// </summary>
