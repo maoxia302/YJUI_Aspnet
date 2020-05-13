@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -65,8 +66,9 @@ namespace YJUI.DAL
             }
             return result;
         }
-        public void BulkCopypSheJi()
+        public void BulkCopypSheJi(DataTable dt)
         {
+
 
         }
     }

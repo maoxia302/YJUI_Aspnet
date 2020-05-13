@@ -61,14 +61,8 @@ namespace YJUI.UI.ashx_ui
                             {
                                 dt1.Rows[i]["预计完成时间"] = DateTime.Now.AddDays(5);
                             }
-
-
                         }
-
-
-
-                        BLL.ui_shejitaizhang.BulkCopypPaichan(dt1,2);
-
+                        BLL.ui_shejitaizhang.Current.BulkCopypSheJi(dt1);
                         context.Response.Write("ok");
                         //保存到数据库
                     }
