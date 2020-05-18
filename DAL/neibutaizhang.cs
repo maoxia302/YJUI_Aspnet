@@ -38,9 +38,9 @@ namespace YJUI.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into neibutaizhang(");
-            strSql.Append("fkDate,fkPerson,fkDep,wtDep,fkDesc,fkItem,fkArea,fkCustomer)");
+            strSql.Append("fkDate,fkPerson,fkDep,wtDep,fkDesc,fkItem,fkArea,fkCustomer,fkPic)");
             strSql.Append(" values (");
-            strSql.Append("@fkDate,@fkPerson,@fkDep,@wtDep,@fkDesc,@fkItem,@fkArea,@fkCustomer)");
+            strSql.Append("@fkDate,@fkPerson,@fkDep,@wtDep,@fkDesc,@fkItem,@fkArea,@fkCustomer,@fkPic)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@fkDate", SqlDbType.DateTime),
@@ -51,6 +51,7 @@ namespace YJUI.DAL
                     new SqlParameter("@fkItem", SqlDbType.VarChar,50),
                      new SqlParameter("@fkArea", SqlDbType.VarChar,200),
                       new SqlParameter("@fkCustomer", SqlDbType.VarChar,200),
+                      new SqlParameter("@fkPic", SqlDbType.VarChar,200),
             };
             parameters[0].Value = model.fkDate;
             parameters[1].Value = model.fkPerson;
@@ -60,6 +61,7 @@ namespace YJUI.DAL
             parameters[5].Value = model.fkItem;
             parameters[6].Value = model.fkArea;
             parameters[7].Value = model.fkCustomer;
+            parameters[8].Value = model.FkPic;
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
             {

@@ -36,7 +36,7 @@
                 {
                     text: '设计处理',
                     iconCls: 'icon-add',
-                    handler: fenku
+                    handler: sheji
                 }
             );
         } else if (t == '产品组验收') {
@@ -44,7 +44,7 @@
                 {
                     text: '产品组验收',
                     iconCls: 'icon-add',
-                    handler: fenku
+                    handler: chanpin
                 }
             );
         } else if (t == '事业部验收') {
@@ -52,7 +52,7 @@
                 {
                     text: '事业部验收',
                     iconCls: 'icon-add',
-                    handler: fenku
+                    handler: shiyebu
                 }
             );
             
@@ -90,12 +90,12 @@
                     { field: "BoxSize", title: "物流箱尺寸", width: 180 },
                     { field: "OuterLabel", title: "外箱标签", width: 100 },
                     { field: "Remark", title: "备注", width: 60 },
-                    { field: "DesignerTime", title: "实际完成时间", width: 60 },
-                    { field: "Designer", title: "产品组验收", width: 80 },
+                    { field: "DesignerTime", title: "实际完成时间", width: 120 },
+                    { field: "Designer", title: "设计者", width: 80 },
                     { field: "Accept", title: "产品组验收", width: 150 },
                     { field: "AcceptDate", title: "验收日期", width: 150 },
                     { field: "ManagerAccept", title: "事业部经理验收", width: 60 },
-                    { field: "ManagerDate", title: "验收日期", width: 80 },
+                    { field: "ManagerDate", title: "验收日期", width: 120 },
                     { field: "TimeOutDays", title: "超时天数", width: 80 },
                 ]
             ],
@@ -119,35 +119,37 @@
     }
 
     //daohuo
-    function fenku() {
+    function sheji() {
         var r = $("#dg_sheji").datagrid("getChecked");
         if (r.length < 1) {
-            $.show_warning("错误", "请选择一个要修改一个信息");
+            $.show_warning("错误", "请至少选择需要处理一个要修改的信息");
             return;
         }
-        if (r.length > 1) {
-            $.show_warning("错误", "一次只能修改一个信息");
-            $("#dg_sheji").datagrid('clearSelections').datagrid('clearChecked');
-            return;
-        }
+        //if (r.length > 1) {
+        //    $.show_warning("错误", "一次只能修改一个信息");
+        //    $("#dg_sheji").datagrid('clearSelections').datagrid('clearChecked');
+        //    return;
+        //}
+
         $("<div/>").dialog({
-            href: "htm_ui/tuji/daohuo.htm",
-            title: "到货确认",
-            height: 600,
-            width: 600,
+            href: "/htm_ui/sheji/sheji_add.html",
+            title: "实际完成时间（设计填写）",
+            height: 150,
+            width: 300,
             modal: true,
             iconCls: "icon-add",
             buttons: [
                 {
-                    text: '确定添加',
+                    text: '确定',
                     iconCls: 'icon-add',
                     handler: function () {
                         var d = $(this).closest('.window-body');
-                        $("#f_daohuo_add").form("submit", {
-                            url: "../ashx_ui/TUJI.ashx",
+                        console.log(r);
+                        $("#f_sheji_add").form("submit", {
+                            url: "/ashx_ui/shejitaizhang.ashx",
                             onSubmit: function (param) {
-                                param.action = 'fenku';
-                                param.ID = r[0].ID;
+                                param.action = 'sheji_add';
+                                param.rows = JSON.stringify(r);
                                 return $(this).form('validate');
                             },
                             success: function (result) {
@@ -161,7 +163,112 @@
                     }
                 },
                 {
-                    text: '取消添加',
+                    text: '取消',
+                    iconCls: 'icon-cancel',
+                    handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                }
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            },
+            onLoad: function () {
+                $("#f_daohuo_add").form("load", r[0]);
+            }
+        });
+    }
+    //产品组
+    function chanpin() {
+        var r = $("#dg_sheji").datagrid("getChecked");
+        if (r.length < 1) {
+            $.show_warning("错误", "请至少选择需要处理一个要修改的信息");
+            return;
+        }
+
+        $("<div/>").dialog({
+            href: "/htm_ui/sheji/chanpin_add.html",
+            title: "实际完成时间（设计填写）",
+            height: 150,
+            width: 300,
+            modal: true,
+            iconCls: "icon-add",
+            buttons: [
+                {
+                    text: '确定',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        var d = $(this).closest('.window-body');
+                        console.log(r);
+                        $("#f_chanpin_add").form("submit", {
+                            url: "/ashx_ui/shejitaizhang.ashx",
+                            onSubmit: function (param) {
+                                param.action = 'add_chanpin';
+                                param.rows = JSON.stringify(r);
+                                return $(this).form('validate');
+                            },
+                            success: function (result) {
+                                dealAjaxResult(result, function (r) {
+                                    d.dialog('destroy');
+                                    $.show_warning("提示", "操作成功");
+                                    $("#dg_sheji").datagrid('reload').datagrid('clearSelections').datagrid('clearChecked');
+                                });
+                            }
+                        });
+                    }
+                },
+                {
+                    text: '取消',
+                    iconCls: 'icon-cancel',
+                    handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                }
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            },
+            onLoad: function () {
+                $("#f_daohuo_add").form("load", r[0]);
+            }
+        });
+    }
+    //事业部经理
+    function shiyebu() {
+        var r = $("#dg_sheji").datagrid("getChecked");
+        if (r.length < 1) {
+            $.show_warning("错误", "请至少选择需要处理一个要修改的信息");
+            return;
+        }
+        $("<div/>").dialog({
+            href: "/htm_ui/sheji/shiyebu_add.html",
+            title: "事业部（经理填写）",
+            height: 150,
+            width: 300,
+            modal: true,
+            iconCls: "icon-add",
+            buttons: [
+                {
+                    text: '确定',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        var d = $(this).closest('.window-body');
+                        console.log(r);
+                        $("#f_shiyebu_add").form("submit", {
+                            url: "/ashx_ui/shejitaizhang.ashx",
+                            onSubmit: function (param) {
+                                param.action = 'add_shiyebu';
+                                param.rows = JSON.stringify(r);
+                                return $(this).form('validate');
+                            },
+                            success: function (result) {
+                                dealAjaxResult(result, function (r) {
+                                    d.dialog('destroy');
+                                    $.show_warning("提示", "操作成功");
+                                    $("#dg_sheji").datagrid('reload').datagrid('clearSelections').datagrid('clearChecked');
+                                });
+                            }
+                        });
+                    }
+                },
+                {
+                    text: '取消',
                     iconCls: 'icon-cancel',
                     handler: function () { $(this).closest('.window-body').dialog('destroy'); }
                 }

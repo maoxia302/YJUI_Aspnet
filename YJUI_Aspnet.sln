@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{ED9A0226-F4B6-4EFD-B4F5-9A1E9B3E619D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMVC", "WebMVC\WebMVC.csproj", "{4AF1FD6A-CAC4-40FE-847F-170F05C14120}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMVC.Tests", "WebMVC.Tests\WebMVC.Tests.csproj", "{F1DD047D-521B-4EF4-BB2F-F276A8272814}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,12 +107,36 @@ Global
 		{ED9A0226-F4B6-4EFD-B4F5-9A1E9B3E619D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{ED9A0226-F4B6-4EFD-B4F5-9A1E9B3E619D}.Release|x86.ActiveCfg = Release|Any CPU
 		{ED9A0226-F4B6-4EFD-B4F5-9A1E9B3E619D}.Release|x86.Build.0 = Release|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Debug|x86.Build.0 = Debug|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Release|x86.ActiveCfg = Release|Any CPU
+		{4AF1FD6A-CAC4-40FE-847F-170F05C14120}.Release|x86.Build.0 = Release|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Debug|x86.Build.0 = Debug|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Release|x86.ActiveCfg = Release|Any CPU
+		{F1DD047D-521B-4EF4-BB2F-F276A8272814}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B5AB10BF-2577-4396-A2FD-D2D3742F0615}
 		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {B5AB10BF-2577-4396-A2FD-D2D3742F0615}
 	EndGlobalSection
 EndGlobal

@@ -20,6 +20,7 @@ namespace YJUI.Model
         private string _fkItem;
         private string _fkArea;
         private string _fkCustomer;
+        private string _fkPic;
 
         private string _dyperson;
         private DateTime? _dydate;
@@ -246,6 +247,19 @@ namespace YJUI.Model
             set
             {
                 _fkCustomer = value;
+            }
+        }
+
+        public string FkPic
+        {
+            get
+            {
+                return _fkPic;
+            }
+
+            set
+            {
+                _fkPic = value;
             }
         }
         #endregion Model

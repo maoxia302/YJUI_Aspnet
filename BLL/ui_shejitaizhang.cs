@@ -53,5 +53,17 @@ namespace YJUI.BLL
             DAL.ui_shejitaizhang.Current.BulkCopySheJi(dt);
 
         }
+        public bool update_sheji(List<Model.ui_shejitaizhang> list) {
+            return DAL.ui_shejitaizhang.Current.update_sheji(list);
+        }
+
+        public bool add_chanpin(List<Model.ui_shejitaizhang> list)
+        {
+            return DAL.ui_shejitaizhang.Current.add_chanpin(list);
+        }
+        public bool add_shiyebu(List<Model.ui_shejitaizhang> list)
+        {
+            return DAL.ui_shejitaizhang.Current.add_shiyebu(list);
+        }
     }
 }

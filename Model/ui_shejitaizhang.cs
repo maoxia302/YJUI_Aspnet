@@ -35,8 +35,10 @@ namespace YJUI.Model
         private DateTime? _designertime;
         private string _designer;
         private string _accept;
-        private string _acceptdate;
+        private string _accepter;
+        private DateTime? _acceptdate;
         private string _manageraccept;
+        private string _manager;
         private DateTime? _managerdate;
         private DateTime? _timeoutdays;
         /// <summary>
@@ -239,10 +241,15 @@ namespace YJUI.Model
             set { _accept = value; }
             get { return _accept; }
         }
+        public string Accepter
+        {
+            set { _accepter = value; }
+            get { return _accepter; }
+        }
         /// <summary>
         /// 
         /// </summary>
-        public string AcceptDate
+        public DateTime? AcceptDate
         {
             set { _acceptdate = value; }
             get { return _acceptdate; }
@@ -262,6 +269,14 @@ namespace YJUI.Model
         {
             set { _managerdate = value; }
             get { return _managerdate; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Manager
+        {
+            set { _manager = value; }
+            get { return _manager; }
         }
         /// <summary>
         /// 

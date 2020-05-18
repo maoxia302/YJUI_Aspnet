@@ -8,6 +8,10 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Web.Script.Serialization;
+using System.Text;
 
 namespace YJUI.UI.ashx_ui
 {
@@ -54,16 +58,43 @@ namespace YJUI.UI.ashx_ui
                     model.fkItem= context.Request.Params["fkItem"];
                     model.fkDesc = context.Request.Params["fkDesc"];
                     model.fkArea = context.Request.Params["fkArea"];
+
+                    string pics= context.Request.Params["pics"];//
+                    List<string> list = new JavaScriptSerializer().Deserialize<List<string>>(pics);
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var item in list)
+                    {
+                        string[] img_array = item.Split(',');
+                        byte[] arr = Convert.FromBase64String(img_array[1]);
+                        string filePath = "../UploadFile";
+                        string name = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                        string file_name = HttpContext.Current.Server.MapPath(filePath + "/" + name);
+                        using (MemoryStream ms = new MemoryStream(arr))
+                        {
+                            Bitmap bmp = new Bitmap(ms);
+                            if (img_array[0].ToLower() == "data:image/jpeg;base64")
+                            {
+                                bmp.Save(file_name + ".jpg");
+                                sb.Append(name + ".jpg"+",");
+                            }
+                            else if (img_array[0].ToLower() == "data:image/png;base64")
+                            {
+                                bmp.Save(file_name + ".png");
+                                sb.Append(name + ".png"+",");
+                            }
+                        }
+                    }
+                    model.FkPic = sb.ToString();
                     model.fkCustomer = context.Request.Params["fkCustomer"];
                     if (new BLL.neibutaizhang().Add(model))
                     {
                         context.Response.Write("ok");
-                    }
-                    else
-                    {
-                        context.Response.Write("err");
-                    }
-                } 
+                }
+                else
+                {
+                    context.Response.Write("err");
+                }
+            } 
                 #endregion
 
                 #region 问题处理添加

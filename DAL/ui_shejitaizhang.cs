@@ -101,5 +101,35 @@ namespace YJUI.DAL
 
 
         }
+
+
+        public bool update_sheji(List<Model.ui_shejitaizhang> list)
+        {
+            string sql = "update ui_shejitaizhang set Designer=@Designer,DesignerTime=@DesignerTime where ID=@ID";
+
+            using (SqlConnection conn = new SqlConnection(ConnStrManage.NEWV2013DB)) {
+                return conn.Execute(sql, list) > 0;
+            }
+        }
+
+
+        public bool add_chanpin(List<Model.ui_shejitaizhang> list)
+        {
+            string sql = "update ui_shejitaizhang set Accept=@Accept,Accepter=@Accepter,AcceptDate=@AcceptDate  where ID=@ID";
+
+            using (SqlConnection conn = new SqlConnection(ConnStrManage.NEWV2013DB))
+            {
+                return conn.Execute(sql, list) > 0;
+            }
+        }
+        public bool add_shiyebu(List<Model.ui_shejitaizhang> list)
+        {
+            string sql = "update ui_shejitaizhang set ManagerAccept=@ManagerAccept,Manager=@Manager,ManagerDate=@ManagerDate  where ID=@ID";
+
+            using (SqlConnection conn = new SqlConnection(ConnStrManage.NEWV2013DB))
+            {
+                return conn.Execute(sql, list) > 0;
+            }
+        }
     }
 }
