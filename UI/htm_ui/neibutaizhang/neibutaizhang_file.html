@@ -1,18 +1,40 @@
 ﻿<style>
     .nbtz_file {
-        padding:15px;
+        padding: 15px 0;
     }
+    .nbtz_file > ul {
+        list-style: none;
+        width:80%;
+        margin:0 auto;
+    }
+        .nbtz_file > ul h2 {
+            padding:10px 0;
+            color: #95B8E7;
+            border-bottom:1px solid #ddd;
+        }
+        .nbtz_file > ul>li>span {
+            display:block;
+            width:60%;
+        
+        }
+        .nbtz_file > ul img {
+            display: block;
+            width: 100%;
+        }
 </style>
 <script>
     $(function () {
-
+        var fkPic = $("#dg_neibutaizhang").datagrid('getSelected').fkPic;
+        var picArr = fkPic.split(",");
+        $("#nbtzFile").empty();
+        for (var i = 0; i < picArr.length-1; i++) {
+            $("#nbtzFile").append('<li><h2>附件'+i+':</h2><span><img src="UploadFile/' + picArr[i] + '" /></span></li>');
+        }
+        
     });
+    
 </script>
 
 <div class="nbtz_file">
-    <ul>
-        <li>
-            <span><img src="" /></span>
-        </li>
-    </ul>
+    <ul id="nbtzFile"></ul>
 </div>

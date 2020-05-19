@@ -41,8 +41,11 @@
                 {
                     field: "fkItem", title: "所属项目", width: 120,
                     formatter: function (value, row, index) {
-                        return value + '<a href="#" onclick="fileDetail(' + index +')" class="easyui-linkbutton" data-options="iconCls:\'icon - search' +'\'" style="display:inline-block;padding:2px 12px;background-color:#efefef;border:1px solid #ddd;border-radius:12px;-webkit-border-radius:12px;margin-left:4px;">查看附件</a>';
-                        
+                        var curHtml = value;
+                        if (row.fkPic != null) {
+                            curHtml = curHtml + '< a href="#" onclick="fileDetail(' + index + ')" class="easyui-linkbutton" data-options="iconCls:\'icon - search' + '\'" style="display:inline-block;padding:2px 12px;background-color:#efefef;border:1px solid #ddd;border-radius:12px;-webkit-border-radius:12px;margin-left:4px;">查看附件</ a>';
+                        }
+                        return curHtml;
                     }
                 },
                 { field: "fkDesc", title: "反馈描述", width: 200 },
@@ -102,15 +105,15 @@
 
     //////////////////////附件预览
     function fileDetail(index) {
-        var row = $("#dg_neibutaizhang").datagrid('getData').rows[index];
-        console.log(row);
+        //var row = $("#dg_neibutaizhang").datagrid('getData').rows[index];
         $("<div/>").dialog({
-            href: "htm_ui/neibutaizhang/imgdetail.htm",
+            href: "htm_ui/neibutaizhang/neibutaizhang_file.html",
             title: "附件预览",
             height: 600,
             width: 800,
             modal: true,
             iconCls: "icon-add",
+            //queryParams: { fkPic: row.fkPic },
             buttons: [
                 {
                     text: '关闭',

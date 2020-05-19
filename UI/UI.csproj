@@ -2080,6 +2080,23 @@
     <Content Include="themes\metro\tree.css" />
     <Content Include="themes\metro\validatebox.css" />
     <Content Include="themes\metro\window.css" />
+    <Content Include="UploadFile\202005151541405810.jpg" />
+    <Content Include="UploadFile\202005151541406330.jpg" />
+    <Content Include="UploadFile\202005151553250050.jpg" />
+    <Content Include="UploadFile\202005151553250220.jpg" />
+    <Content Include="UploadFile\202005151553250630.jpg" />
+    <Content Include="UploadFile\202005151559598760.jpg" />
+    <Content Include="UploadFile\202005151559598920.jpg" />
+    <Content Include="UploadFile\20200515335.jpg" />
+    <Content Include="UploadFile\202005181730006120.jpg" />
+    <Content Include="UploadFile\202005181730006530.jpg" />
+    <Content Include="UploadFile\202005181732032860.jpg" />
+    <Content Include="UploadFile\202005181732259160.jpg" />
+    <Content Include="UploadFile\202005181734147190.jpg" />
+    <Content Include="UploadFile\202005181734147380.jpg" />
+    <Content Include="UploadFile\202005181735033520.jpg" />
+    <Content Include="UploadFile\202005181735033780.jpg" />
+    <Content Include="UploadFile\202005181735033810.jpg" />
     <Content Include="uploadimg\css\fileAndPicture\webuploader.css" />
     <Content Include="uploadimg\css\webuploader.css" />
     <Content Include="uploadimg\css\webuploader.min.css" />
@@ -2250,7 +2267,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="htm_ui\NewFolder1\" />
-    <Folder Include="UploadFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ashx_ui\ui_leftmenu.ashx" />
