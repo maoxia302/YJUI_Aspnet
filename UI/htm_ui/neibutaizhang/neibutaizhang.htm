@@ -150,8 +150,8 @@
                             $("#fkCustomer").focus();
                             $("#fkCustomer").after('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
                             return false;
-                        } else if ($("#cb_fkItem").combobox('getValue') == '') {
-                            $("#cb_fkItem").parents("td").append('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
+                        } else if ($("#fkItem").combobox('getValue') == '') {
+                            $("#fkItem").parents("td").append('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
                             return false;
                         } else if ($("#fkDesc").val() == '') {
                             $("#fkDesc").focus();

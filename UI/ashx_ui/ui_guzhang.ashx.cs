@@ -62,6 +62,20 @@ namespace YJUI.UI.ashx_ui
                 context.Response.Write(guzhang);
                 context.Response.End();
             }
+            //部门分类
+            else if (context.Request.Params["action"] == "getDepCat")
+            {
+                string guzhang = new BLL.ui_guzhang().GetDepCatToJson();
+                context.Response.Write(guzhang);
+                context.Response.End();
+            }
+            //部门项目
+            else if (context.Request.Params["action"] == "GetDepItem")
+            {
+                string guzhang = new BLL.ui_guzhang().GetDepItemToJson();
+                context.Response.Write(guzhang);
+                context.Response.End();
+            }
         }
         public bool IsReusable
         {

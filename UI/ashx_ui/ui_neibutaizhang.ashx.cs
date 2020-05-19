@@ -54,6 +54,7 @@ namespace YJUI.UI.ashx_ui
                     model.fkDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                     model.fkPerson = (context.Session["user"] as YJUI.Model.ui_user).xingming;
                     model.FkDep = (context.Session["user"] as YJUI.Model.ui_user).depname;
+                    model.DepCat = context.Request.Params["DepCat"];
                     model.wtDep = context.Request.Params["wtDep"];
                     model.fkItem= context.Request.Params["fkItem"];
                     model.fkDesc = context.Request.Params["fkDesc"];

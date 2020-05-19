@@ -13,6 +13,7 @@ namespace YJUI.Model
         private int _id;
         private DateTime? _fkdate;
         private string _fkperson;
+        private string _DepCat;
         private string _fkDep;
         private string _wtdep;
         private string _fkdesc;
@@ -260,6 +261,19 @@ namespace YJUI.Model
             set
             {
                 _fkPic = value;
+            }
+        }
+
+        public string DepCat
+        {
+            get
+            {
+                return _DepCat;
+            }
+
+            set
+            {
+                _DepCat = value;
             }
         }
         #endregion Model

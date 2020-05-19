@@ -30,6 +30,31 @@
         textField: 'guzhang'
 
     });
+    $('#DepCat').combobox({
+        editable: false,
+        url: '../ashx_ui/ui_guzhang.ashx?action=getDepCat',
+        valueField: 'guzhang',
+        textField: 'guzhang',
+        onSelect: function (record) {
+            var typeTxt = 'GetDepItem';
+            if (record.guzhang == "发动机") {
+                typeTxt = 'getItem1';
+            } 
+            refreshCombox(typeTxt);
+        }
+
+    });
+
+    function refreshCombox(typeTxt) {
+        $('#fkItem').combobox({
+            disabled: false,
+            url: "../ashx_ui/ui_guzhang.ashx?action=" + typeTxt,
+            valueField: 'guzhang',
+            textField: 'guzhang',
+        });
+    }
+
+
     $("#fkArea,#fkCustomer,#fkDesc").blur(function () {
         $("#f_neibutaizhang_add").find(".val-erro").remove();
         if ($("#fkArea").val() == '') {
@@ -38,8 +63,8 @@
         } else if ($("#fkCustomer").val() == '') {
             $("#fkCustomer").focus();
             $("#fkCustomer").after('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
-        } else if ($("#cb_fkItem").combobox('getValue') == '') {
-            $("#cb_fkItem").parents("td").append('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
+        } else if ($("#fkItem").combobox('getValue') == '') {
+            $("#fkItem").parents("td").append('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
         } else if ($("#fkDesc").val() == '') {
             $("#fkDesc").focus();
             $("#fkDesc").after('<p class="val-erro" style="color:red;font-size:14px;padding:0;margin:0">*必填项</p>');
@@ -49,7 +74,7 @@
         var uploader2 = uploadImage({
             wrap: "#uploader2", //包裹整个上传控件的元素，必须。可以传递dom元素、选择器、jQuery对象
             /*预览图片的宽度，可以不传，如果宽高都不传则为包裹预览图的元素宽度，高度自动计算*/
-            //width: "160px", 
+            //width: "160px",
             height: 120,//预览图片的高度
             fileVal: "file", // [默认值：'file'] 设置文件上传域的name。
             btns: {//必须
@@ -64,7 +89,7 @@
             duplicate: true
         });
     });
-    
+
 </script>
 <div style="padding: 15px; overflow: hidden">
     <form id="f_neibutaizhang_add" method="post">
@@ -76,10 +101,20 @@
 
 
                 <td style="width:80px;">
+                    部门分类：
+                </td>
+                <td>
+                    <input class="easyui-combobox" id="DepCat" name="DepCat" />
+                </td>
+            </tr>
+            <tr>
+
+
+                <td style="width:80px;">
                     问题归属部门：
                 </td>
                 <td>
-                    <input type="easyui-combobox" id="cb_wtDep" name="wtDep"   />
+                    <input class="easyui-combobox" id="cb_wtDep" name="wtDep" />
                 </td>
             </tr>
             <tr>
@@ -90,7 +125,7 @@
                     反馈地区：
                 </td>
                 <td>
-                    <input type="easyui-textbox" id="fkArea" name="fkArea" />
+                    <input class="easyui-textbox" id="fkArea" name="fkArea" />
                 </td>
             </tr>
             <tr>
@@ -101,7 +136,7 @@
                     反馈客户：
                 </td>
                 <td>
-                    <input type="easyui-textbox" id="fkCustomer" name="fkCustomer" />
+                    <input class="easyui-textbox" id="fkCustomer" name="fkCustomer" />
                 </td>
             </tr>
             <tr>
@@ -111,7 +146,7 @@
                     所属项目：
                 </td>
                 <td>
-                    <input type="easyui-combobox" id="cb_fkItem" name="fkItem" />
+                    <input class="easyui-combobox" id="fkItem" name="fkItem" />
                 </td>
             </tr>
             <tr>
