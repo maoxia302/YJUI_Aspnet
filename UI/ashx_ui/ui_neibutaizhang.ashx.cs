@@ -9,7 +9,6 @@ using NPOI.SS.UserModel;
 using System.Data;
 using System.IO;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Web.Script.Serialization;
 using System.Text;
 
@@ -36,10 +35,10 @@ namespace YJUI.UI.ashx_ui
                     string bdate = context.Request.Params["bdate"];
                     string edate = context.Request.Params["edate"];
                     string word = context.Request.Params["txt_search"];
-
+                    string depcat = context.Request.Params["DepCat"];//反馈部门
                     string dep = context.Request.Params["txt_dep"];//反馈部门
                     var fkItem= context.Request.Params["fkItem"];//反馈部门
-                    strWhere = NewMethod(strWhere, bdate, edate, word, dep,fkItem);
+                    strWhere = NewMethod(strWhere, bdate, edate, word, dep,fkItem, depcat);
                     int pageindex = int.Parse(context.Request["page"]);
                     int pagesize = int.Parse(context.Request.Params["rows"]);
                     string strjson = new BLL.neibutaizhang().GetJsonneibuTaizhang(pagesize, pageindex, strWhere);
@@ -107,6 +106,7 @@ namespace YJUI.UI.ashx_ui
                     model.dyPerson = context.Request.Params["dyPerson"];
                     string dyDate = context.Request.Params["dyDate"];
                     model.dyDate = DateTime.Parse(dyDate);
+                    model.IsEnd= context.Request.Params["IsEnd"];
                     model.dyGaishan = context.Request.Params["dyGaishan"];
                     model.cqFangan = context.Request.Params["cqFangan"];
                     model.cqDate = Convert.ToDateTime(context.Request.Params["cqDate"]);
@@ -176,19 +176,27 @@ namespace YJUI.UI.ashx_ui
                 }
                 else if (context.Request.Params["action"] == "daochu")
                 {
-                    string sqlWhere = " 1=1";
-                    string bdate = context.Request.Params["bdate"];
-                    string edate = context.Request.Params["edate"];
-                    string word = context.Request.Params["txt_search"];
-                    string dep = context.Request.Params["txt_dep"];//反馈部门
-                    var fkItem = context.Request.Params["fkItem"];//反馈部门
-                    sqlWhere = NewMethod(sqlWhere, bdate, edate, word, dep,fkItem);//查询条件
+                   string sqlWhere = " 1=1";
+                   string p = context.Request.Params["params"];
+                   Dictionary<string,object> dic = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(p);
+                    var bdate = dic["bdate"].ToString();
+                    var fkItem = dic["fkItem"].ToString();
+                    var DepCat = dic["DepCat"].ToString();
+                    var word = dic["txt_search"].ToString();
+                    var edate = dic["edate"].ToString();
+                    var dep = dic["txt_dep"].ToString();
+                    sqlWhere = NewMethod(sqlWhere, bdate, edate, word, dep,fkItem, DepCat);//查询条件
                     HSSFWorkbook workbook = new HSSFWorkbook();
                     ISheet sheet1 = workbook.CreateSheet("sheet1");
                     IDataReader reader = new BLL.neibutaizhang().neiBuTaiZhangGetList(sqlWhere);
                     IRow rowhead = sheet1.CreateRow(0);
                     //循环表头
                     //fkArea,fkCustomer,
+                    //strSql.Append("select ID,fkDate,fkPerson,fkDep,fkItem,fkArea,fkCustomer,wtDep,fkDesc,
+                    //dyDep,dyPerson,dyDate,dyGaishan,cqFangan,cqDate,
+                    //lsJianhe,lsDep,lsDate,
+                    //myPingjia,myPerson,myDate,
+                    //dsJianhe,dsPerson,dsDate ");
                     string cs = "序号,反馈时间,反馈人,反馈部门,所属项目,反馈地区,反馈客户,问题部门,反馈描述," +
                           "领取部门,领取人,领取时间,临时改善,长期方案,长期时间," +
                           "落实检核,落实部门,落实时间," +
@@ -235,7 +243,7 @@ namespace YJUI.UI.ashx_ui
             }
         }
 
-        public static string NewMethod(string strWhere, string bdate, string edate, string word, string dep,string fkItem)
+        public static string NewMethod(string strWhere, string bdate, string edate, string word, string dep,string fkItem,string depcat)
         {
             if (!string.IsNullOrEmpty(bdate))
             {
@@ -256,6 +264,10 @@ namespace YJUI.UI.ashx_ui
             if (!string.IsNullOrEmpty(fkItem))
             {
                 strWhere += string.Format(" and fkItem='{0}'", fkItem);
+            }
+            if (!string.IsNullOrEmpty(depcat))
+            {
+                strWhere += string.Format(" and DepCat='{0}'", depcat);
             }
 
             return strWhere;

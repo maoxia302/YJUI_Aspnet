@@ -306,6 +306,8 @@ function isEmpty(target) {
     return false;
 }
 
+
+
 (function ($) {
     $.fn.serializeObject = function () {
         var o = {};
@@ -372,6 +374,198 @@ function addTab_new02(title, url) {
         });
     }
 }
+
+/*
+ *   功能:实现VBScript的DateAdd功能.
+ *   参数:interval,字符串表达式，表示要添加的时间间隔.
+ *   参数:number,数值表达式，表示要添加的时间间隔的个数.
+ *   参数:date,时间对象.
+ *   返回:新的时间对象.
+ *   var now = new Date();
+ *   var newDate = DateAdd( "d", 5, now);
+ *---------------   DateAdd(interval,number,date)   -----------------
+ */
+function DateAdd(interval, number, date) {
+    switch (interval) {
+        case "y ": {
+            date.setFullYear(date.getFullYear() + number);
+            return date;
+            break;
+        }
+        case "q ": {
+            date.setMonth(date.getMonth() + number * 3);
+            return date;
+            break;
+        }
+        case "m ": {
+            date.setMonth(date.getMonth() + number);
+            return date;
+            break;
+        }
+        case "w ": {
+            date.setDate(date.getDate() + number * 7);
+            return date;
+            break;
+        }
+        case "d ": {
+            date.setDate(date.getDate() + number);
+            return date;
+            break;
+        }
+        case "h ": {
+            date.setHours(date.getHours() + number);
+            return date;
+            break;
+        }
+        case "m ": {
+            date.setMinutes(date.getMinutes() + number);
+            return date;
+            break;
+        }
+        case "s ": {
+            date.setSeconds(date.getSeconds() + number);
+            return date;
+            break;
+        }
+        default: {
+            date.setDate(d.getDate() + number);
+            return date;
+            break;
+        }
+    }
+}
+
+//var now = new Date();
+//// 加五天.
+//var newDate = DateAdd("d ", 5, now);
+//alert(newDate.toLocaleDateString())
+//// 加两个月.
+//newDate = DateAdd("m ", 2, now);
+//alert(newDate.toLocaleDateString())
+//// 加一年
+//newDate = DateAdd("y ", 1, now);
+//alert(newDate.toLocaleDateString())
+
+
+
+/*
+* 获得时间差,时间格式为 年-月-日 小时:分钟:秒 或者 年/月/日 小时：分钟：秒
+* 其中，年月日为全格式，例如 ： 2010-10-12 01:00:00
+* 返回精度为：秒，分，小时，天
+* //调用格式var result = GetDateDiff("2010-02-26 16:00:00", testStr, "day");
+*/
+
+function GetDateDiff(startTime, endTime, diffType) {
+    //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式 
+    startTime = startTime.replace(/\-/g, "/");
+    endTime = endTime.replace(/\-/g, "/");
+
+    //将计算间隔类性字符转换为小写
+    diffType = diffType.toLowerCase();
+    var sTime = new Date(startTime);      //开始时间
+    var eTime = new Date(endTime);  //结束时间
+    //作为除数的数字
+    var divNum = 1;
+    switch (diffType) {
+        case "second":
+            divNum = 1000;
+            break;
+        case "minute":
+            divNum = 1000 * 60;
+            break;
+        case "hour":
+            divNum = 1000 * 3600;
+            break;
+        case "day":
+            divNum = 1000 * 3600 * 24;
+            break;
+        default:
+            break;
+    }
+    return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+}
+
+
+//时间格式化问题
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份   
+        "d+": this.getDate(), //日   
+        "H+": this.getHours(), //小时   
+        "m+": this.getMinutes(), //分   
+        "s+": this.getSeconds(), //秒   
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度   
+        "S": this.getMilliseconds() //毫秒   
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+} 
+
+
+//js时间格式化方法
+function dateFormat(fmt, date) {
+    let ret;
+    let opt = {
+        "Y+": date.getFullYear().toString(),        // 年
+        "m+": (date.getMonth() + 1).toString(),     // 月
+        "d+": date.getDate().toString(),            // 日
+        "H+": date.getHours().toString(),           // 时
+        "M+": date.getMinutes().toString(),         // 分
+        "S+": date.getSeconds().toString()          // 秒
+    };
+    for (let k in opt) {
+        ret = new RegExp("(" + k + ")").exec(fmt);
+        if (ret) {
+            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+        };
+    };
+    return fmt;
+}
+//let date = new Date();
+////let time = dateFormat("YYYY-mm-dd HH:MM:SS", date);
+//console.log(time);
+
+
+
+//获取当前时间（年月日时分秒）
+function getNowDate() {
+    var nowDate = new Date;
+    var y = nowDate.getFullYear()
+    var m = nowDate.getMonth() + 1
+    m = m < 10 ? '0' + m : m
+    var d = nowDate.getDate()
+    d = d < 10 ? ('0' + d) : d
+    var hour = nowDate.getHours();
+    hour = hour < 10 ? '0' + hour : hour
+    var minute = nowDate.getMinutes();
+    minute = minute < 10 ? '0' + minute : minute
+    var second = nowDate.getSeconds();
+    second = second < 10 ? '0' + second : second
+    var curDate = y + '-' + m + '-' + d + ' ' + hour + ':' + minute + ':' + second;
+    return curDate;
+}
+
+(function ($) {
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            return decodeURI(r[2]); // decodeURI(r[2]); 解决参数是中文时的乱码问题
+
+        return null;
+    }
+
+
+
+    ////获取url中的参数
+    //function getUrlParam(name) {
+    //    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    //    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    //    if (r != null) return unescape(r[2]); return null; //返回参数值
+    //}
+})(jQuery);
 
 
 

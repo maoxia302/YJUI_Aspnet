@@ -28,6 +28,7 @@ namespace YJUI.Model
         private string _dygaishan;
         private string _cqfangan;
         private DateTime? _cqdate;
+        private string _isEnd;
         private string _lsjianhe;
         private string _lsdep;
         private DateTime? _lsdate;
@@ -276,6 +277,20 @@ namespace YJUI.Model
                 _DepCat = value;
             }
         }
+
+        public string IsEnd
+        {
+            get
+            {
+                return _isEnd;
+            }
+
+            set
+            {
+                _isEnd = value;
+            }
+        }
+
         #endregion Model
 
     }

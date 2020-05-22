@@ -31,10 +31,11 @@ namespace YJUI.UI.ashx_ui
                 string sqlWhere = " 1=1";
                 var bdate = context.Request.Params["bdate"];
                 var edate = context.Request.Params["edate"];
-                var isTiHuo = context.Request.Params["txt_word"];
+                var isTiHuo = context.Request.Params["isTiHuo"];
                 var ph= context.Request.Params["ph"];
                 var dhwl= context.Request.Params["dhwl"];
-                sqlWhere = NewMethod(sqlWhere, bdate, edate, isTiHuo,ph,dhwl);//查询条件
+                var tzr = context.Request.Params["tzr"];
+                sqlWhere = NewMethod(sqlWhere, bdate, edate, isTiHuo,ph,dhwl,tzr);//查询条件
                 int pageindex = int.Parse(context.Request["page"]);
                 int pagesize = int.Parse(context.Request.Params["rows"]);
                 string strjson = new BLL.chuyun().GetJsonChuYun(pagesize, pageindex, sqlWhere);
@@ -112,12 +113,16 @@ namespace YJUI.UI.ashx_ui
             else if (context.Request.Params["action"] == "daochu")
             {
                 string sqlWhere = " 1=1";
-                var bdate = context.Request.Params["bdate"];
-                var edate = context.Request.Params["edate"];
-                var isTiHuo = context.Request.Params["txt_word"];
-                var ph = context.Request.Params["ph"];
-                var dhwl = context.Request.Params["dhwl"];
-                sqlWhere = NewMethod(sqlWhere, bdate, edate, isTiHuo, ph, dhwl);//查询条件
+
+                string p = context.Request.Params["params"];
+                Dictionary<string, object> dic = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(p);
+                var bdate = dic["bdate"].ToString();
+                var edate = dic["edate"].ToString();
+                var isTiHuo = dic["isTiHuo"].ToString();
+                var ph = dic["ph"].ToString();
+                var dhwl = dic["dhwl"].ToString();
+                var tzr = dic["tzr"].ToString();
+                sqlWhere = NewMethod(sqlWhere, bdate, edate, isTiHuo, ph, dhwl,tzr);//查询条件
                 HSSFWorkbook workbook = new HSSFWorkbook();
                 ISheet sheet1 = workbook.CreateSheet("sheet1");
                 IDataReader reader = new BLL.chuyun().ChuYunToDataReader(sqlWhere);
@@ -162,7 +167,7 @@ namespace YJUI.UI.ashx_ui
 
 
         }
-        private static string NewMethod(string sqlWhere, string bdate, string edate, string isTiHuo,string ph,string dhwl)
+        private static string NewMethod(string sqlWhere, string bdate, string edate, string isTiHuo,string ph,string dhwl,string tzr)
         {
             if (!string.IsNullOrEmpty(bdate))
             {
@@ -192,6 +197,11 @@ namespace YJUI.UI.ashx_ui
             {
                 sqlWhere += string.Format("and dhwl like '%{0}%'", dhwl);
             }
+            if (!string.IsNullOrEmpty(tzr))
+            {
+                sqlWhere += string.Format("and tzr like '%{0}%'", tzr);
+            }
+
             return sqlWhere;
         }
 

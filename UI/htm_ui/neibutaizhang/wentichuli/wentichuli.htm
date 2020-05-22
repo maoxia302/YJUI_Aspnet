@@ -25,35 +25,139 @@
             pageSize: 10,
             pageList: [10, 20, 30, 40, 50],
             //冻结列
-            frozenColumns: [[{ "title": "反馈内容", "colspan": 9 }],
+            //冻结列
+            frozenColumns: [[{ "title": "反馈内容", "colspan": 11 }],
             [
                 { field: "ID", title: "编号", width: 50 },
+                { field: "DepCat", title: "部门分类", width: 50 },//
+
                 { field: "fkDate", title: "反馈时间", width: 70 },
                 { field: "fkPerson", title: "反馈人", width: 50 },
                 { field: "fkDep", title: "反馈部门", width: 50 },
-                { field: "wtDep", title: "问题归属部门", width: 120 },
-                { field: "fkArea", title: "反馈地区", width: 120 },
-                { field: "fkCustomer", title: "反馈客户", width: 120 },
-                { field: "fkItem", title: "所属项目", width: 120 },
-                { field: "fkDesc", title: "反馈描述", width: 200 }
+                { field: "wtDep", title: "问题归属部门", width: 50 },
+                { field: "fkArea", title: "反馈地区", width: 50 },
+                { field: "fkCustomer", title: "反馈客户", width: 80 },
+                { field: "fkItem", title: "所属项目", width: 80 },
+                { field: "fkDesc", title: "反馈描述", width: 200 },
+                {
+                    field: "fkPic", title: "图片", width: 50,//hidden:true,
+                    formatter: function (value, row, index) {
+                        var curHtml = '';
+                        if (!isEmpty(row.fkPic)) {
+                            curHtml = curHtml + '<a href="#" onclick="fileDetail(' + index + ')" >附件</a>';
+                        }
+                        return curHtml;
+                    }
+                }
             ]],
-            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 6 }, { title: "问题检核（问题登记后的30天内）", colspan: 3 }, { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 }, { title: "第三方检核", colspan: 3 }],
-                   [{ field: "dyDep", title: "领取部门", width: 70 },
-                   { field: "dyPerson", title: "第一责任人", width: 80 },
-                   { field: "dyDate", title: "接收问题时间", width: 100 },
-                   { field: "dyGaishan", title: "临时改善", width: 200 },
-                   { field: "cqFangan", title: "长期方案", width: 250 },
-                   { field: "cqDate", title: "改善时间", width: 70 },
-                   { field: "lsJianhe", title: "落时检核", width: 80 },
-                   { field: "lsDep", title: "问题领取部门经理", width: 60 },
-                   { field: "lsDate", title: "落时时间", width: 60 },
-                   { field: "myPingjia", title: "满意评价", width: 100 },
-                   { field: "myPerson", title: "满意人", width: 80 },
-                   { field: "myDate", title: "满意日期", width: 80 },
-                   { field: "dsJianhe", title: "第三方检核", width: 250 },
-                   { field: "dsPerson", title: "第三方检核人", width: 80 },
-                   { field: "dsDate", title: "第三方简核时间", width: 100 }
-                   ]],
+            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 7 },
+            { title: "问题检核（问题登记后的30天内）", colspan: 3 },
+            { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 },
+            { title: "第三方检核", colspan: 3 }],
+            [{ field: "dyDep", title: "领取部门", width: 70 },
+            { field: "dyPerson", title: "第一责任人", width: 80 },
+            { field: "dyDate", title: "接收问题时间", width: 100 },
+            { field: "dyGaishan", title: "临时改善", width: 100 },
+            { field: "cqFangan", title: "长期方案", width: 150 },
+            { field: "cqDate", title: "改善完成时间", width: 70 },
+            { field: "IsEnd", title: "完成情况", width: 70 },
+
+            { field: "lsJianhe", title: "落时检核", width: 80 },
+            { field: "lsDep", title: "问题领取部门经理", width: 60 },
+            { field: "lsDate", title: "落时时间", width: 60 },
+
+            { field: "myFirstDate", title: "满意评估最早日期", width: 100 },//
+            { field: "myPingjia", title: "验收评价内容", width: 100 },//
+            { field: "myPingjia", title: "验收打分", width: 100 },
+            { field: "myPerson", title: "验收评价人", width: 80 },
+            { field: "myDate", title: "验收时间", width: 80 },//自动默认时间
+
+            //{ field: "myPingjia", title: "满意评价", width: 100 },
+            //{ field: "myPerson", title: "验收评价人", width: 80 },
+            //{ field: "myDate", title: "满意日期", width: 80 },
+            //{ field: "dsJianhe", title: "第三方检核", width: 250 },
+            //{ field: "dsPerson", title: "第三方检核人", width: 80 },
+            //    { field: "dsDate", title: "第三方简核时间", width: 100 },
+            { field: "dsJianhe", title: "流程监控", width: 250 },
+            { field: "dsPerson", title: "监控人", width: 80 },
+            { field: "dsDate", title: "填写时间", width: 100 },
+            {
+                field: "a", title: "问题领取超时", width: 100,
+                formatter: function (value, row, index) {
+                    if (!isEmpty(row.dyDate)) {
+                        if (GetDateDiff(row.fkDate, row.dyDate, "day") < 3) {
+                            return "0";
+                        } else {
+                            return GetDateDiff(row.fkDate, row.dyDate, "day") - 3;
+                        }
+                    } else {
+                        return "0";
+                    }
+                }
+            },
+
+            {
+                field: "b", title: "完成情况超时", width: 100,
+                formatter: function (value, row, index) {
+                    // DateAdd("d ", 3, new Date(row.fkDate));
+                    //var currtime = new Date().Format("yyyyMMddHHmmss");
+                    //console.log(endDate);
+                    //console.log(DateAdd("d ", 3, new Date()));
+                    // GetDateDiff(row.fkDate, row.dyDate, "day")
+                    if (!isEmpty(row.dyDate)) {
+                        if (GetDateDiff(row.fkDate, row.dyDate, "day") <= 7) {
+                            return "0";
+                        } else {
+                            return GetDateDiff(row.fkDate, row.dyDate, "day") - 7;
+                        }
+                    } else {
+                        return "0";
+                    }
+                }
+
+            },
+
+            {
+                field: "c", title: "长期方案超时", width: 100,
+                formatter: function (value, row, index) {
+                    // DateAdd("d ", 3, new Date(row.fkDate));
+                    //var currtime = new Date().Format("yyyyMMddHHmmss");
+                    //console.log(endDate);
+                    //console.log(DateAdd("d ", 3, new Date()));
+                    // GetDateDiff(row.fkDate, row.dyDate, "day")
+                    if (!isEmpty(row.dyDate)) {
+                        if (GetDateDiff(row.fkDate, row.dyDate, "day") < 3) {
+                            return "0";
+                        } else {
+                            return GetDateDiff(row.fkDate, row.dyDate, "day") - 3;
+                        }
+                    } else {
+                        return "0";
+                    }
+                }
+            },
+            {
+                field: "d", title: "评价超时", width: 100,
+                formatter: function (value, row, index) {
+                    // DateAdd("d ", 3, new Date(row.fkDate));
+                    //var currtime = new Date().Format("yyyyMMddHHmmss");
+                    //console.log(endDate);
+                    //console.log(DateAdd("d ", 3, new Date()));
+                    // GetDateDiff(row.fkDate, row.dyDate, "day")
+                    if (!isEmpty(row.dyDate)) {
+                        if (GetDateDiff(row.fkDate, row.dyDate, "day") < 3) {
+                            return "0";
+                        } else {
+                            return GetDateDiff(row.fkDate, row.dyDate, "day") - 3;
+                        }
+                    } else {
+                        return "0";
+                    }
+                }
+
+
+            },
+            ]],
             toolbar: [
                 {
                     text: '问题处理',
@@ -62,6 +166,33 @@
                 }]
         });
     })
+
+
+
+    //////////////////////附件预览
+    function fileDetail(index) {
+        //var row = $("#dg_neibutaizhang").datagrid('getData').rows[index];
+        $("<div/>").dialog({
+            href: "htm_ui/neibutaizhang/neibutaizhang_file.html",
+            title: "附件预览",
+            height: 600,
+            width: 800,
+            maximized: true,
+            modal: true,
+            iconCls: "icon-add",
+            //queryParams: { fkPic: row.fkPic },
+            buttons: [
+                {
+                    text: '关闭',
+                    iconCls: 'icon-cancel',
+                    handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+                }
+            ],
+            onClose: function () {
+                $(this).dialog('destroy');
+            }
+        });
+    }
 
     //////////////////////添加内部台账
 
@@ -141,16 +272,13 @@
     function toexcel() {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
         var params = $("#f_wtcl" + t).serializeObject();
-        //console.log(params);
-        //return;
-        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&bdate=" + params.bdate + "&edate=" + params.edate + "&txt_dep=" + params.txt_dep + "&txt_search=" + params.txt_search + "&fkItem=" + params.fkItem);
+        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&params=" + JSON.stringify(params));
 
     }
 
     $("#btn_search"+t).click(function () {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
         var params = $("#f_wtcl" + t).serializeObject();
-        console.log(params);
         $('#dg_wentichuli').datagrid('load', params);
     });
 
@@ -166,12 +294,29 @@
     });
 
 
-    $('#fkItem'+t).combobox({
+    $('#DepCat' + t).combobox({
         editable: false,
-        url: '../ashx_ui/ui_guzhang.ashx?action=getItem1',
+        url: '../ashx_ui/ui_guzhang.ashx?action=getDepCat',
         valueField: 'guzhang',
-        textField: 'guzhang'
+        textField: 'guzhang',
+        onSelect: function (record) {
+            var typeTxt = 'GetDepItem';
+            if (record.guzhang == "发动机") {
+                typeTxt = 'getItem1';
+            }
+            refreshCombox(typeTxt);
+        }
+
     });
+
+    function refreshCombox(typeTxt) {
+        $('#fkItem' + t).combobox({
+            disabled: false,
+            url: "../ashx_ui/ui_guzhang.ashx?action=" + typeTxt,
+            valueField: 'guzhang',
+            textField: 'guzhang',
+        });
+    }
 
 
 </script>
@@ -191,6 +336,7 @@
                             <!--<input type="checkbox" id="chk" />-->
                             关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
                             反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                            部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 18px;" />
                             问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
                         </td>
                         <td>

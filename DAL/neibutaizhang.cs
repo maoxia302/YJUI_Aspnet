@@ -85,6 +85,7 @@ namespace YJUI.DAL
             strSql.Append("dyDate=@dyDate,");
             strSql.Append("dyGaishan=@dyGaishan,");
             strSql.Append("cqFangan=@cqFangan,");
+            strSql.Append("IsEnd=@IsEnd,");
             strSql.Append("cqDate=@cqDate");
             strSql.Append(" where ID=@ID");
             SqlParameter[] parameters = {
@@ -93,15 +94,17 @@ namespace YJUI.DAL
 					new SqlParameter("@dyDate", SqlDbType.DateTime),
 					new SqlParameter("@dyGaishan", SqlDbType.NVarChar,200),
 					new SqlParameter("@cqFangan", SqlDbType.NVarChar,200),
-					new SqlParameter("@cqDate", SqlDbType.DateTime),
-					new SqlParameter("@ID", SqlDbType.Int,4)};
+                    new SqlParameter("@IsEnd", SqlDbType.NVarChar,50),
+                    new SqlParameter("@cqDate", SqlDbType.DateTime),
+                    new SqlParameter("@ID", SqlDbType.Int,4)};
             parameters[0].Value = model.dyDep;
             parameters[1].Value = model.dyPerson;
             parameters[2].Value = model.dyDate;
             parameters[3].Value = model.dyGaishan;
             parameters[4].Value = model.cqFangan;
-            parameters[5].Value = model.cqDate;
-            parameters[6].Value = model.ID;
+            parameters[5].Value = model.IsEnd;
+            parameters[6].Value = model.cqDate;
+            parameters[7].Value = model.ID;
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
             {

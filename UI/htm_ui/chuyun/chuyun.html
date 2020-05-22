@@ -95,9 +95,9 @@
             <form id="ff" method="POST">
                 <ul class="chuyun_table">
                     <li style="width:365px">
-                        通知时间<input type="text" class="Wdate bdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
+                        通知时间<input type="text" name="bdate"  class="Wdate bdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
                         至
-                        <input type="text" class="Wdate edate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
+                        <input type="text" name="edate"  class="Wdate edate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
                     </li>
                     <li>
                         是否提货
@@ -116,12 +116,13 @@
     			                                                value: '否'
     		                                                }]" />
                     </li>
-                    <li>物流票号<input type="text" class="ph" autocomplete="off" /></li>
-                    <li>到货物流<input type="text" class="dhwl" autocomplete="off" /></li>
+                    <li>通知人<input type="text" name="tzr" class="tzr"  autocomplete="off" /></li>
+                    <li>物流票号<input type="text" name="ph" class="ph" autocomplete="off" /></li>
+                    <li>到货物流<input type="text" name="dhwl" class="dhwl" autocomplete="off" /></li>
                     <li>
                         <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                            onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                                                            onclick="toexcel();">导出</a>
+                           onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                                                         onclick="toexcel();">导出</a>
                     </li>
 
 
@@ -399,9 +400,10 @@
             queryParams: {
                 bdate: $("#ff" + t).find('.bdate').val(),
                 edate: $("#ff" + t).find('.edate').val(),
-                txt_word: $("#ff" + t).find('.isTiHuo').combobox('getValue'),//单选时
+                isTiHuo: $("#ff" + t).find('.isTiHuo').combobox('getValue'),//单选时
                 ph: $("#ff" + t).find('.ph').val(),
                 dhwl: $("#ff" + t).find('.dhwl').val(),
+                tzr: $("#ff" + t).find('.tzr').val(),
             }
         });
     }
@@ -479,12 +481,13 @@
     }
 
     function toexcel() {
-        var bdate = $("#ff" + t).find('.bdate').val();
-        var edate = $("#ff" + t).find('.edate').val();
-        var txt_word = $("#ff" + t).find('.isTiHuo').combobox('getValue');
-        var ph = $("#ff" + t).find('.ph').val();
-        var dhwl = $("#ff" + t).find('.dhwl').val();
-        window.open("../ashx_ui/chuyun.ashx?action=daochu&bdate=" + bdate + "&edate=" + edate + "&txt_word=" + txt_word + "&ph=" + ph + "&dhwl=" + dhwl);
+        //var bdate = $("#ff" + t).find('.bdate').val();
+        //var edate = $("#ff" + t).find('.edate').val();
+        //var txt_word = $("#ff" + t).find('.isTiHuo').combobox('getValue');
+        //var ph = $("#ff" + t).find('.ph').val();
+        //var dhwl = $("#ff" + t).find('.dhwl').val();
+        var params = $("#ff" + t).serializeObject();
+        window.open("../ashx_ui/chuyun.ashx?action=daochu&params=" + JSON.stringify(params));//用JSON格式进行传参
     }
     //tab切换动态获取t
     function tabDyn() {

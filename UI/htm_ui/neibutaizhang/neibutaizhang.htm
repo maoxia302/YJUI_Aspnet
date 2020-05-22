@@ -1,4 +1,7 @@
-﻿<script type="text/javascript">
+﻿<style type="text/css">
+
+</style>
+<script type="text/javascript">
     var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
     $(function () {
 
@@ -10,6 +13,7 @@
         $("#edate").attr('id', 'edate' + t);
         $("#txt_dep").attr('id', 'txt_dep' + t);
         $("#f_wtcl").attr('id', 'f_wtcl' + t);
+        $("#DepCat").attr('id', 'DepCat' + t);
         $("#fkItem").attr('id', 'fkItem' + t);
         $("#txt_search").attr('id', 'txt_search' + t);
         $("#txt_export").attr('id', 'txt_export' + t);
@@ -27,51 +31,51 @@
             pageSize: 10,
             pageList: [10, 20, 30, 40, 50],
             //冻结列
-            frozenColumns: [[{ "title": "反馈内容", "colspan": 9 }],
+            frozenColumns: [[{ "title": "反馈内容", "colspan": 11 }],
             [
                 { field: "ID", title: "编号", width: 50 },
-                { field: "DepCat", title: "部门分类", width: 50 },//
+                { field: "DepCat", title: "部门<br />分类", width: 50, rowspan: 2 },//
 
                 { field: "fkDate", title: "反馈时间", width: 70 },
                 { field: "fkPerson", title: "反馈人", width: 50 },
                 { field: "fkDep", title: "反馈部门", width: 50 },
-                { field: "wtDep", title: "问题归属部门", width: 120 },
-                { field: "fkArea", title: "反馈地区", width: 120 },
-                {field: "fkCustomer", title: "反馈客户", width: 120},
+                { field: "wtDep", title: "问题归属部门", width: 50 },
+                { field: "fkArea", title: "反馈地区", width: 50 },
+                { field: "fkCustomer", title: "反馈客户", width: 80 },
+                { field: "fkItem", title: "所属项目", width: 80 },
+                { field: "fkDesc", title: "反馈描述", width: 200 },
                 {
-                    field: "fkItem", title: "所属项目", width: 120,
+                    field: "fkPic", title: "图片", width: 50,//hidden:true,
                     formatter: function (value, row, index) {
-                        var curHtml = value;
-                        if (row.fkPic != null) {
-                            curHtml = curHtml + '< a href="#" onclick="fileDetail(' + index + ')" class="easyui-linkbutton" data-options="iconCls:\'icon - search' + '\'" style="display:inline-block;padding:2px 12px;background-color:#efefef;border:1px solid #ddd;border-radius:12px;-webkit-border-radius:12px;margin-left:4px;">查看附件</ a>';
+                        var curHtml = '';
+                        if (!isEmpty(row.fkPic)) {
+                            curHtml = curHtml + '<a href="#" onclick="fileDetail(' + index + ')" >附件</a>';
                         }
                         return curHtml;
                     }
-                },
-                { field: "fkDesc", title: "反馈描述", width: 200 },
-                { field: "fkPic", title: "图片", width: 200 }
+                }
             ]],
-            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 6 },
+            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 7},
             { title: "问题检核（问题登记后的30天内）", colspan: 3 },
             { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 },
             { title: "第三方检核", colspan: 3 }],
             [{ field: "dyDep", title: "领取部门", width: 70 },
             { field: "dyPerson", title: "第一责任人", width: 80 },
             { field: "dyDate", title: "接收问题时间", width: 100 },
-            { field: "dyGaishan", title: "临时改善", width: 200 },
-            { field: "cqFangan", title: "长期方案", width: 250 },
+            { field: "dyGaishan", title: "临时改善", width: 100 },
+            { field: "cqFangan", title: "长期方案", width: 150},
             { field: "cqDate", title: "改善完成时间", width: 70 },
-
+                { field: "IsEnd", title: "完成情况", width: 70 },
 
             { field: "lsJianhe", title: "落时检核", width: 80 },
             { field: "lsDep", title: "问题领取部门经理", width: 60 },
             { field: "lsDate", title: "落时时间", width: 60 },
 
-                { field: "myFirstDate", title: "满意评估最早日期", width: 100 },//
-                { field: "myPingjia", title: "验收评价内容", width: 100 },//
-                { field: "myPingjia", title: "验收打分", width: 100 },
-                { field: "myPerson", title: "验收评价人", width: 80 },
-                { field: "myDate", title: "验收时间", width: 80 },//自动默认时间
+            { field: "myFirstDate", title: "满意评估最早日期", width: 100 },//
+            { field: "myPingjia", title: "验收评价内容", width: 100 },//
+            { field: "myPingjia", title: "验收打分", width: 100 },
+            { field: "myPerson", title: "验收评价人", width: 80 },
+            { field: "myDate", title: "验收时间", width: 80 },//自动默认时间
 
             //{ field: "myPingjia", title: "满意评价", width: 100 },
             //{ field: "myPerson", title: "验收评价人", width: 80 },
@@ -79,16 +83,85 @@
             //{ field: "dsJianhe", title: "第三方检核", width: 250 },
             //{ field: "dsPerson", title: "第三方检核人", width: 80 },
             //    { field: "dsDate", title: "第三方简核时间", width: 100 },
-                { field: "dsJianhe", title: "流程监控", width: 250 },
-                { field: "dsPerson", title: "监控人", width: 80 },
-                { field: "dsDate", title: "填写时间", width: 100 },
+            { field: "dsJianhe", title: "流程监控", width: 250 },
+            { field: "dsPerson", title: "监控人", width: 80 },
+            { field: "dsDate", title: "填写时间", width: 100 },
+            {
+                field: "a", title: "问题领取超时", width: 100,
+                formatter: function (value, row, index) {
+                    if (!isEmpty(row.dyDate)) {
+                        if (GetDateDiff(row.fkDate, row.dyDate, "day") < 3) {
+                            return "0";
+                        } else {
+                            return GetDateDiff(row.fkDate, row.dyDate, "day") - 3;
+                        }
+                    } else {
+                        return "0";
+                    }
+                }
+            },
+
+            {
+                field: "b", title: "完成情况超时", width: 100,
+                formatter: function (value, row, index) {
+                    // DateAdd("d ", 3, new Date(row.fkDate));
+                    //var currtime = new Date().Format("yyyyMMddHHmmss");
+                    //console.log(endDate);
+                    //console.log(DateAdd("d ", 3, new Date()));
+                    // GetDateDiff(row.fkDate, row.dyDate, "day")
+                    if (!isEmpty(row.dyDate)) {
+                        if (GetDateDiff(row.fkDate, row.dyDate, "day") <= 7) {
+                            return "0";
+                        } else {
+                            return GetDateDiff(row.fkDate, row.dyDate, "day") - 7;
+                        }
+                    } else {
+                        return "0";
+                    }
+                }
+
+            },
+
+            {
+                field: "c", title: "长期方案超时", width: 100,
+                formatter: function (value, row, index) {
+                    // DateAdd("d ", 3, new Date(row.fkDate));
+                    //var currtime = new Date().Format("yyyyMMddHHmmss");
+                    //console.log(endDate);
+                    //console.log(DateAdd("d ", 3, new Date()));
+                    // GetDateDiff(row.fkDate, row.dyDate, "day")
+                    if (!isEmpty(row.dyDate)) {
+                        if (GetDateDiff(row.fkDate, row.dyDate, "day") < 3) {
+                            return "0";
+                        } else {
+                            return GetDateDiff(row.fkDate, row.dyDate, "day") - 3;
+                        }
+                    } else {
+                        return "0";
+                    }
+                }
+            },
+            {
+                field: "d", title: "评价超时", width: 100,
+                formatter: function (value, row, index) {
+                    // DateAdd("d ", 3, new Date(row.fkDate));
+                    //var currtime = new Date().Format("yyyyMMddHHmmss");
+                    //console.log(endDate);
+                    //console.log(DateAdd("d ", 3, new Date()));
+                    // GetDateDiff(row.fkDate, row.dyDate, "day")
+                    if (!isEmpty(row.dyDate)) {
+                        if (GetDateDiff(row.fkDate, row.dyDate, "day") < 3) {
+                            return "0";
+                        } else {
+                            return GetDateDiff(row.fkDate, row.dyDate, "day") - 3;
+                        }
+                    } else {
+                        return "0";
+                    }
+                }
 
 
-
-                { field: "dsDate", title: "问题领取超时", width: 100 },
-                { field: "dsDate", title: "完成情况超时", width: 100 },
-                { field: "dsDate", title: "长期方案超时", width: 100 },
-                { field: "dsDate", title: "评价超时", width: 100 },     
+            },
             ]],
             toolbar: [{
                 text: '查询',
@@ -100,17 +173,18 @@
                 handler: add_neibutaizhang
             }]
         });
-        
+
     })
 
     //////////////////////附件预览
     function fileDetail(index) {
-        //var row = $("#dg_neibutaizhang").datagrid('getData').rows[index];
+        var row = $("#dg_neibutaizhang").datagrid('getData').rows[index];
         $("<div/>").dialog({
-            href: "htm_ui/neibutaizhang/neibutaizhang_file.html",
+            href: "htm_ui/neibutaizhang/neibutaizhang_file.html?par=2",
             title: "附件预览",
             height: 600,
             width: 800,
+            maximized: true,
             modal: true,
             iconCls: "icon-add",
             //queryParams: { fkPic: row.fkPic },
@@ -143,7 +217,7 @@
                     text: '确定添加',
                     iconCls: 'icon-add',
                     handler: function () {
-                        
+
                         $("#f_neibutaizhang_add").find(".val-erro").remove();
                         if ($("#fkArea").val() == '') {
                             $("#fkArea").focus();
@@ -203,9 +277,9 @@
 
     function toexcel() {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
-        var params = $("#ff"+t).serializeObject();
-        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&bdate=" + params.bdate + "&edate=" + params.edate + "&txt_dep=" + params.txt_dep + "&txt_search=" + params.txt_search + "&fkItem=" + params.fkItem);
-
+        var params = $("#ff" + t).serializeObject();
+        // window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&bdate=" + params.bdate + "&edate=" + params.edate + "&txt_dep=" + params.txt_dep + "&txt_search=" + params.txt_search + "&fkItem=" + params.fkItem);
+        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&params=" + JSON.stringify(params));
 
     }
     $("#btn_search" + t).click(function () {
@@ -216,39 +290,77 @@
     });
 
 
-    $("#btn_reset").click(function () {
-        $('#type' ).combobox('clear');
-        $('#bdate' ).val("");
-        $('#edate' ).val("");
-        $('#txt_dep' ).val("");
-        $('#txt_search').val("");
-        $('#fkItem').combobox('clear');
+
+    $("#btn_reset" + t).click(function () {
+        var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
+        $('#type' + t).combobox('clear');
+        $('#bdate' + t).val("");
+        $('#edate' + t).val("");
+        $('#txt_dep' + t).val("");
+        $('#txt_search' + t).val("");
+        $('#fkItem' + t).combobox('clear');
     });
-    ///
-    $('#fkItem'+t).combobox({
+
+
+    $('#DepCat' + t).combobox({
         editable: false,
-        url: '../ashx_ui/ui_guzhang.ashx?action=getItem1',
+        url: '../ashx_ui/ui_guzhang.ashx?action=getDepCat',
         valueField: 'guzhang',
-        textField: 'guzhang'
+        textField: 'guzhang',
+        onSelect: function (record) {
+            var typeTxt = 'GetDepItem';
+            if (record.guzhang == "发动机") {
+                typeTxt = 'getItem1';
+            }
+            refreshCombox(typeTxt);
+        }
+
     });
+
+    function refreshCombox(typeTxt) {
+        $('#fkItem' + t).combobox({
+            disabled: false,
+            url: "../ashx_ui/ui_guzhang.ashx?action=" + typeTxt,
+            valueField: 'guzhang',
+            textField: 'guzhang',
+        });
+    }
 </script>
 <div class="easyui-layout" data-options="fit : true,border : false">
     <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
          style="height: 130px; background: #f4f4f4;">
         <div>
             <form id="ff" method="POST">
-                <table>
+                <div>
+                    <p>
+                        反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                        至
+                        <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                        关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
+                        反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                    </p>
+                    <p>
+                        部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 18px;" />
+                        问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
+                        <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+                        <a id="txt_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                           onclick="toexcel();">导出</a>
+                        <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
+                    </p>
+                </div>
+                <!--<table>
                     <tr>
                         <td>
                             反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
                             至
                             <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
                         </td>
-                        <td>
+                        <td>-->
                             <!--<input type="checkbox" id="chk" />-->
-                            关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
+                            <!--关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
                             反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
-                            问题类型:<input type="text"  class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
+                            部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 18px;" />
+                            问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
                         </td>
                         <td>
                             <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
@@ -256,7 +368,7 @@
                                onclick="toexcel();">导出</a>
                             <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
                     </tr>
-                </table>
+                </table>-->
             </form>
         </div>
     </div>
