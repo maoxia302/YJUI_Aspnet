@@ -28,11 +28,21 @@
 
 <script>
     $(function () {
-        var start = $.getUrlParam("par");
-        console.log(start);
-
-
-        var fkPic = $("#dg_neibutaizhang").datagrid('getSelected').fkPic;
+        
+        var tab = $('#tabs').tabs('getSelected');
+        var tabTitle = tab.panel('options').tab[0];
+        var fkPic = '';
+        if (tabTitle.innerText == '添加内部台账') {
+            fkPic = $("#dg_neibutaizhang").datagrid('getSelected').fkPic;
+        } else if (tabTitle.innerText == '问题处理') {
+            fkPic = $("#dg_wentichuli").datagrid('getSelected').fkPic;
+        } else if (tabTitle.innerText == '落实检验') {
+            fkPic = $("#dg_luoshijianhe").datagrid('getSelected').fkPic;
+        } else if (tabTitle.innerText == '验收评价') {
+            fkPic = $("#dg_manyidupingjia").datagrid('getSelected').fkPic;
+        } else if (tabTitle.innerText == '流程监控') {
+            fkPic = $("#dg_disanfangjianhe").datagrid('getSelected').fkPic;
+        }
         var picArr = fkPic.split(",");
         $("#nbtzFile").empty();
         for (var i = 0; i < picArr.length - 1; i++) {
