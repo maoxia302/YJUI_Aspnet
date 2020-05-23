@@ -61,6 +61,10 @@
                 type: "POST",
                 //data: {action:'login',uname:uname,pwd:pwd},
                 data: $("#f_login").serialize(),
+                beforeSend: function (xmlHttp) {
+                    xmlHttp.setRequestHeader("If-Modified-Since", "0");
+                    xmlHttp.setRequestHeader("Cache-Control", "no-cache");
+                },
                 success: function (result) {
                     if (result == "ok") {
                         window.location.href = "index.htm";
