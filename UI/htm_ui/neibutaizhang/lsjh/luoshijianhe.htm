@@ -8,9 +8,10 @@
         $("#edate").attr('id', 'edate' + t);
         $("#txt_dep").attr('id', 'txt_dep' + t);
         $("#txt_search").attr('id', 'txt_search' + t);
-        $("#txt_search").attr('id', 'txt_search' + t);
         $("#fkItem").attr('id', 'fkItem' + t);
+        $("#DepCat").attr('id', 'DepCat' + t);
         $("#btn_reset").attr('id', 'btn_reset' + t);
+
 
 
         $("#dg_luoshijianhe").datagrid({
@@ -295,6 +296,7 @@
         $('#txt_dep' + t).val("");
         $('#txt_search'+t).val("");
         $('#fkItem' + t).combobox('clear');
+        $('#DepCat' + t).combobox('clear');
     });
 
     $('#fkItem'+t).combobox({
@@ -304,12 +306,36 @@
         valueField: 'guzhang',
         textField: 'guzhang'
     });
-
-    $("#btn_export" + t).click(function () {
+    function toexcel() {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
         var params = $("#ff" + t).serializeObject();
-        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&bdate=" + params.bdate + "&edate=" + params.edate + "&txt_dep=" + params.txt_dep + "&txt_search=" + params.txt_search + "&fkItem=" + params.fkItem);
+        window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&params=" + JSON.stringify(params));
+
+    }
+
+    $('#DepCat' + t).combobox({
+        editable: false,
+        url: '../ashx_ui/ui_guzhang.ashx?action=getDepCat',
+        valueField: 'guzhang',
+        textField: 'guzhang',
+        onSelect: function (record) {
+            var typeTxt = 'GetDepItem';
+            if (record.guzhang == "发动机") {
+                typeTxt = 'getItem1';
+            }
+            refreshCombox(typeTxt);
+        }
+
     });
+
+    function refreshCombox(typeTxt) {
+        $('#fkItem' + t).combobox({
+            disabled: false,
+            url: "../ashx_ui/ui_guzhang.ashx?action=" + typeTxt,
+            valueField: 'guzhang',
+            textField: 'guzhang',
+        });
+    }
 
 
 </script>
@@ -318,25 +344,23 @@
         style="height: 130px; background: #f4f4f4;">
         <div>
             <form id="ff" method="POST">
-                <table>
-                    <tr>
-                        <td>
-                            反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
-                            至
-                            <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
-                        </td>
-                        <td>
-                            <!--<input type="checkbox" id="chk" />-->
-                            关键字:<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
-                            反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
-                            问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
-                        </td>
-                        <td>
-                            <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
-                            <a id="btn_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">导出</a>
-                            <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
-                    </tr>
-                </table>
+                <div>
+                    <p>
+                        反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                        至
+                        <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                        关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
+                        反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                    </p>
+                    <p>
+                        部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 25px;" />
+                        问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 25px;" />
+                        <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+                        <a id="txt_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                           onclick="toexcel();">导出</a>
+                        <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
+                    </p>
+                </div>
             </form>
         </div>
     </div>

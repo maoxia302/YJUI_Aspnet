@@ -1,7 +1,6 @@
 ﻿<script type="text/javascript">
     var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
     $(function () {
-        $("#btn_search").attr('id', 'btn_search' + t);
         $("#f_wtcl").attr('id', 'f_wtcl' + t);
         $("#type").attr('id', 'type' + t);
         $("#bdate").attr('id', 'bdate' + t);
@@ -9,8 +8,10 @@
         $("#txt_dep").attr('id', 'txt_dep' + t);
         $("#f_wtcl").attr('id', 'f_wtcl' + t);
         $("#fkItem").attr('id', 'fkItem' + t);
-        $("#txt_search").attr('id', 'txt_search' + t);
+        $("#DepCat").attr('id', 'DepCat' + t);
+        $("#btn_search").attr('id', 'btn_search' + t);
         $("#btn_reset").attr('id', 'btn_reset' + t);
+        $("#ff").attr('id', 'ff' + t);
       
 
         $("#dg_wentichuli").datagrid({
@@ -269,16 +270,17 @@
             }
         });
     }
+
     function toexcel() {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
-        var params = $("#f_wtcl" + t).serializeObject();
+        var params = $("#ff" + t).serializeObject();
         window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&params=" + JSON.stringify(params));
 
     }
 
     $("#btn_search"+t).click(function () {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
-        var params = $("#f_wtcl" + t).serializeObject();
+        var params = $("#ff" + t).serializeObject();
         $('#dg_wentichuli').datagrid('load', params);
     });
 
@@ -324,28 +326,24 @@
     <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
          style="height: 100px; background: #f4f4f4;">
         <div>
-            <form id="f_wtcl" method="POST">
-                <table>
-                    <tr>
-                        <td>
-                            反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
-                            至
-                            <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
-                        </td>
-                        <td>
-                            <!--<input type="checkbox" id="chk" />-->
-                            关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
-                            反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
-                            部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 18px;" />
-                            问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
-                        </td>
-                        <td>
-                            <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
-                            <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                               onclick="toexcel();">导出</a>
-                            <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
-                    </tr>
-                </table>
+            <form id="ff" method="POST">
+                <div>
+                    <p>
+                        反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                        至
+                        <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                        关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
+                        反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                    </p>
+                    <p>
+                        部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 18px;" />
+                        问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
+                        <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+                        <a id="txt_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                           onclick="toexcel();">导出</a>
+                        <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
+                    </p>
+                </div>
             </form>
         </div>
     </div>

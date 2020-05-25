@@ -282,6 +282,7 @@
         window.open("../ashx_ui/ui_neibutaizhang.ashx?action=daochu&params=" + JSON.stringify(params));
 
     }
+
     $("#btn_search" + t).click(function () {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
         var params = $("#ff" + t).serializeObject();
@@ -340,35 +341,14 @@
                         反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
                     </p>
                     <p>
-                        部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 18px;" />
-                        问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
+                        部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 25px;" />
+                        问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 25px;" />
                         <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
                         <a id="txt_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
                            onclick="toexcel();">导出</a>
                         <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
                     </p>
                 </div>
-                <!--<table>
-                    <tr>
-                        <td>
-                            反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
-                            至
-                            <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
-                        </td>
-                        <td>-->
-                            <!--<input type="checkbox" id="chk" />-->
-                            <!--关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
-                            反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
-                            部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 18px;" />
-                            问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
-                        </td>
-                        <td>
-                            <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
-                            <a id="txt_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
-                               onclick="toexcel();">导出</a>
-                            <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btn_reset">重置</a>
-                    </tr>
-                </table>-->
             </form>
         </div>
     </div>
