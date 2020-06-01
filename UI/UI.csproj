@@ -145,10 +145,6 @@
     <Content Include="htm_ui\neibutaizhang\mydpj\manyidupingjia_add.htm" />
     <Content Include="htm_ui\neibutaizhang\neibutaizhang.htm" />
     <Content Include="htm_ui\neibutaizhang\neibutaizhang_add.htm" />
-    <Content Include="htm_ui\neibutaizhang\neibutaizhang_file - 复制%282%29.html" />
-    <Content Include="htm_ui\neibutaizhang\neibutaizhang_file - 复制%283%29.html" />
-    <Content Include="htm_ui\neibutaizhang\neibutaizhang_file - 复制%284%29.html" />
-    <Content Include="htm_ui\neibutaizhang\neibutaizhang_file - 复制%285%29.html" />
     <Content Include="htm_ui\neibutaizhang\luoshijianhe_file.html" />
     <Content Include="htm_ui\neibutaizhang\neibutaizhang_file.html" />
     <Content Include="htm_ui\neibutaizhang\wentichuli\wentichuli_add.htm" />

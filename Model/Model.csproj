@@ -74,6 +74,7 @@
     <Compile Include="PURTG.cs" />
     <Compile Include="PURTH.cs" />
     <Compile Include="renkuan.cs" />
+    <Compile Include="RubMao.cs" />
     <Compile Include="ui_shejitaizhang.cs" />
     <Compile Include="shiwu.cs" />
     <Compile Include="TUJI.cs" />
