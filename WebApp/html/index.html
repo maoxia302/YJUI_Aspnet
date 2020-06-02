@@ -21,7 +21,7 @@
                 </li>
                 <li>
                     <label>结束时间</label>
-                    <input type="text" placeholder="请选择" readonly="readonly" id="end"  name="end"/>
+                    <input type="text" placeholder="请选择" readonly="readonly" id="end" name="end" />
                 </li>
                 <li>
                     <label>反馈人</label>
@@ -30,6 +30,15 @@
                 <li>
                     <label>问题类型</label>
                     <select id="fk_type" name="fk_type"></select>
+                </li>
+                <li>
+                    <label>上传图片</label>
+                    <div class="index_upload clearfix">
+                        <div class="upload_btn">
+                            <input type="file" accept="image/*;capture=camera">
+                            <span class="iconfont">&#xe654;</span>
+                        </div>
+                    </div>
                 </li>
             </ul>
             <input type="button" value="查询" class="com_btn searchBtn" id="search" style="margin-bottom:5%;" />
