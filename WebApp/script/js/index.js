@@ -14,21 +14,26 @@ $("#start,#end").mobiscroll(optDate);
 if (isEmpty(localStorage.getItem("params")))  {
     window.location.href = "../login.html";
 }
+var imgArr = [];//存放上传图片
 $(function () {
     getItem();
     //点击”+“号，文件上传前
     $(document).on('change', '.upload_btn input', function () {
-        var file = this.files[0];
-        var r = new FileReader();
-        r.readAsDataURL(file);
-        $(r).load(function () {
-            $(".upload_btn").before('<span><img src="' + this.result + '" /><i class="iconfont" onclick="deletImg($(this))">&#xe60f;</i></span>');
-            $(".index_upload>span").each(function () {
-                if (parseInt($(this).index()+1) % 3 == 0 && parseInt($(this).index()+1) != 0) {
-                    $(this).css("margin-right", 0);
-                }
+        var file = this.files;
+        imgArr = [];
+        for (var i = 0; i < file.length; i++) {
+            var r = new FileReader();
+            r.readAsDataURL(file[i]);
+            $(r).load(function () {
+                imgArr.push(this.result);
+                $(".upload_btn").before('<span><img src="' + this.result + '" /><i class="iconfont" onclick="deletImg($(this))">&#xe60f;</i></span>');
+                $(".index_upload>span").each(function () {
+                    if (parseInt($(this).index() + 1) % 3 == 0 && parseInt($(this).index() + 1) != 0) {
+                        $(this).css("margin-right", 0);
+                    }
+                });
             });
-        });
+        }
         
     });
 });
