@@ -52,7 +52,9 @@ namespace YJUI.UI.ashx_ui
                     model.fkDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                     string par = context.Request.Params["params"];//local
                     JObject obj = JObject.Parse(par);//解析成其他；
+
                     var username = obj.Value<string>("userName");
+
                     var pwd = obj.Value<string>("pwd");
                     Model.ui_user Loginer = new BLL.ui_user().Login(username, pwd);//登录验证
                     model.fkPerson = Loginer.xingming;

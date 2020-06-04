@@ -11,7 +11,6 @@ namespace YJUI.UI.ashx_ui
     /// </summary>
     public class getsession : IHttpHandler, IRequiresSessionState
     {
-
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";

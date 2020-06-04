@@ -75,6 +75,12 @@
     .ph, .dhwl {
         padding:2px 0;
     }
+    .chuyun_table .Wdate, .chuyun_table .easyui-textbox {
+        padding: 0;
+        line-height: 24px;
+        height: 20px;
+        border: 1px solid #95B8E7;
+    }
 </style>
 
 <div id="tb1" class="tbBoor">
@@ -95,7 +101,7 @@
             <form id="ff" method="POST">
                 <ul class="chuyun_table">
                     <li style="width:365px">
-                        通知时间<input type="text" name="bdate"  class="Wdate bdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
+                        通知时间<input type="text" id="bdate" name="bdate"  class="Wdate bdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
                         至
                         <input type="text" name="edate"  class="Wdate edate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" autocomplete="off" />
                     </li>
@@ -116,9 +122,9 @@
     			                                                value: '否'
     		                                                }]" />
                     </li>
-                    <li>通知人<input type="text" name="tzr" class="tzr"  autocomplete="off" /></li>
-                    <li>物流票号<input type="text" name="ph" class="ph" autocomplete="off" /></li>
-                    <li>到货物流<input type="text" name="dhwl" class="dhwl" autocomplete="off" /></li>
+                    <li>通知人<input type="text" name="tzr" class="easyui-textbox tzr"  autocomplete="off" /></li>
+                    <li>物流票号<input type="text" name="ph" class="easyui-textbox ph" autocomplete="off" /></li>
+                    <li>到货物流<input type="text" name="dhwl" class="easyui-textbox dhwl" autocomplete="off" /></li>
                     <li>
                         <a id="btn1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
                            onclick="Search();">搜索</a> <a id="A1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
@@ -136,13 +142,16 @@
     </div>
 </div>
 <script type="text/javascript">
+
     var editRow, editId, editRow02;
     var t = tabDyn();//tab切换获取动态t
+
     $(function () {
         $("#ExpandRow").attr("id", "ExpandRow" + t);
         $("#dg_chuyun").attr("id", "dg_chuyun" + t);
         $("#ff").attr("id", "ff" + t);
         $("#tb1").attr("id", "tb1" + t);
+        $("#bdate").attr("id", "bdate" + t);
         $("#dg_chuyun" + t).datagrid({
             url: "../ashx_ui/chuyun.ashx?action=search",
             queryParams: {
@@ -522,6 +531,9 @@
         var curDate = y + '-' + m + '-' + d + ' ' + hour + ':' + minute + ':' + second;
         return curDate;
     }
+
+    var time = new Date().Format("yyyy-MM-dd");
+    $('#bdate' + t).val(time);
 </script>
 
 

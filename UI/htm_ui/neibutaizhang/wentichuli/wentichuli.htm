@@ -12,7 +12,7 @@
         $("#btn_search").attr('id', 'btn_search' + t);
         $("#btn_reset").attr('id', 'btn_reset' + t);
         $("#ff").attr('id', 'ff' + t);
-      
+
 
         $("#dg_wentichuli").datagrid({
             url: "../ashx_ui/ui_neibutaizhang.ashx?action=search",
@@ -51,10 +51,9 @@
                     }
                 }
             ]],
-            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 7 },
-            { title: "问题检核（问题登记后的30天内）", colspan: 3 },
-            { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 },
-            { title: "第三方检核", colspan: 3 }],
+            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 8 },
+            { title: "验收评价", colspan: 5 },
+            { title: "流程监控", colspan: 3 }, { title: "时效统计", colspan: 4 }],
             [{ field: "dyDep", title: "领取部门", width: 70 },
             { field: "dyPerson", title: "第一责任人", width: 80 },
             { field: "dyDate", title: "接收问题时间", width: 100 },
@@ -62,10 +61,11 @@
             { field: "cqFangan", title: "长期方案", width: 150 },
             { field: "cqDate", title: "改善完成时间", width: 70 },
             { field: "IsEnd", title: "完成情况", width: 70 },
+            { field: "IsEndDate", title: "完成情况填写时间", width: 100 },
 
-            { field: "lsJianhe", title: "落时检核", width: 80 },
-            { field: "lsDep", title: "问题领取部门经理", width: 60 },
-            { field: "lsDate", title: "落时时间", width: 60 },
+            //{ field: "lsJianhe", title: "落时检核", width: 80 },
+            //{ field: "lsDep", title: "问题领取部门经理", width: 60 },
+            //{ field: "lsDate", title: "落时时间", width: 60 },
 
             { field: "myFirstDate", title: "满意评估最早日期", width: 100 },//
             { field: "myPingjia", title: "验收评价内容", width: 100 },//
@@ -79,7 +79,7 @@
             //{ field: "dsJianhe", title: "第三方检核", width: 250 },
             //{ field: "dsPerson", title: "第三方检核人", width: 80 },
             //    { field: "dsDate", title: "第三方简核时间", width: 100 },
-            { field: "dsJianhe", title: "流程监控", width: 250 },
+            { field: "dsJianhe", title: "流程监控", width: 150 },
             { field: "dsPerson", title: "监控人", width: 80 },
             { field: "dsDate", title: "填写时间", width: 100 },
             {
@@ -241,12 +241,12 @@
                 }
 
             },
-                {
-                    text: '取消修改',
-                    iconCls: 'icon-cancel',
-                    handler: function () { $(this).closest('.window-body').dialog('destroy'); }
+            {
+                text: '取消修改',
+                iconCls: 'icon-cancel',
+                handler: function () { $(this).closest('.window-body').dialog('destroy'); }
 
-                }
+            }
             ],
             onClose: function () {
                 $(this).dialog('destroy');
@@ -278,7 +278,7 @@
 
     }
 
-    $("#btn_search"+t).click(function () {
+    $("#btn_search" + t).click(function () {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
         var params = $("#ff" + t).serializeObject();
         $('#dg_wentichuli').datagrid('load', params);
@@ -287,12 +287,12 @@
 
     $("#btn_reset" + t).click(function () {
         var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
-        $('#type'+t).combobox('clear');
-        $('#bdate'+t).val("");
-        $('#edate'+t).val("");
+        $('#type' + t).combobox('clear');
+        $('#bdate' + t).val("");
+        $('#edate' + t).val("");
         $('#txt_dep' + t).val("");
         $('#txt_search' + t).val("");
-        $('#fkItem'+t).combobox('clear');
+        $('#fkItem' + t).combobox('clear');
     });
 
 
@@ -320,6 +320,8 @@
         });
     }
 
+    var time = new Date().Format("yyyy-MM-dd");
+    $('#bdate' + t).val(time);
 
 </script>
 <div class="easyui-layout" data-options="fit : true,border : false">
@@ -336,8 +338,8 @@
                         反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
                     </p>
                     <p>
-                        部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 18px;" />
-                        问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 18px;" />
+                        部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 25px;" />
+                        问题类型:<input type="text" class="easyui-combobox" id="fkItem" name="fkItem" style="height: 25px;" />
                         <a id="btn_search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
                         <a id="txt_export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
                            onclick="toexcel();">导出</a>

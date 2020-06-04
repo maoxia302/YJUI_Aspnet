@@ -1,5 +1,4 @@
 ﻿<style type="text/css">
-
 </style>
 <script type="text/javascript">
     var t = parent.$('#tabs').tabs('getSelected').panel('options').title;
@@ -55,17 +54,17 @@
                     }
                 }
             ]],
-            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 7},
-            { title: "问题检核（问题登记后的30天内）", colspan: 3 },
-            { title: "满意度评价（检核完毕后7个工作日内）", colspan: 3 },
-            { title: "第三方检核", colspan: 3 }],
+            columns: [[{ "title": "问题登记后的3个工作日内填写", "colspan": 8 },
+            { title: "验收评价", colspan: 5 },
+            { title: "流程监控", colspan: 3 }, { title: "时效统计", colspan: 4 }],
             [{ field: "dyDep", title: "领取部门", width: 70 },
             { field: "dyPerson", title: "第一责任人", width: 80 },
             { field: "dyDate", title: "接收问题时间", width: 100 },
             { field: "dyGaishan", title: "临时改善", width: 100 },
-            { field: "cqFangan", title: "长期方案", width: 150},
+            { field: "cqFangan", title: "长期方案", width: 150 },
             { field: "cqDate", title: "改善完成时间", width: 70 },
-                { field: "IsEnd", title: "完成情况", width: 70 },
+            { field: "IsEnd", title: "完成情况", width: 70 },
+            { field: "IsEndDate", title: "完成情况填写时间", width: 100 },
 
             //{ field: "lsJianhe", title: "落时检核", width: 80 },
             //{ field: "lsDep", title: "问题领取部门经理", width: 60 },
@@ -83,7 +82,7 @@
             //{ field: "dsJianhe", title: "第三方检核", width: 250 },
             //{ field: "dsPerson", title: "第三方检核人", width: 80 },
             //    { field: "dsDate", title: "第三方简核时间", width: 100 },
-            { field: "dsJianhe", title: "流程监控", width: 250 },
+            { field: "dsJianhe", title: "流程监控", width: 150 },
             { field: "dsPerson", title: "监控人", width: 80 },
             { field: "dsDate", title: "填写时间", width: 100 },
             {
@@ -326,7 +325,19 @@
             textField: 'guzhang',
         });
     }
+
+    var time = new Date().Format("yyyy-MM-dd");
+    $('#bdate'+t).val(time);
+
 </script>
+<style>
+    .chuyun_table .Wdate, .chuyun_table .easyui-textbox {
+        padding: 0;
+        line-height: 24px;
+        height: 20px;
+        border: 1px solid #95B8E7;
+    }
+</style>
 <div class="easyui-layout" data-options="fit : true,border : false">
     <div data-options="region:'north',title:'查询条件',border:false,iconCls:'icon-columns'"
          style="height: 130px; background: #f4f4f4;">
@@ -337,8 +348,8 @@
                         反馈时间<input type="text" id="bdate" name="bdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
                         至
                         <input type="text" id="edate" name="edate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
-                        关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 18px;" />
-                        反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 18px;" />
+                        关键字<input type="text" id="txt_search" name="txt_search" class="txt_search" style="height: 20px;" />
+                        反馈部门:<input type="text" id="txt_dep" name="txt_dep" style="height: 20px; line-height:20px;" />
                     </p>
                     <p>
                         部门分类:<input type="text" class="easyui-combobox" id="DepCat" name="DepCat" style="height: 25px;" />

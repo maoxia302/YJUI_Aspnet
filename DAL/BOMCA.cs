@@ -10,7 +10,5 @@ namespace YJUI.DAL
         private readonly DAL.BOMCA dal = new BOMCA();
 
         public BOMCA() { }
-
-
     }
 }
